@@ -1,19 +1,3 @@
-<?php
-/**
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* @module clickandbuy
-* @copyright (C) 2010 PayIntelligent GmbH
-* @license GNU General Public License
-*/
-?>
-
 <?php echo $header; ?>
 <div id="content">
     <div class="breadcrumb" align="left">
@@ -40,15 +24,6 @@
                             <select name="paymill_status">
                                 <option value="1" <?php if ($paymill_status) { echo 'selected="selected"';}?>> <?php echo $text_enabled; ?></option>
                                 <option value="0" <?php if (!$paymill_status) { echo 'selected="selected"';}?>> <?php echo $text_disabled; ?></option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $entry_sandbox; ?></td>
-                        <td>
-                            <select name="paymill_sandbox">
-                                <option value="1" <?php if ($paymill_sandbox) { echo 'selected="selected"';}?>> <?php echo $text_enabled; ?></option>
-                                <option value="0" <?php if (!$paymill_sandbox) { echo 'selected="selected"';}?>> <?php echo $text_disabled; ?></option>
                             </select>
                         </td>
                     </tr>
