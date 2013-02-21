@@ -11,7 +11,7 @@
 <div class="warning"><?php echo $error; ?></div>
 <?php } ?>
 <div class="right">
-        <form action="index.php?route=payment/paymilldirectdebit/confirm" method="POST">
+        <form id='paymill_form' action="index.php?route=payment/paymilldirectdebit/confirm" method="POST">
             <div class="error" style="display: none">
                 <ul id="errorsdebit"></ul>
             </div>
@@ -99,7 +99,7 @@
             alert("API returned error:" + error.apierror);
         } else {
             debugELV("Received token from Paymill API: " + result.token);
-            var form = $("#paymillDirectdebitSubmit").parent();
+            var form = $("#paymill_form");
             var token = result.token;
             form.append("<input type='hidden' name='paymillToken' value='" + token + "'/>");
             form.get(0).submit();
