@@ -10,7 +10,7 @@
 <?php if (isset($error)) { ?>
 <div class="warning"><?php echo $error; ?></div>
 <?php } ?>
-<div class="buttons">
+
     <div class="right">
         <form action="index.php?route=payment/paymillcreditcard/confirm" method="POST">
             <div class="error" style="display: none">
@@ -23,32 +23,32 @@
                 </p>
                 <p class="none">
                     <label><?php echo $paymill_cardholder;?></label>
-                    <input id="account-holder" type="text" size="20" class="text" value="<?php echo $paymill_fullname;?>"/>
+                    <input id="account-holder" type="text" size="20" class="paymill_text" value="<?php echo $paymill_fullname;?>"/>
                 </p>
                 <p class="none">
                     <label><?php echo $paymill_cardnumber;?></label>
-                    <input id="card-number" type="text" size="20" class="text" />
+                    <input id="card-number" type="text" size="20" class="paymill_text" />
                 </p>
                 <p class="none">
                     <label><?php echo $paymill_cvc;?></label>
-                    <input id="card-cvc" type="text" size="4" class="text" />
+                    <input id="card-cvc" type="text" size="4" class="paymill_text" />
                 </p>
                 <p class="none">
                     <label><?php echo $paymill_birthday;?></label>
-                    <input id="card-expiry-month" type="text" style="width: 30px; display: inline-block;" class="text" />
-                    <input id="card-expiry-year" type="text" style="width: 60px; display: inline-block;" class="text" />
+                    <input id="card-expiry-year" type="text" style="width: 60px; display: inline-block;" class="paymill_text" />
+                    <input id="card-expiry-month" type="text" style="width: 30px; display: inline-block;" class="paymill_text" />
                 </p>
                 <p class="description"><?php echo $paymill_description;?></p>
-
-                    <p><div class="paymill_powered"><div class="paymill_credits"><?php echo $paymill_paymilllabel;?> powered by <a href="http://www.paymill.de" target="_blank">Paymill</a></div></div></p>
-
+                <p><div class="paymill_powered"><div class="paymill_credits"><?php echo $paymill_paymilllabel;?> powered by <a href="http://www.paymill.de" target="_blank">Paymill</a></div></div></p>
             </div>
-            <a class="button" id="paymillCreditcardSubmit">
-                <span><?php echo $button_confirm; ?></span>
-            </a>
+            <div class="buttons">
+                <a class="button" id="paymillCreditcardSubmit">
+                    <span><?php echo $button_confirm; ?></span>
+                </a>
+            </div>
         </form>
     </div>
-</div>
+
 <script type="text/javascript">
     var PAYMILL_PUBLIC_KEY = "<?php echo $paymill_publickey; ?>";
 </script>

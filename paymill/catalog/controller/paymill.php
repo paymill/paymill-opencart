@@ -90,7 +90,7 @@ abstract class ControllerPaymentPaymill extends Controller
             if ($result === true) {
                 $this->log("Finish order.");
                 $this->model_checkout_order->confirm(
-                        $this->session->data['order_id'], 8, '', true
+                        $this->session->data['order_id'], 5, '', true
                 );
                 $this->redirect($this->url->link('checkout/success'));
             } else {

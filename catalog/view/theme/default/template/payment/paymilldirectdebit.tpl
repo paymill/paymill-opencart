@@ -10,8 +10,7 @@
 <?php if (isset($error)) { ?>
 <div class="warning"><?php echo $error; ?></div>
 <?php } ?>
-<div class="buttons">
-    <div class="right">
+<div class="right">
         <form action="index.php?route=payment/paymilldirectdebit/confirm" method="POST">
             <div class="error" style="display: none">
                 <ul id="errorsdebit"></ul>
@@ -19,15 +18,15 @@
             <div class="debit">
                 <p class="none">
                     <label><?php echo $paymill_accountholder;?></label>
-                    <input id="paymill_accountholder" type="text" size="20" class="text" />
+                    <input id="paymill_accountholder" type="text" size="20" class="paymill_text" />
                 </p>
                 <p class="none">
                     <label><?php echo $paymill_accountnumber;?></label>
-                    <input id="paymill_accountnumber" type="text" size="4" class="text" />
+                    <input id="paymill_accountnumber" type="text" size="20" class="paymill_text" />
                 </p>
                 <p class="none">
                     <label><?php echo $paymill_banknumber;?></label>
-                    <input id="paymill_banknumber" type="text" size="4" class="text" />
+                    <input id="paymill_banknumber" type="text" size="20" class="paymill_text" />
                 </p>
                 <p class="description"><?php echo $paymill_description;?></p>
                 <p>
@@ -36,12 +35,13 @@
                     </div>
                 </p>
             </div>
-            <a class="button" id="paymillDirectdebitSubmit">
-                <span><?php echo $button_confirm; ?></span>
-            </a>
+            <div class="buttons">
+                <a class="button" id="paymillDirectdebitSubmit">
+                    <span><?php echo $button_confirm; ?></span>
+                </a>
+            </div>
         </form>
     </div>
-</div>
 <script type="text/javascript">
   var PAYMILL_PUBLIC_KEY = "<?php echo $paymill_publickey; ?>";
 </script>
