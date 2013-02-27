@@ -184,6 +184,11 @@ abstract class ControllerPaymentPaymill extends Controller
                 $transactionParams['payment'] = $creditcard['id'];
             }
             $transaction = $transactionsObject->create($transactionParams);
+            if(isset($transaction['data']['response_code'])){
+                call_user_func_array($logger, array("An Error occured: " . var_export($transaction, true)));
+                return false;
+            }
+            
             if (!isset($transaction['id'])) {
                 call_user_func_array($logger, array("No transaction created" . var_export($transaction, true)));
                 return false;
