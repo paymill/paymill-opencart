@@ -73,6 +73,11 @@
                             </select>
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="2">
+                        <textarea style="width:1000px;" rows="15" readonly /><?php echo $paymill_logfile; ?></textarea>
+                        </td>
+                    </tr>
                 </table>
             </form>
         </div>

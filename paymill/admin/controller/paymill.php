@@ -68,6 +68,8 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_sort_order'] = $this->getConfigValue($this->getPaymentName() . '_sort_order');
         $this->data['paymill_logging'] = $this->getConfigValue($this->getPaymentName() . '_logging');
         $this->data['paymill_debugging'] = $this->getConfigValue($this->getPaymentName() . '_debugging');
+        $this->data['paymill_logfile'] = file_get_contents(dirname(dirname(dirname(__FILE__))).'/log/log.txt');
+
 
         $this->template = 'payment/' . $this->getPaymentName() . '.tpl';
         $this->children = array(
@@ -128,8 +130,8 @@ abstract class ControllerPaymentPaymill extends Controller
         $config[$this->getPaymentName() . '_status'] = '0';
         $config[$this->getPaymentName() . '_publickey'] = '';
         $config[$this->getPaymentName() . '_privatekey'] = '';
-        $config[$this->getPaymentName() . '_apiurl'] = 'https://api.paymill.de/v2/';
-        $config[$this->getPaymentName() . '_bridgeurl'] = 'https://bridge.paymill.de/';
+        $config[$this->getPaymentName() . '_apiurl'] = 'https://api.paymill.com/v2/';
+        $config[$this->getPaymentName() . '_bridgeurl'] = 'https://bridge.paymill.com/';
         $config[$this->getPaymentName() . '_sort_order'] = '1';
         $config[$this->getPaymentName() . '_logging'] = '1';
         $config[$this->getPaymentName() . '_debugging'] = '1';
