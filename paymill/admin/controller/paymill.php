@@ -9,6 +9,10 @@
  */
 abstract class ControllerPaymentPaymill extends Controller
 {
+    protected $_version = "1.0.0";
+
+
+
 
     abstract protected function getPaymentName();
 
@@ -16,7 +20,7 @@ abstract class ControllerPaymentPaymill extends Controller
     {
         global $config;
         $this->language->load('payment/' . $this->getPaymentName());
-        $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->setTitle($this->language->get('heading_title') . " (".$this->_version.")");
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->load->model('setting/setting');
@@ -36,7 +40,7 @@ abstract class ControllerPaymentPaymill extends Controller
         }
 
         $this->data['breadcrumbs'] = $this->getBreadcrumbs();
-        $this->data['heading_title'] = $this->language->get('heading_title');
+        $this->data['heading_title'] = $this->language->get('heading_title') . " (".$this->_version.")";
 
         $this->data['text_enabled'] = $this->language->get('text_enabled');
         $this->data['text_disabled'] = $this->language->get('text_disabled');
