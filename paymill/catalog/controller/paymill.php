@@ -11,6 +11,8 @@ abstract class ControllerPaymentPaymill extends Controller
 
     abstract protected function getPaymentName();
 
+    abstract protected function getDatabaseName();
+
     public function index()
     {
         global $config;
@@ -38,7 +40,16 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_description'] = $this->language->get('paymill_description');
         $this->data['paymill_paymilllabel'] = $this->language->get('paymill_paymilllabel');
 
-        $this->template = 'default/template/payment/' . $this->getPaymentName() . '.tpl';
+        $table = $this->getDatabaseName();
+        $row = $this->db->query("SELECT COUNT(*)AS `Matches` FROM $table WHERE `userId`=" . $this->customer->getId());
+
+        if($row->row['Matches'] == 1){
+            $this->data['paymill_paymentname'] = $this->getPaymentName();
+            $this->template = 'default/template/payment/paymillfastcheckout.tpl';
+        }else{
+            $this->template = 'default/template/payment/' . $this->getPaymentName() . '.tpl';
+        }
+
         $this->render();
     }
 
@@ -50,7 +61,7 @@ abstract class ControllerPaymentPaymill extends Controller
         // check if token present
         if (empty($paymillToken)) {
             $this->log("No paymill token was provided. Redirect to payments page.");
-            $this->redirect($this->url->link('checkout/' . $this->getPaymentName()));
+            $this->redirect($this->url->link('checkout/checkout'));
         } else {
             $this->log("Start processing payment with token " . $paymillToken);
             $this->load->model('checkout/order');
@@ -67,8 +78,8 @@ abstract class ControllerPaymentPaymill extends Controller
             $amount = $this->currency->format($this->order_info['total'], $this->order_info['currency_code'], false, false);
             $amount = number_format(($amount), 2, '.', '');
 
-            // process the payment
-            $result = $this->processPayment(array(
+            $data = array(
+                'userId' => $this->customer->getId(),
                 'libVersion' => $libVersion,
                 'token' => $paymillToken,
                 'amount' => $amount * 100,
@@ -80,7 +91,17 @@ abstract class ControllerPaymentPaymill extends Controller
                 'privateKey' => $this->config->get($this->getPaymentName() . '_privatekey'),
                 'apiUrl' => $this->config->get($this->getPaymentName() . '_apiurl'),
                 'loggerCallback' => array('ControllerPaymentPaymill', 'log')
-                    ));
+            );
+
+            $table = $this->getDatabaseName();
+            $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
+            if ($row->num_rows === 1) {
+                $data['clientId'] = $row->row['clientId'];
+                $data['paymentId'] = $row->row['paymentId'];
+            }
+
+            // process the payment
+            $result = $this->processPayment($data);
             $this->log(
                     "Payment processing resulted in: "
                     . ($result ? "Success" : "Fail")
@@ -158,33 +179,39 @@ abstract class ControllerPaymentPaymill extends Controller
 
         // perform conection to the Paymill API and trigger the payment
         try {
-
-            // create card
-            $creditcard = $creditcardsObject->create($creditcardParams);
-            if (!isset($creditcard['id'])) {
-                call_user_func_array($logger, array("No creditcard created: " . var_export($creditcard, true)));
-                return false;
+            if (!array_key_exists('clientId', $params)) {
+                // create client
+                $client = $clientsObject->create($clientParams);
+                if (!isset($client['id'])) {
+                    call_user_func_array($logger, array("No client created" . var_export($client, true)));
+                    return false;
+                } else {
+                    call_user_func_array($logger, array("Client created: " . $client['id']));
+                }
+                // create card
+                $creditcardParams['client'] = $client['id'];
             } else {
-                call_user_func_array($logger, array("Creditcard created: " . $creditcard['id']));
+                call_user_func_array($logger, array("Client using: " . $params['clientId']));
+                $creditcardParams['client'] = $params['clientId'];
             }
 
-            // create client
-            $clientParams['creditcard'] = $creditcard['id'];
-            $client = $clientsObject->create($clientParams);
-            if (!isset($client['id'])) {
-                call_user_func_array($logger, array("No client created" . var_export($client, true)));
-                return false;
-            } else {
-                call_user_func_array($logger, array("Client created: " . $client['id']));
-            }
 
-            // create transaction
-            $transactionParams['client'] = $client['id'];
-            if ($params['libVersion'] == 'v2') {
+            if (!array_key_exists('paymentId', $params)) {
+                // create card
+                $creditcard = $creditcardsObject->create($creditcardParams);
+                if (!isset($creditcard['id'])) {
+                    call_user_func_array($logger, array("No creditcard created: " . var_export($creditcard, true)));
+                    return false;
+                } else {
+                    call_user_func_array($logger, array("Creditcard created: " . $creditcard['id']));
+                }
                 $transactionParams['payment'] = $creditcard['id'];
+            } else {
+                call_user_func_array($logger, array("Creditcard using: " . $params['paymentId']));
+                $transactionParams['payment'] = $params['paymentId'];
             }
             $transaction = $transactionsObject->create($transactionParams);
-            if(isset($transaction['data']['response_code'])){
+            if (isset($transaction['data']['response_code'])) {
                 call_user_func_array($logger, array("An Error occured: " . var_export($transaction, true)));
                 return false;
             }
@@ -200,6 +227,9 @@ abstract class ControllerPaymentPaymill extends Controller
             if (is_array($transaction) && array_key_exists('status', $transaction)) {
                 if ($transaction['status'] == "closed") {
                     // transaction was successfully issued
+                    if (!empty($params['userId'])) {
+                        $this->_saveUserData($params['userId'], $creditcardParams['client'], $transactionParams['payment']);
+                    }
                     return true;
                 } elseif ($transaction['status'] == "open") {
                     // transaction was issued but status is open for any reason
@@ -222,6 +252,17 @@ abstract class ControllerPaymentPaymill extends Controller
         }
 
         return true;
+    }
+
+    private function _saveUserData($userId, $clientId, $paymentId)
+    {
+        $table = $this->getDatabaseName();
+        try {
+            $this->db->query("REPLACE INTO `$table` (`userId`, `clientId`, `paymentId`) VALUES($userId, '$clientId', '$paymentId')");
+            $this->log("Userdata stored.");
+        } catch (Exception $exception) {
+            $this->log("Error while saving Userdata: " . $exception->getMessage());
+        }
     }
 
     /**

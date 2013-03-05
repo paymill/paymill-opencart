@@ -7,4 +7,9 @@ class ControllerPaymentPaymilldirectdebit extends ControllerPaymentPaymill
     {
         return 'paymilldirectdebit';
     }
+
+    protected function getDatabaseName()
+    {
+        return 'paymill_dd_userdata';
+    }
 }

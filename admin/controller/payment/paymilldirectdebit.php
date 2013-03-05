@@ -7,4 +7,16 @@ class ControllerPaymentPaymilldirectdebit extends ControllerPaymentPaymill
     {
         return 'paymilldirectdebit';
     }
+
+    public function install()
+    {
+        $this->db->query("CREATE TABLE IF NOT EXISTS `paymill_dd_userdata` (
+            `userId` int(11) NOT NULL,
+            `clientId` text NOT NULL,
+            `paymentId` text NOT NULL,
+            PRIMARY KEY (`userId`)
+        )");
+        parent::install();
+    }
+
 }

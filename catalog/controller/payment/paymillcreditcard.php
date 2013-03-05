@@ -7,4 +7,9 @@ class ControllerPaymentPaymillcreditcard extends ControllerPaymentPaymill
     {
         return 'paymillcreditcard';
     }
+
+    protected function getDatabaseName()
+    {
+        return 'paymill_cc_userdata';
+    }
 }
