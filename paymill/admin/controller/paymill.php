@@ -31,6 +31,7 @@ abstract class ControllerPaymentPaymill extends Controller
             $newConfig[$this->getPaymentName() . '_apiurl'] = $this->request->post['paymill_apiurl'];
             $newConfig[$this->getPaymentName() . '_bridgeurl'] = $this->request->post['paymill_bridgeurl'];
             $newConfig[$this->getPaymentName() . '_sort_order'] = $this->request->post['paymill_sort_order'];
+            $newConfig[$this->getPaymentName() . '_fast_checkout'] = $this->request->post['paymill_fast_checkout'];
             $newConfig[$this->getPaymentName() . '_logging'] = $this->request->post['paymill_logging'];
             $newConfig[$this->getPaymentName() . '_debugging'] = $this->request->post['paymill_debugging'];
 
@@ -55,6 +56,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['entry_apiurl'] = $this->language->get('entry_apiurl');
         $this->data['entry_bridgeurl'] = $this->language->get('entry_bridgeurl');
         $this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+        $this->data['entry_fast_checkout'] = $this->language->get('entry_fast_checkout');
         $this->data['entry_logging'] = $this->language->get('entry_logging');
         $this->data['entry_debugging'] = $this->language->get('entry_debugging');
 
@@ -70,6 +72,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_apiurl'] = $this->getConfigValue($this->getPaymentName() . '_apiurl');
         $this->data['paymill_bridgeurl'] = $this->getConfigValue($this->getPaymentName() . '_bridgeurl');
         $this->data['paymill_sort_order'] = $this->getConfigValue($this->getPaymentName() . '_sort_order');
+        $this->data['paymill_fast_checkout'] = $this->getConfigValue($this->getPaymentName() . '_fast_checkout');
         $this->data['paymill_logging'] = $this->getConfigValue($this->getPaymentName() . '_logging');
         $this->data['paymill_debugging'] = $this->getConfigValue($this->getPaymentName() . '_debugging');
         $this->data['paymill_logfile'] = file_get_contents(dirname(dirname(dirname(__FILE__))).'/log/log.txt');
@@ -137,6 +140,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $config[$this->getPaymentName() . '_apiurl'] = 'https://api.paymill.com/v2/';
         $config[$this->getPaymentName() . '_bridgeurl'] = 'https://bridge.paymill.com/';
         $config[$this->getPaymentName() . '_sort_order'] = '1';
+        $config[$this->getPaymentName() . '_fast_checkout'] = '0';
         $config[$this->getPaymentName() . '_logging'] = '1';
         $config[$this->getPaymentName() . '_debugging'] = '1';
 

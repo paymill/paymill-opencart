@@ -56,6 +56,15 @@
                         <td><input type="text" name="paymill_sort_order" value="<?php echo $paymill_sort_order; ?>" size="1" /></td>
                     </tr>
                     <tr>
+                        <td><?php echo $entry_fast_checkout; ?></td>
+                        <td>
+                            <select name="paymill_fast_checkout">
+                                <option value="1" <?php if ($paymill_fast_checkout) { echo 'selected="selected"';}?>> <?php echo $text_enabled; ?></option>
+                                <option value="0" <?php if (!$paymill_fast_checkout) { echo 'selected="selected"';}?>> <?php echo $text_disabled; ?></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <td><?php echo $entry_logging; ?></td>
                         <td>
                             <select name="paymill_logging">

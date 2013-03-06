@@ -42,8 +42,7 @@ abstract class ControllerPaymentPaymill extends Controller
 
         $table = $this->getDatabaseName();
         $row = $this->db->query("SELECT COUNT(*)AS `Matches` FROM $table WHERE `userId`=" . $this->customer->getId());
-
-        if($row->row['Matches'] == 1){
+        if($row->row['Matches'] == 1 && $this->config->get($this->getPaymentName() . '_fast_checkout')){
             $this->data['paymill_paymentname'] = $this->getPaymentName();
             $this->template = 'default/template/payment/paymillfastcheckout.tpl';
         }else{
@@ -95,7 +94,7 @@ abstract class ControllerPaymentPaymill extends Controller
 
             $table = $this->getDatabaseName();
             $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
-            if ($row->num_rows === 1) {
+            if ($row->num_rows === 1 && $this->config->get($this->getPaymentName() . '_fast_checkout')) {
                 $data['clientId'] = $row->row['clientId'];
                 $data['paymentId'] = $row->row['paymentId'];
             }

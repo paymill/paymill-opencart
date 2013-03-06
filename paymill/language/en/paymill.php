@@ -11,6 +11,7 @@ $_['entry_privatekey'] = 'Privatekey:';
 $_['entry_apiurl'] = 'ApiUrl:';
 $_['entry_bridgeurl'] = 'BridgeUrl:';
 $_['entry_sort_order'] = 'Sort Order:';
+$_['entry_fast_checkout'] = 'FastCheckout:';
 $_['entry_logging'] = 'Logging:';
 $_['entry_debugging'] = 'Debug:';
 
