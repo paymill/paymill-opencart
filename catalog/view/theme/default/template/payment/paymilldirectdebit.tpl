@@ -13,7 +13,7 @@
 <div class="right">
         <form id='paymill_form' action="index.php?route=payment/paymilldirectdebit/confirm" method="POST">
             <div class="error" style="display: none">
-                <ul id="errorsdebit"></ul>
+                <ul id="errors"></ul>
             </div>
             <div class="debit">
                 <p class="none">
@@ -49,7 +49,7 @@
 <script type="text/javascript">
     function validateELV() {
         debugELV("Paymill handler triggered");
-        var errors = $("#errorsdebit");
+        var errors = $("#errors");
         errors.parent().hide();
         errors.html("");
         var result = true;
@@ -86,7 +86,7 @@
                     }
                 }else{
                     $('html, body').animate({
-                        scrollTop: $("#errorsdebit").offset().top - 100
+                        scrollTop: $("#errors").offset().top - 100
                     }, 1000);
                 }
                 return false;

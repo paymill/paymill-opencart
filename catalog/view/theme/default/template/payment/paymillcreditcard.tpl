@@ -14,7 +14,7 @@
     <div class="right">
         <form id='paymill_form' action="index.php?route=payment/paymillcreditcard/confirm" method="POST">
             <div class="error" style="display: none">
-                <ul id="errorsdebit"></ul>
+                <ul id="errors"></ul>
             </div>
             <div class="debit">
                 <p>
