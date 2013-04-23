@@ -37,7 +37,7 @@ abstract class ControllerPaymentPaymill extends Controller
 
             $this->model_setting_setting->editSetting($this->getPaymentName(), $newConfig);
             $this->session->data['success'] = $this->language->get('text_success');
-            $this->redirect(HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token']);
+            $this->redirect($this->url->link('extension/payment', '&token=' . $this->session->data['token']));
         }
 
         $this->data['breadcrumbs'] = $this->getBreadcrumbs();
@@ -63,8 +63,8 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['button_save'] = $this->language->get('button_save');
         $this->data['button_cancel'] = $this->language->get('button_cancel');
 
-        $this->data['action'] = HTTPS_SERVER . 'index.php?route=payment/' . $this->getPaymentName() . '&token=' . $this->session->data['token'];
-        $this->data['cancel'] = HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token'];
+        $this->data['action'] = $this->url->link('payment/' . $this->getPaymentName(), '&token=' . $this->session->data['token']);
+        $this->data['cancel'] = $this->url->link('extension/payment', '&token=' . $this->session->data['token']);
 
         $this->data['paymill_status'] = $this->getConfigValue($this->getPaymentName() . '_status');
         $this->data['paymill_publickey'] = $this->getConfigValue($this->getPaymentName() . '_publickey');
@@ -90,19 +90,19 @@ abstract class ControllerPaymentPaymill extends Controller
     {
         $breadcrumbs = array();
         $breadcrumbs[] = array(
-            'href' => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+            'href' => $this->url->link('common/home', '&token=' . $this->session->data['token']),
             'text' => $this->language->get('text_home'),
             'separator' => FALSE
         );
 
         $breadcrumbs[] = array(
-            'href' => HTTPS_SERVER . 'index.php?route=extension/payment&token=' . $this->session->data['token'],
+            'href' => $this->url->link('extension/payment', '&token=' . $this->session->data['token']),
             'text' => $this->language->get('text_payment'),
             'separator' => ' :: '
         );
 
         $breadcrumbs[] = array(
-            'href' => HTTPS_SERVER . 'index.php?route=payment/' . $this->getPaymentName() . '&token=' . $this->session->data['token'],
+            'href' => $this->url->link('payment/' . $this->getPaymentName() , '&token=' . $this->session->data['token']),
             'text' => $this->language->get('heading_title'),
             'separator' => ' :: '
         );
