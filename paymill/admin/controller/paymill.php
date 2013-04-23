@@ -9,7 +9,7 @@
  */
 abstract class ControllerPaymentPaymill extends Controller
 {
-    protected $_version = "1.0.1";
+    protected $_version = "1.0.2";
 
 
 
