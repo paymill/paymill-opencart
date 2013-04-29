@@ -43,15 +43,15 @@ abstract class ControllerPaymentPaymill extends Controller
         $table = $this->getDatabaseName();
 
         $fastCheckout = false;
-        if($this->customer->getId()){
+        if ($this->customer->getId() != null) {
             $row = $this->db->query("SELECT COUNT(*) AS `Matches` FROM $table WHERE `userId`=" . $this->customer->getId());
             $fastCheckout = $row->row['Matches'] == 1;
         }
 
-        if($fastCheckout && $this->config->get($this->getPaymentName() . '_fast_checkout')){
+        if ($fastCheckout && $this->config->get($this->getPaymentName() . '_fast_checkout')) {
             $this->data['paymill_paymentname'] = $this->getPaymentName();
             $this->template = 'default/template/payment/paymillfastcheckout.tpl';
-        }else{
+        } else {
             $this->template = 'default/template/payment/' . $this->getPaymentName() . '.tpl';
         }
 
@@ -98,11 +98,13 @@ abstract class ControllerPaymentPaymill extends Controller
                 'loggerCallback' => array('ControllerPaymentPaymill', 'log')
             );
 
-            $table = $this->getDatabaseName();
-            $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
-            if ($row->num_rows === 1 && $this->config->get($this->getPaymentName() . '_fast_checkout')) {
-                $data['clientId'] = $row->row['clientId'];
-                $data['paymentId'] = $row->row['paymentId'];
+            if ($this->customer->getId() != null) {
+                $table = $this->getDatabaseName();
+                $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
+                if ($row->num_rows === 1 && $this->config->get($this->getPaymentName() . '_fast_checkout')) {
+                    $data['clientId'] = $row->row['clientId'];
+                    $data['paymentId'] = $row->row['paymentId'];
+                }
             }
 
             // process the payment
