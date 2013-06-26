@@ -1,12 +1,15 @@
 <?php
 
+require_once dirname(dirname(dirname(__FILE__))) . '/v2/lib/Services/Paymill/PaymentProcessor.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/v2/lib/Services/Paymill/LoggingInterface.php';
+
 /**
  * paymill
  *
  * @category   PayIntelligent
  * @copyright  Copyright (c) 2011 PayIntelligent GmbH (http://payintelligent.de)
  */
-abstract class ControllerPaymentPaymill extends Controller
+abstract class ControllerPaymentPaymill extends Controller implements Services_Paymill_LoggingInterface
 {
 
     abstract protected function getPaymentName();
@@ -72,34 +75,30 @@ abstract class ControllerPaymentPaymill extends Controller
             $this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
             $amount = $this->currency->format($this->order_info['total'], $this->order_info['currency_code'], false, false);
-            $amount = number_format(($amount), 2, '.', '');
+            $amount = number_format(($amount), 2, '.', '') * 100;
 
-            $data = array(
-                'userId' => $this->customer->getId(),
-                'libVersion' => 'v2',
-                'token' => $paymillToken,
-                'amount' => $amount * 100,
-                'currency' => $this->order_info['currency_code'],
-                'name' => $this->order_info['lastname'] . ', ' . $this->order_info['firstname'],
-                'email' => $this->order_info['email'],
-                'description' => $this->config->get('config_name') . " " . $this->order_info['email'],
-                'libBase' => $libBase,
-                'privateKey' => $this->config->get($this->getPaymentName() . '_privatekey'),
-                'apiUrl' => 'https://api.paymill.com/v2/',
-                'loggerCallback' => array('ControllerPaymentPaymill', 'log')
-            );
+            $paymentProcessor = new Services_Paymill_PaymentProcessor();
+            $paymentProcessor->setToken($paymillToken);
+            $paymentProcessor->setAmount((int)$amount);
+            $paymentProcessor->setPrivateKey($this->config->get($this->getPaymentName() . '_privatekey'));
+            $paymentProcessor->setApiUrl('https://api.paymill.com/v2/');
+            $paymentProcessor->setCurrency($this->order_info['currency_code']);
+            $paymentProcessor->setDescription($this->config->get('config_name') . " " . $this->order_info['email']);
+            $paymentProcessor->setEmail($this->order_info['email']);
+            $paymentProcessor->setLogger($this);
+            $paymentProcessor->setName($this->order_info['lastname'] . ', ' . $this->order_info['firstname']);
 
             if ($this->customer->getId() != null) {
                 $table = $this->getDatabaseName();
                 $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
                 if ($row->num_rows === 1 && $this->config->get($this->getPaymentName() . '_fast_checkout')) {
-                    $data['clientId'] = $row->row['clientId'];
-                    $data['paymentId'] = $row->row['paymentId'];
+                    $paymentProcessor->setPaymentId($row->row['paymentId']);
+                    $paymentProcessor->setClientId($row->row['clientId']);
                 }
             }
 
             // process the payment
-            $result = $this->processPayment($data);
+            $result = $paymentProcessor->processPayment();
             $this->log(
                     "Payment processing resulted in: "
                     . ($result ? "Success" : "Fail")
@@ -108,6 +107,7 @@ abstract class ControllerPaymentPaymill extends Controller
             // finish the order if payment was sucessfully processed
             if ($result === true) {
                 $this->log("Finish order.");
+                $this->_saveUserData($this->customer->getId(), $paymentProcessor->getClientId(), $paymentProcessor->getPaymentId());
                 $this->model_checkout_order->confirm(
                         $this->session->data['order_id'], $this->config->get('config_complete_status_id'), '', true
                 );
@@ -117,139 +117,6 @@ abstract class ControllerPaymentPaymill extends Controller
                 $this->redirect($this->url->link('payment/' . $this->getPaymentName() . '/error'));
             }
         }
-    }
-
-    /**
-     * Processes the payment against the paymill API
-     * @param $params array The settings array
-     * @return boolean
-     */
-    private function processPayment($params)
-    {
-
-        // setup the logger
-        $logger = $params['loggerCallback'];
-
-        // reformat paramters
-        $params['currency'] = strtolower($params['currency']);
-
-        // setup client params
-        $clientParams = array(
-            'email' => $params['email'],
-            'description' => $params['name']
-        );
-
-        // setup credit card params
-        $creditcardParams = array(
-            'token' => $params['token']
-        );
-
-        // setup transaction params
-        $transactionParams = array(
-            'amount' => $params['amount'],
-            'currency' => $params['currency'],
-            'description' => $params['description']
-        );
-
-        require_once $params['libBase'] . 'Services/Paymill/Transactions.php';
-        require_once $params['libBase'] . 'Services/Paymill/Clients.php';
-
-        $clientsObject = new Services_Paymill_Clients(
-                        $params['privateKey'], $params['apiUrl']
-        );
-        $transactionsObject = new Services_Paymill_Transactions(
-                        $params['privateKey'], $params['apiUrl']
-        );
-
-        // In the PHP-Wrapper version v1 an explicit creditcard object exists.
-        // This was replaced by a payments object in v2.
-        if ($params['libVersion'] == 'v1') {
-            require_once $params['libBase'] . 'Services/Paymill/Creditcards.php';
-            $creditcardsObject = new Services_Paymill_Creditcards(
-                            $params['privateKey'], $params['apiUrl']
-            );
-        } elseif ($params['libVersion'] == 'v2') {
-            require_once $params['libBase'] . 'Services/Paymill/Payments.php';
-            $creditcardsObject = new Services_Paymill_Payments(
-                            $params['privateKey'], $params['apiUrl']
-            );
-        }
-
-        // perform conection to the Paymill API and trigger the payment
-        try {
-            if (!array_key_exists('clientId', $params)) {
-                // create client
-                $client = $clientsObject->create($clientParams);
-                if (!isset($client['id'])) {
-                    call_user_func_array($logger, array("No client created" . var_export($client, true)));
-                    return false;
-                } else {
-                    call_user_func_array($logger, array("Client created: " . $client['id']));
-                }
-                // create card
-                $creditcardParams['client'] = $client['id'];
-            } else {
-                call_user_func_array($logger, array("Client using: " . $params['clientId']));
-                $creditcardParams['client'] = $params['clientId'];
-            }
-
-
-            if (!array_key_exists('paymentId', $params)) {
-                // create card
-                $creditcard = $creditcardsObject->create($creditcardParams);
-                if (!isset($creditcard['id'])) {
-                    call_user_func_array($logger, array("No creditcard created: " . var_export($creditcard, true)));
-                    return false;
-                } else {
-                    call_user_func_array($logger, array("Creditcard created: " . $creditcard['id']));
-                }
-                $transactionParams['payment'] = $creditcard['id'];
-            } else {
-                call_user_func_array($logger, array("Creditcard using: " . $params['paymentId']));
-                $transactionParams['payment'] = $params['paymentId'];
-            }
-            $transaction = $transactionsObject->create($transactionParams);
-            if (isset($transaction['data']['response_code'])) {
-                call_user_func_array($logger, array("An Error occured: " . var_export($transaction, true)));
-                return false;
-            }
-
-            if (!isset($transaction['id'])) {
-                call_user_func_array($logger, array("No transaction created" . var_export($transaction, true)));
-                return false;
-            } else {
-                call_user_func_array($logger, array("Transaction created: " . $transaction['id']));
-            }
-
-            // check result
-            if (is_array($transaction) && array_key_exists('status', $transaction)) {
-                if ($transaction['status'] == "closed") {
-                    // transaction was successfully issued
-                    if (!empty($params['userId'])) {
-                        $this->_saveUserData($params['userId'], $creditcardParams['client'], $transactionParams['payment']);
-                    }
-                    return true;
-                } elseif ($transaction['status'] == "open") {
-                    // transaction was issued but status is open for any reason
-                    call_user_func_array($logger, array("Status is open."));
-                    return false;
-                } else {
-                    // another error occured
-                    call_user_func_array($logger, array("Unknown error." . var_export($transaction, true)));
-                    return false;
-                }
-            } else {
-                // another error occured
-                call_user_func_array($logger, array("Transaction could not be issued."));
-                return false;
-            }
-        } catch (Services_Paymill_Exception $ex) {
-            // paymill wrapper threw an exception
-            call_user_func_array($logger, array("Exception thrown from paymill wrapper: " . $ex->getMessage()));
-            return false;
-        }
-
-        return true;
     }
 
     private function _saveUserData($userId, $clientId, $paymentId)
@@ -267,7 +134,7 @@ abstract class ControllerPaymentPaymill extends Controller
      * Logger for events
      * @return void
      */
-    public function log($message)
+    public function log($message, $debuginfo = null)
     {
         $logfile = dirname(dirname(dirname(dirname(__FILE__)))) . '/paymill/log/log.txt';
         if (is_writable($logfile) && $this->config->get($this->getPaymentName() . '_logging')) {
