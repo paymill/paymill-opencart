@@ -40,18 +40,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $entry_apiurl; ?></td>
-                        <td>
-                            <input type="text" name="paymill_apiurl" value="<?php echo $paymill_apiurl; ?>" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $entry_bridgeurl; ?></td>
-                        <td>
-                            <input type="text" name="paymill_bridgeurl" value="<?php echo $paymill_bridgeurl; ?>" />
-                        </td>
-                    </tr>
-                    <tr>
                         <td><?php echo $entry_sort_order; ?></td>
                         <td><input type="text" name="paymill_sort_order" value="<?php echo $paymill_sort_order; ?>" size="1" /></td>
                     </tr>

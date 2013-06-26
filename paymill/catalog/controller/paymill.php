@@ -25,7 +25,6 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_fullname'] = $this->order_info['firstname'] . ' ' . $this->order_info['lastname'];
         $this->data['paymill_css'] = $this->baseUrl . '/catalog/view/theme/default/stylesheet/paymill_styles.css';
         $this->data['paymill_publickey'] = $this->config->get($this->getPaymentName() . '_publickey');
-        $this->data['paymill_bridgeurl'] = $this->config->get($this->getPaymentName() . '_bridgeurl');
         $this->data['paymill_debugging'] = $this->config->get($this->getPaymentName() . '_debugging');
         $this->data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -72,20 +71,12 @@ abstract class ControllerPaymentPaymill extends Controller
             $this->load->model('checkout/order');
             $this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-            if (preg_match("/\/v2\//", $this->config->get($this->getPaymentName() . '_apiurl'))) {
-                $libBase = dirname(dirname(dirname(__FILE__))) . '/v2/lib/';
-                $libVersion = 'v2';
-            } else {
-                $libBase = dirname(dirname(dirname(__FILE__))) . '/v2/lib/';
-                $libVersion = 'v1';
-            }
-
             $amount = $this->currency->format($this->order_info['total'], $this->order_info['currency_code'], false, false);
             $amount = number_format(($amount), 2, '.', '');
 
             $data = array(
                 'userId' => $this->customer->getId(),
-                'libVersion' => $libVersion,
+                'libVersion' => 'v2',
                 'token' => $paymillToken,
                 'amount' => $amount * 100,
                 'currency' => $this->order_info['currency_code'],
@@ -94,7 +85,7 @@ abstract class ControllerPaymentPaymill extends Controller
                 'description' => $this->config->get('config_name') . " " . $this->order_info['email'],
                 'libBase' => $libBase,
                 'privateKey' => $this->config->get($this->getPaymentName() . '_privatekey'),
-                'apiUrl' => $this->config->get($this->getPaymentName() . '_apiurl'),
+                'apiUrl' => 'https://api.paymill.com/v2/',
                 'loggerCallback' => array('ControllerPaymentPaymill', 'log')
             );
 

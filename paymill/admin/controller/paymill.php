@@ -28,8 +28,6 @@ abstract class ControllerPaymentPaymill extends Controller
             $newConfig[$this->getPaymentName() . '_status'] = $this->request->post['paymill_status'];
             $newConfig[$this->getPaymentName() . '_publickey'] = $this->request->post['paymill_publickey'];
             $newConfig[$this->getPaymentName() . '_privatekey'] = $this->request->post['paymill_privatekey'];
-            $newConfig[$this->getPaymentName() . '_apiurl'] = $this->request->post['paymill_apiurl'];
-            $newConfig[$this->getPaymentName() . '_bridgeurl'] = $this->request->post['paymill_bridgeurl'];
             $newConfig[$this->getPaymentName() . '_sort_order'] = $this->request->post['paymill_sort_order'];
             $newConfig[$this->getPaymentName() . '_fast_checkout'] = $this->request->post['paymill_fast_checkout'];
             $newConfig[$this->getPaymentName() . '_logging'] = $this->request->post['paymill_logging'];
@@ -53,8 +51,6 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['entry_status'] = $this->language->get('entry_status');
         $this->data['entry_publickey'] = $this->language->get('entry_publickey');
         $this->data['entry_privatekey'] = $this->language->get('entry_privatekey');
-        $this->data['entry_apiurl'] = $this->language->get('entry_apiurl');
-        $this->data['entry_bridgeurl'] = $this->language->get('entry_bridgeurl');
         $this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
         $this->data['entry_fast_checkout'] = $this->language->get('entry_fast_checkout');
         $this->data['entry_logging'] = $this->language->get('entry_logging');
@@ -69,8 +65,6 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_status'] = $this->getConfigValue($this->getPaymentName() . '_status');
         $this->data['paymill_publickey'] = $this->getConfigValue($this->getPaymentName() . '_publickey');
         $this->data['paymill_privatekey'] = $this->getConfigValue($this->getPaymentName() . '_privatekey');
-        $this->data['paymill_apiurl'] = $this->getConfigValue($this->getPaymentName() . '_apiurl');
-        $this->data['paymill_bridgeurl'] = $this->getConfigValue($this->getPaymentName() . '_bridgeurl');
         $this->data['paymill_sort_order'] = $this->getConfigValue($this->getPaymentName() . '_sort_order');
         $this->data['paymill_fast_checkout'] = $this->getConfigValue($this->getPaymentName() . '_fast_checkout');
         $this->data['paymill_logging'] = $this->getConfigValue($this->getPaymentName() . '_logging');
@@ -137,8 +131,6 @@ abstract class ControllerPaymentPaymill extends Controller
         $config[$this->getPaymentName() . '_status'] = '0';
         $config[$this->getPaymentName() . '_publickey'] = '';
         $config[$this->getPaymentName() . '_privatekey'] = '';
-        $config[$this->getPaymentName() . '_apiurl'] = 'https://api.paymill.com/v2/';
-        $config[$this->getPaymentName() . '_bridgeurl'] = 'https://bridge.paymill.com/';
         $config[$this->getPaymentName() . '_sort_order'] = '1';
         $config[$this->getPaymentName() . '_fast_checkout'] = '0';
         $config[$this->getPaymentName() . '_logging'] = '1';

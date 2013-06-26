@@ -52,7 +52,7 @@
 <script type="text/javascript">
     var PAYMILL_PUBLIC_KEY = "<?php echo $paymill_publickey; ?>";
 </script>
-<script type="text/javascript" src="<?php echo $paymill_bridgeurl; ?>"></script>
+<script type="text/javascript" src="https://bridge.paymill.com/"></script>
 <script type="text/javascript">
     function validateCC() {
         debugCC("Paymill handler triggered");
