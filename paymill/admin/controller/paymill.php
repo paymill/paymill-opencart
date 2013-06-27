@@ -30,7 +30,6 @@ abstract class ControllerPaymentPaymill extends Controller
             $newConfig[$this->getPaymentName() . '_privatekey'] = $this->request->post['paymill_privatekey'];
             $newConfig[$this->getPaymentName() . '_sort_order'] = $this->request->post['paymill_sort_order'];
             $newConfig[$this->getPaymentName() . '_fast_checkout'] = $this->request->post['paymill_fast_checkout'];
-            $newConfig[$this->getPaymentName() . '_tolerance'] = $this->request->post['paymill_tolerance'];
             $newConfig[$this->getPaymentName() . '_logging'] = $this->request->post['paymill_logging'];
             $newConfig[$this->getPaymentName() . '_debugging'] = $this->request->post['paymill_debugging'];
 
@@ -54,7 +53,6 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['entry_privatekey'] = $this->language->get('entry_privatekey');
         $this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
         $this->data['entry_fast_checkout'] = $this->language->get('entry_fast_checkout');
-        $this->data['entry_tolerance'] = $this->language->get('entry_tolerance');
         $this->data['entry_logging'] = $this->language->get('entry_logging');
         $this->data['entry_debugging'] = $this->language->get('entry_debugging');
 
@@ -69,7 +67,6 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_privatekey'] = $this->getConfigValue($this->getPaymentName() . '_privatekey');
         $this->data['paymill_sort_order'] = $this->getConfigValue($this->getPaymentName() . '_sort_order');
         $this->data['paymill_fast_checkout'] = $this->getConfigValue($this->getPaymentName() . '_fast_checkout');
-        $this->data['paymill_tolerance'] = $this->getConfigValue($this->getPaymentName() . '_tolerance');
         $this->data['paymill_logging'] = $this->getConfigValue($this->getPaymentName() . '_logging');
         $this->data['paymill_debugging'] = $this->getConfigValue($this->getPaymentName() . '_debugging');
         $this->data['paymill_logfile'] = file_get_contents(dirname(dirname(dirname(__FILE__))).'/log/log.txt');
@@ -136,7 +133,6 @@ abstract class ControllerPaymentPaymill extends Controller
         $config[$this->getPaymentName() . '_privatekey'] = '';
         $config[$this->getPaymentName() . '_sort_order'] = '1';
         $config[$this->getPaymentName() . '_fast_checkout'] = '0';
-        $config[$this->getPaymentName() . '_tolerance'] = '0';
         $config[$this->getPaymentName() . '_logging'] = '1';
         $config[$this->getPaymentName() . '_debugging'] = '1';
 

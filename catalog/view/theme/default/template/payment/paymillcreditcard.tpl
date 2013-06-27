@@ -80,7 +80,6 @@
         return result;
     }
     $(document).ready(function() {
-            debugCC('<?php echo ($paymill_amount + $paymill_tolerance) * 100;?>');
             $("#paymillCreditcardSubmit").click(function(event) {
                 if (validateCC()) {
                     try {
@@ -90,7 +89,7 @@
                             exp_month: $('#card-expiry-month').val(),
                             exp_year: $('#card-expiry-year').val(),
                             cvc: $('#card-cvc').val(),
-                            amount_int: <?php echo ($paymill_amount + $paymill_tolerance) * 100;?>,
+                            amount_int: <?php echo $paymill_amount * 100;?>,
                             currency: '<?php echo $paymill_currency;?>'
                         }, PaymillResponseHandler);
                     } catch (e) {
