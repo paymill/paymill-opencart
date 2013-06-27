@@ -53,6 +53,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <td><?php echo $entry_tolerance; ?></td>
+                        <td>
+                            <input type="number" name="paymill_tolerance" value="<?php echo $paymill_tolerance; ?>">
+                        </td>
+                    </tr>
+                    <tr>
                         <td><?php echo $entry_logging; ?></td>
                         <td>
                             <select name="paymill_logging">
