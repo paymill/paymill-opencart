@@ -28,8 +28,8 @@ $_['paymill_cvc'] = 'CVC *';
 $_['paymill_birthday'] = 'Valid until (MM/YYYY) *';
 
 $_['paymill_description'] = "Fields marked with * are required";
-$_['paymill_paymilllabel'] = 'Secure creditcard payments';
-
+$_['paymill_paymilllabel_cc'] = 'Secure creditcard payments';
+$_['paymill_paymilllabel_elv'] = 'Directdebit payments';
 
 $_['text_paymilldirectdebit'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
 $_['text_payment_paymilldirectdebit_title'] = 'Paymill Directdebit';

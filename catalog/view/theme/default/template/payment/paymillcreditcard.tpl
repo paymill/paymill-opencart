@@ -39,7 +39,7 @@
                     <input id="card-expiry-month" type="text" style="width: 30px; display: inline-block;" class="paymill_text" />
                 </p>
                 <p class="description"><?php echo $paymill_description;?></p>
-                <p><div class="paymill_powered"><div class="paymill_credits"><?php echo $paymill_paymilllabel;?> powered by <a href="http://www.paymill.de" target="_blank">Paymill</a></div></div></p>
+                <p><div class="paymill_powered"><div class="paymill_credits"><?php echo $paymill_paymilllabel_cc;?> powered by <a href="http://www.paymill.de" target="_blank">PAYMILL</a></div></div></p>
             </div>
             <div class="buttons">
                 <a class="button" id="paymillCreditcardSubmit">

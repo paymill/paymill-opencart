@@ -40,7 +40,8 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_cvc'] = $this->language->get('paymill_cvc');
         $this->data['paymill_birthday'] = $this->language->get('paymill_birthday');
         $this->data['paymill_description'] = $this->language->get('paymill_description');
-        $this->data['paymill_paymilllabel'] = $this->language->get('paymill_paymilllabel');
+        $this->data['paymill_paymilllabel_cc'] = $this->language->get('paymill_paymilllabel_cc');
+        $this->data['paymill_paymilllabel_elv'] = $this->language->get('paymill_paymilllabel_elv');
 
         $table = $this->getDatabaseName();
 
