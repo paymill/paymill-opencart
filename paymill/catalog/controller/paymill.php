@@ -1,7 +1,7 @@
 <?php
 
-require_once dirname(dirname(dirname(__FILE__))) . '/v2/lib/Services/Paymill/PaymentProcessor.php';
-require_once dirname(dirname(dirname(__FILE__))) . '/v2/lib/Services/Paymill/LoggingInterface.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/PaymentProcessor.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/LoggingInterface.php';
 
 /**
  * paymill
@@ -27,7 +27,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_currency'] = $this->order_info['currency_code'];
         $this->data['paymill_fullname'] = $this->order_info['firstname'] . ' ' . $this->order_info['lastname'];
         $this->data['paymill_css'] = $this->baseUrl . '/catalog/view/theme/default/stylesheet/paymill_styles.css';
-        $this->data['paymill_publickey'] = $this->config->get($this->getPaymentName() . '_publickey');
+        $this->data['paymill_publickey'] = trim($this->config->get($this->getPaymentName() . '_publickey'));
         $this->data['paymill_debugging'] = $this->config->get($this->getPaymentName() . '_debugging');
         $this->data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -81,7 +81,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $paymentProcessor = new Services_Paymill_PaymentProcessor();
             $paymentProcessor->setToken($paymillToken);
             $paymentProcessor->setAmount((int)$amount);
-            $paymentProcessor->setPrivateKey($this->config->get($this->getPaymentName() . '_privatekey'));
+            $paymentProcessor->setPrivateKey(trim($this->config->get($this->getPaymentName() . '_privatekey')));
             $paymentProcessor->setApiUrl('https://api.paymill.com/v2/');
             $paymentProcessor->setCurrency($this->order_info['currency_code']);
             $paymentProcessor->setDescription($this->config->get('config_name') . " " . $this->order_info['email']);

@@ -9,7 +9,7 @@
  */
 abstract class ControllerPaymentPaymill extends Controller
 {
-    protected $_version = "1.0.3";
+    protected $_version = "1.0.4";
 
 
 
@@ -26,8 +26,8 @@ abstract class ControllerPaymentPaymill extends Controller
             $this->load->model('setting/setting');
 
             $newConfig[$this->getPaymentName() . '_status'] = $this->request->post['paymill_status'];
-            $newConfig[$this->getPaymentName() . '_publickey'] = $this->request->post['paymill_publickey'];
-            $newConfig[$this->getPaymentName() . '_privatekey'] = $this->request->post['paymill_privatekey'];
+            $newConfig[$this->getPaymentName() . '_publickey'] = trim($this->request->post['paymill_publickey']);
+            $newConfig[$this->getPaymentName() . '_privatekey'] = trim($this->request->post['paymill_privatekey']);
             $newConfig[$this->getPaymentName() . '_sort_order'] = $this->request->post['paymill_sort_order'];
             $newConfig[$this->getPaymentName() . '_fast_checkout'] = $this->request->post['paymill_fast_checkout'];
             $newConfig[$this->getPaymentName() . '_logging'] = $this->request->post['paymill_logging'];
