@@ -23,6 +23,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->load->model('checkout/order');
         $this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         $amount = $this->currency->format($this->order_info['total'], $this->order_info['currency_code'], false, false);
+        $amount += $this->config->get($this->getPaymentName() . '_different_amount');
         $this->data['paymill_amount'] = number_format(($amount), 2, '.', '');
         $this->data['paymill_currency'] = $this->order_info['currency_code'];
         $this->data['paymill_fullname'] = $this->order_info['firstname'] . ' ' . $this->order_info['lastname'];
@@ -43,6 +44,8 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_paymilllabel_cc'] = $this->language->get('paymill_paymilllabel_cc');
         $this->data['paymill_paymilllabel_elv'] = $this->language->get('paymill_paymilllabel_elv');
 
+
+        $this->session->data['paymill_authorized_amount'] = $amount;
         $table = $this->getDatabaseName();
 
         $fastCheckout = false;
@@ -81,6 +84,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $paymentProcessor = new Services_Paymill_PaymentProcessor();
             $paymentProcessor->setToken($paymillToken);
             $paymentProcessor->setAmount((int)$amount);
+            $paymentProcessor->setPreAuthAmount((int)$this->session->data['paymill_authorized_amount']+1);
             $paymentProcessor->setPrivateKey(trim($this->config->get($this->getPaymentName() . '_privatekey')));
             $paymentProcessor->setApiUrl('https://api.paymill.com/v2/');
             $paymentProcessor->setCurrency($this->order_info['currency_code']);

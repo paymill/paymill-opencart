@@ -9,10 +9,8 @@
  */
 abstract class ControllerPaymentPaymill extends Controller
 {
+
     protected $_version = "1.0.4";
-
-
-
 
     abstract protected function getPaymentName();
 
@@ -20,7 +18,7 @@ abstract class ControllerPaymentPaymill extends Controller
     {
         global $config;
         $this->language->load('payment/' . $this->getPaymentName());
-        $this->document->setTitle($this->language->get('heading_title') . " (".$this->_version.")");
+        $this->document->setTitle($this->language->get('heading_title') . " (" . $this->_version . ")");
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->load->model('setting/setting');
@@ -30,6 +28,7 @@ abstract class ControllerPaymentPaymill extends Controller
             $newConfig[$this->getPaymentName() . '_privatekey'] = trim($this->request->post['paymill_privatekey']);
             $newConfig[$this->getPaymentName() . '_sort_order'] = $this->request->post['paymill_sort_order'];
             $newConfig[$this->getPaymentName() . '_fast_checkout'] = $this->request->post['paymill_fast_checkout'];
+            $newConfig[$this->getPaymentName() . '_different_amount'] = number_format($this->request->post['paymill_differnet_amount'], 2, '.', '');
             $newConfig[$this->getPaymentName() . '_logging'] = $this->request->post['paymill_logging'];
             $newConfig[$this->getPaymentName() . '_debugging'] = $this->request->post['paymill_debugging'];
 
@@ -39,7 +38,7 @@ abstract class ControllerPaymentPaymill extends Controller
         }
 
         $this->data['breadcrumbs'] = $this->getBreadcrumbs();
-        $this->data['heading_title'] = $this->language->get('heading_title') . " (".$this->_version.")";
+        $this->data['heading_title'] = $this->language->get('heading_title') . " (" . $this->_version . ")";
 
         $this->data['text_enabled'] = $this->language->get('text_enabled');
         $this->data['text_disabled'] = $this->language->get('text_disabled');
@@ -53,6 +52,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['entry_privatekey'] = $this->language->get('entry_privatekey');
         $this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
         $this->data['entry_fast_checkout'] = $this->language->get('entry_fast_checkout');
+        $this->data['entry_different_amount'] = $this->language->get('entry_different_amount');
         $this->data['entry_logging'] = $this->language->get('entry_logging');
         $this->data['entry_debugging'] = $this->language->get('entry_debugging');
 
@@ -67,9 +67,10 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_privatekey'] = $this->getConfigValue($this->getPaymentName() . '_privatekey');
         $this->data['paymill_sort_order'] = $this->getConfigValue($this->getPaymentName() . '_sort_order');
         $this->data['paymill_fast_checkout'] = $this->getConfigValue($this->getPaymentName() . '_fast_checkout');
+        $this->data['paymill_different_amount'] = $this->getConfigValue($this->getPaymentName() . '_different_amount');
         $this->data['paymill_logging'] = $this->getConfigValue($this->getPaymentName() . '_logging');
         $this->data['paymill_debugging'] = $this->getConfigValue($this->getPaymentName() . '_debugging');
-        $this->data['paymill_logfile'] = file_get_contents(dirname(dirname(dirname(__FILE__))).'/log/log.txt');
+        $this->data['paymill_logfile'] = file_get_contents(dirname(dirname(dirname(__FILE__))) . '/log/log.txt');
 
 
         $this->template = 'payment/' . $this->getPaymentName() . '.tpl';
@@ -96,7 +97,7 @@ abstract class ControllerPaymentPaymill extends Controller
         );
 
         $breadcrumbs[] = array(
-            'href' => $this->url->link('payment/' . $this->getPaymentName() , '&token=' . $this->session->data['token']),
+            'href' => $this->url->link('payment/' . $this->getPaymentName(), '&token=' . $this->session->data['token']),
             'text' => $this->language->get('heading_title'),
             'separator' => ' :: '
         );
@@ -114,16 +115,17 @@ abstract class ControllerPaymentPaymill extends Controller
 
     protected function validate()
     {
-
+        $error = false;
         if (!$this->user->hasPermission('modify', 'payment/' . $this->getPaymentName())) {
-            $this->error['warning'] = $this->language->get('error_permission');
+            $this->data['error_warning'] = $this->language->get('error_permission');
+            $error = true;
         }
 
-        if (!$this->error) {
-            return true;
-        } else {
-            return false;
+        if (!is_numeric($this->request->post['paymill_differnet_amount'])) {
+            $this->data['error_warning'] = $this->language->get('error_different_amount');
+            $error = true;
         }
+        return !$error;
     }
 
     public function install()
@@ -133,6 +135,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $config[$this->getPaymentName() . '_privatekey'] = '';
         $config[$this->getPaymentName() . '_sort_order'] = '1';
         $config[$this->getPaymentName() . '_fast_checkout'] = '0';
+        $config[$this->getPaymentName() . '_different_amount'] = '0.00';
         $config[$this->getPaymentName() . '_logging'] = '1';
         $config[$this->getPaymentName() . '_debugging'] = '1';
 

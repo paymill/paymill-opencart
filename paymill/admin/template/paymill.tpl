@@ -5,6 +5,9 @@
         <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
         <?php } ?>
     </div>
+    <div style="text-align:center; margin:5px;color:red;font-size: large;">
+        <?php echo isset($error_warning)?$error_warning:''; ?>
+    </div>
     <div class="box">
         <div class="left"></div>
         <div class="right"></div>
@@ -53,6 +56,10 @@
                         </td>
                     </tr>
                     <tr>
+                        <td><?php echo $entry_different_amount; ?></td>
+                        <td><input type="text" name="paymill_differnet_amount" value="<?php echo $paymill_different_amount; ?>" size="9" /></td>
+                    </tr>
+                    <tr>
                         <td><?php echo $entry_logging; ?></td>
                         <td>
                             <select name="paymill_logging">
@@ -72,7 +79,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                        <textarea style="width:1000px;" rows="15" readonly /><?php echo $paymill_logfile; ?></textarea>
+                            <textarea style="width:1000px;" rows="15" readonly /><?php echo $paymill_logfile; ?></textarea>
                         </td>
                     </tr>
                 </table>
