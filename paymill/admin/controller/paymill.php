@@ -1,10 +1,11 @@
 <?php
 
+require_once dirname(dirname(dirname(__FILE__))) . '/metadata.php';
+
 /**
  * paymill
  *
  * @category   PayIntelligent
- * @package    Expression package is undefined on line 6, column 18 in Templates/Scripting/PHPClass.php.
  * @copyright  Copyright (c) 2011 PayIntelligent GmbH (http://payintelligent.de)
  */
 abstract class ControllerPaymentPaymill extends Controller
@@ -14,11 +15,17 @@ abstract class ControllerPaymentPaymill extends Controller
 
     abstract protected function getPaymentName();
 
+    public function getVersion()
+    {
+        $metadata = new metadata();
+        return $metadata->getVersion();
+    }
+
     public function index()
     {
         global $config;
         $this->language->load('payment/' . $this->getPaymentName());
-        $this->document->setTitle($this->language->get('heading_title') . " (" . $this->_version . ")");
+        $this->document->setTitle($this->language->get('heading_title') . " (" . $this->getVersion() . ")");
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->load->model('setting/setting');
@@ -38,7 +45,7 @@ abstract class ControllerPaymentPaymill extends Controller
         }
 
         $this->data['breadcrumbs'] = $this->getBreadcrumbs();
-        $this->data['heading_title'] = $this->language->get('heading_title') . " (" . $this->_version . ")";
+        $this->data['heading_title'] = $this->language->get('heading_title') . " (" . $this->getVersion() . ")";
 
         $this->data['text_enabled'] = $this->language->get('text_enabled');
         $this->data['text_disabled'] = $this->language->get('text_disabled');

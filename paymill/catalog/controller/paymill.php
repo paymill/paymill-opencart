@@ -2,6 +2,7 @@
 
 require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/PaymentProcessor.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/LoggingInterface.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/metadata.php';
 
 /**
  * paymill
@@ -15,6 +16,12 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
     abstract protected function getPaymentName();
 
     abstract protected function getDatabaseName();
+
+    public function getVersion()
+    {
+        $metadata = new metadata();
+        return $metadata->getVersion();
+    }
 
     public function index()
     {
@@ -82,10 +89,13 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $amount = $this->currency->format($this->order_info['total'], $this->order_info['currency_code'], false, false);
             $amount = number_format(($amount), 2, '.', '') * 100;
 
+            $source = $this->getVersion() . "_opencart_" . VERSION;
+
+
             $paymentProcessor = new Services_Paymill_PaymentProcessor();
             $paymentProcessor->setToken($paymillToken);
-            $paymentProcessor->setAmount((int)$amount);
-            $paymentProcessor->setPreAuthAmount((int)($this->session->data['paymill_authorized_amount'] * 100));
+            $paymentProcessor->setAmount((int) $amount);
+            $paymentProcessor->setPreAuthAmount((int) ($this->session->data['paymill_authorized_amount'] * 100));
             $paymentProcessor->setPrivateKey(trim($this->config->get($this->getPaymentName() . '_privatekey')));
             $paymentProcessor->setApiUrl('https://api.paymill.com/v2/');
             $paymentProcessor->setCurrency($this->order_info['currency_code']);
@@ -93,6 +103,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $paymentProcessor->setEmail($this->order_info['email']);
             $paymentProcessor->setLogger($this);
             $paymentProcessor->setName($this->order_info['lastname'] . ', ' . $this->order_info['firstname']);
+            $paymentProcessor->setSource($source);
 
             if ($this->customer->getId() != null) {
                 $table = $this->getDatabaseName();
