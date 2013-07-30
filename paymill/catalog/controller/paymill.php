@@ -3,6 +3,7 @@
 require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/PaymentProcessor.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/LoggingInterface.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/Clients.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/Payments.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/metadata.php';
 
 /**
@@ -37,6 +38,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_currency'] = $this->order_info['currency_code'];
         $this->data['paymill_fullname'] = $this->order_info['firstname'] . ' ' . $this->order_info['lastname'];
         $this->data['paymill_css'] = $this->baseUrl . '/catalog/view/theme/default/stylesheet/paymill_styles.css';
+        $this->data['paymill_js'] = $this->baseUrl . '/catalog/view/javascript/paymill/checkout.js';
         $this->data['paymill_publickey'] = trim($this->config->get($this->getPaymentName() . '_publickey'));
         $this->data['paymill_debugging'] = $this->config->get($this->getPaymentName() . '_debugging');
         $this->data['button_confirm'] = $this->language->get('button_confirm');
@@ -53,22 +55,35 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_paymilllabel_cc'] = $this->language->get('paymill_paymilllabel_cc');
         $this->data['paymill_paymilllabel_elv'] = $this->language->get('paymill_paymilllabel_elv');
 
-
         $this->session->data['paymill_authorized_amount'] = $amount;
         $table = $this->getDatabaseName();
 
-        $fastCheckout = false;
         if ($this->customer->getId() != null) {
-            $row = $this->db->query("SELECT COUNT(*) AS `Matches` FROM $table WHERE `userId`=" . $this->customer->getId());
-            $fastCheckout = $row->row['Matches'] == 1;
+            $row = $this->db->query("SELECT `paymentID` FROM $table WHERE `userId`=" . $this->customer->getId());
+            if (!empty($row->row['paymentID'])) {
+                $privateKey = trim($this->config->get($this->getPaymentName() . '_privatekey'));
+                $paymentObject = new Services_Paymill_Payments($privateKey, 'https://api.paymill.com/v2/');
+                $payment = $paymentObject->getOne($row->row['paymentID']);
+                $this->data['paymill_prefilled'] = $payment;
+            }
         }
 
-        if ($fastCheckout && $this->config->get($this->getPaymentName() . '_fast_checkout')) {
-            $this->data['paymill_paymentname'] = $this->getPaymentName();
-            $this->template = 'default/template/payment/paymillfastcheckout.tpl';
-        } else {
-            $this->template = 'default/template/payment/' . $this->getPaymentName() . '.tpl';
+        $this->data['paymill_form_year'] = array_map(function($year) {
+                    return $year;
+                }, range(date('Y', time('now')), date('Y', time('now')) + 10));
+
+        $this->data['paymill_form_month'] = array_map(function($year) {
+                    return $year;
+                }, range(1, 12));
+
+        if ($this->getPaymentName() == 'paymillcreditcard') {
+            $this->data['paymill_form_action'] = "index.php?route=payment/paymillcreditcard/confirm";
+        } elseif ($this->getPaymentName() == 'paymilldirectdebit') {
+            $this->data['paymill_form_action'] = "index.php?route=payment/paymilldirectdebit/confirm";
         }
+
+        $this->data['paymill_activepayment'] = $this->getPaymentName();
+        $this->template = 'default/template/payment/paymill.tpl';
 
         $this->render();
     }
