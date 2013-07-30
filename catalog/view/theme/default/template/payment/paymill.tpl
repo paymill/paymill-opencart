@@ -13,6 +13,7 @@
     var PAYMILL_AMOUNT = <?php echo $paymill_amount * 100;?>;
     var PAYMILL_PAYMENT = "<?php echo $paymill_activepayment;?>";
     var PAYMILL_DEBUG = <?php echo $paymill_debugging;?>;
+    var PAYMILL_IMAGE = "<?php echo $paymill_image_folder;?>";
 </script>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
 <script type="text/javascript" src="<?php echo $paymill_js; ?>"></script>
@@ -28,11 +29,6 @@
         </div>
         <div class="debit">
             <?php if($paymill_activepayment === 'paymillcreditcard'){ ?>
-            <p>
-                <img src="catalog/view/theme/default/image/payment/paymill_icon_mastercard.png" />
-                <img src="catalog/view/theme/default/image/payment/paymill_icon_visa.png" />
-            </p>
-            <!--ToDo: KreditkartenLabels-->
             <p class="none">
                 <label><?php echo $paymill_cardholder;?></label>
                 <input id="paymill_account_holder" type="text" size="20" class="paymill_text" value="<?php echo $paymill_fullname;?>"/>
@@ -40,6 +36,7 @@
             <p class="none">
                 <label><?php echo $paymill_cardnumber;?></label>
                 <input id="paymill_card_number" type="text" size="20" class="paymill_text" />
+                <span id="paymill_card_icon"></span>
             </p>
             <p class="none">
                 <label><?php echo $paymill_cvc;?></label>

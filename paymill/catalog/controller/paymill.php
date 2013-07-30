@@ -38,6 +38,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_currency'] = $this->order_info['currency_code'];
         $this->data['paymill_fullname'] = $this->order_info['firstname'] . ' ' . $this->order_info['lastname'];
         $this->data['paymill_css'] = $this->baseUrl . '/catalog/view/theme/default/stylesheet/paymill_styles.css';
+        $this->data['paymill_image_folder'] = $this->baseUrl . '/catalog/view/theme/default/image/payment';
         $this->data['paymill_js'] = $this->baseUrl . '/catalog/view/javascript/paymill/checkout.js';
         $this->data['paymill_publickey'] = trim($this->config->get($this->getPaymentName() . '_publickey'));
         $this->data['paymill_debugging'] = $this->config->get($this->getPaymentName() . '_debugging');
