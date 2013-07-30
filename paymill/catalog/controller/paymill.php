@@ -73,8 +73,8 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                     return $year;
                 }, range(date('Y', time('now')), date('Y', time('now')) + 10));
 
-        $this->data['paymill_form_month'] = array_map(function($year) {
-                    return $year;
+        $this->data['paymill_form_month'] = array_map(function($month) {
+                    return $month;
                 }, range(1, 12));
 
         if ($this->getPaymentName() == 'paymillcreditcard') {
@@ -93,6 +93,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
     {
         // read transaction token from session
         $paymillToken = $this->request->post['paymillToken'];
+        $fastcheckout = $this->request->post['paymillFastcheckout'];
 
         // check if token present
         if (empty($paymillToken)) {
@@ -122,7 +123,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $paymentProcessor->setName($this->order_info['lastname'] . ', ' . $this->order_info['firstname']);
             $paymentProcessor->setSource($source);
 
-            if ($this->customer->getId() != null) {
+            if ($this->customer->getId() != null && $fastcheckout) {
                 $table = $this->getDatabaseName();
                 $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
                 if ($row->num_rows === 1) {

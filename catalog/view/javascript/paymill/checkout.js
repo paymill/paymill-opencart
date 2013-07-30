@@ -53,37 +53,53 @@ $(document).ready(function() {
     });
 
     $("#paymill_submit").click(function(event) {
-        if (validate()) {
-            try {
-                var params;
-                if(PAYMILL_PAYMENT == "paymillcreditcard"){
-                    params = {
-                        number: $('#paymill_card_number').val(),
-                        cardholder: $('#paymill_account_holder').val(),
-                        exp_month: $('#paymill_card_expiry_month').val(),
-                        exp_year: $('#paymill_card_expiry_year').val(),
-                        cvc: $('#paymill_card_cvc').val(),
-                        amount_int: PAYMILL_AMOUNT,
-                        currency: PAYMILL_CURRENCY
-                    };
-                }else if(PAYMILL_PAYMENT == "paymilldirectdebit"){
-                    params = {
-                        number: $('#paymill_accountnumber').val(),
-                        bank: $('#paymill_banknumber').val(),
-                        accountholder: $('#paymill_accountholder').val()
-                    };
+        if(PAYMILL_FASTCHECKOUT != 1){
+            if (validate()) {
+                try {
+                    var params;
+                    if(PAYMILL_PAYMENT == "paymillcreditcard"){
+                        params = {
+                            number: $('#paymill_card_number').val(),
+                            cardholder: $('#paymill_account_holder').val(),
+                            exp_month: $('#paymill_card_expiry_month').val(),
+                            exp_year: $('#paymill_card_expiry_year').val(),
+                            cvc: $('#paymill_card_cvc').val(),
+                            amount_int: PAYMILL_AMOUNT,
+                            currency: PAYMILL_CURRENCY
+                        };
+                    }else if(PAYMILL_PAYMENT == "paymilldirectdebit"){
+                        params = {
+                            number: $('#paymill_accountnumber').val(),
+                            bank: $('#paymill_banknumber').val(),
+                            accountholder: $('#paymill_accountholder').val()
+                        };
+                    }
+                    paymill.createToken(params, PaymillResponseHandler);
+                } catch (e) {
+                    alert("Ein Fehler ist aufgetreten: " + e);
                 }
-                paymill.createToken(params, PaymillResponseHandler);
-            } catch (e) {
-                alert("Ein Fehler ist aufgetreten: " + e);
+            }else{
+                $('html, body').animate({
+                    scrollTop: $("#paymill_errors").offset().top - 100
+                }, 1000);
             }
+            return false;
         }else{
-            $('html, body').animate({
-                scrollTop: $("#paymill_errors").offset().top - 100
-            }, 1000);
+            result = new Object();
+            result.token = 'dummyToken';
+            PaymillResponseHandler(null,result);
         }
-        return false;
     });
+
+    $('#paymill_form :input').focus(function(event){
+        if($(this).attr('id') == 'paymill_card_number'){
+            $('#paymill_card_cvc').val('');
+        }
+        $(this).val('');
+        PAYMILL_FASTCHECKOUT = 0;
+    });
+
+
 });
 
 function validate() {
@@ -137,12 +153,12 @@ function PaymillResponseHandler(error, result) {
         var form = $("#paymill_form");
         var token = result.token;
         form.append("<input type='hidden' name='paymillToken' value='" + token + "'/>");
+        form.append("<input type='hidden' name='paymillFastcheckout' value='" + PAYMILL_FASTCHECKOUT + "'/>");
         form.get(0).submit();
     }
 }
 
 function debug(message){
-    console.log(PAYMILL_DEBUG);
     if(PAYMILL_DEBUG){
         if(PAYMILL_PAYMENT == "paymillcreditcard"){
             console.log("[PaymillCC] " + message);
