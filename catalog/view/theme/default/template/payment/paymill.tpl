@@ -10,11 +10,11 @@
 <script type="text/javascript">
     var PAYMILL_PUBLIC_KEY = "<?php echo $paymill_publickey; ?>";
     var PAYMILL_CURRENCY = "<?php echo $paymill_currency;?>";
-    var PAYMILL_AMOUNT = <?php echo $paymill_amount * 100;?>;
+    var PAYMILL_AMOUNT = "<?php echo $paymill_amount * 100;?>";
     var PAYMILL_PAYMENT = "<?php echo $paymill_activepayment;?>";
-    var PAYMILL_DEBUG = <?php echo $paymill_debugging;?>;
+    var PAYMILL_DEBUG = "<?php echo $paymill_debugging;?>";
     var PAYMILL_IMAGE = "<?php echo $paymill_image_folder;?>";
-    var PAYMILL_FASTCHECKOUT = <? echo isset($paymill_prefilled['id'])?1:0;?>;
+    var PAYMILL_FASTCHECKOUT = "<? echo isset($paymill_prefilled['id'])?1:0;?>";
 </script>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
 <script type="text/javascript" src="<?php echo $paymill_js; ?>"></script>
