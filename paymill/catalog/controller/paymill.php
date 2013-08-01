@@ -59,15 +59,16 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->session->data['paymill_authorized_amount'] = $amount;
         $table = $this->getDatabaseName();
 
+        $payment = null;
         if ($this->customer->getId() != null) {
             $row = $this->db->query("SELECT `paymentID` FROM $table WHERE `userId`=" . $this->customer->getId());
             if (!empty($row->row['paymentID'])) {
                 $privateKey = trim($this->config->get($this->getPaymentName() . '_privatekey'));
                 $paymentObject = new Services_Paymill_Payments($privateKey, 'https://api.paymill.com/v2/');
                 $payment = $paymentObject->getOne($row->row['paymentID']);
-                $this->data['paymill_prefilled'] = $payment;
             }
         }
+        $this->data['paymill_prefilled'] = $payment;
 
         $this->data['paymill_form_year'] = array_map(function($year) {
                     return $year;

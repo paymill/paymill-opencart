@@ -81,7 +81,7 @@
             <?php }elseif($paymill_activepayment === 'paymilldirectdebit'){ ?>
             <p class="none">
                 <label><?php echo $paymill_accountholder;?></label>
-                <input id="paymill_accountholder" type="text" size="20" class="paymill_text" value="<?php echo $paymill_prefilled['holder']?:$paymill_fulname; ?>"/>
+                <input id="paymill_accountholder" type="text" size="20" class="paymill_text" value="<?php echo $paymill_prefilled['holder']?:$paymill_fullname; ?>"/>
             </p>
             <p class="none">
                 <label><?php echo $paymill_accountnumber;?></label>
