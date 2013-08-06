@@ -110,42 +110,43 @@ function getFormData(array){
 function validate() {
     debug("Paymill handler triggered");
     var errors = $("#paymill_errors");
-    errors.parent().hide();
+    errors.hide();
     errors.html("");
     var result = true;
     if(PAYMILL_PAYMENT === "paymillcreditcard"){
         if (!paymill.validateCardNumber($('#paymill_card_number').val())) {
-            errors.append("<li>Bitte geben Sie eine gültige Kartennummer ein</li>");
+            errors.append("<p>Bitte geben Sie eine gültige Kartennummer ein</p>");
             result = false;
         }
         if (!paymill. validateCvc($('#paymill_card_cvc').val())) {
-            errors.append("<li>Bitte geben sie einen gültigen Sicherheitscode ein (Rückseite der Karte).</li>");
+            errors.append("<p>Bitte geben sie einen gültigen Sicherheitscode ein (Rückseite der Karte).</p>");
             result = false;
         }
         if (!paymill.validateExpiry($('#paymill_card_expiry_month').val(), $('#paymill_card_expiry_year').val())) {
-            errors.append("<li>Das Ablaufdatum der Karte ist ungültig.</li>");
+            errors.append("<p>Das Ablaufdatum der Karte ist ungültig.</p>");
             result = false;
         }
         if (!$('#paymill_card_holder').val()) {
-            errors.append("<li>Bitte geben Sie den Karteninhaber an.</li>");
+            errors.append("<p>Bitte geben Sie den Karteninhaber an.</p>");
             result = false;
         }
     }else if(PAYMILL_PAYMENT === "paymilldirectdebit"){
         if (!$('#paymill_accountholder').val()) {
-            errors.append("<li>Bitte geben Sie den Kontoinhaber an.</li>");
+            errors.append("<p>Bitte geben Sie den Kontoinhaber an.</p>");
             result = false;
         }
         if (!paymill.validateAccountNumber($('#paymill_accountnumber').val())) {
-            errors.append("<li>Bitte geben Sie eine g&uuml;ltige Kontonummer ein.</li>");
+            errors.append("<p>Bitte geben Sie eine g&uuml;ltige Kontonummer ein.</p>");
             result = false;
         }
         if (!paymill.validateBankCode($('#paymill_banknumber').val())) {
-            errors.append("<li>Bitte geben Sie eine g&uuml;ltige BLZ ein.</li>");
+            errors.append("<p>Bitte geben Sie eine g&uuml;ltige BLZ ein.</p>");
             result = false;
         }
     }
     if (!result) {
-        errors.parent().show();
+        errors.children().removeClass('warning').addClass('warning');
+        errors.show();
     }else{
         debug("Validations successful");
     }

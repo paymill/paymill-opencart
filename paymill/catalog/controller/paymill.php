@@ -55,6 +55,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_description'] = $this->language->get('paymill_description');
         $this->data['paymill_paymilllabel_cc'] = $this->language->get('paymill_paymilllabel_cc');
         $this->data['paymill_paymilllabel_elv'] = $this->language->get('paymill_paymilllabel_elv');
+        $this->data['paymill_error'] = $this->session->data['error_message'];
 
         $this->session->data['paymill_authorized_amount'] = $amount;
         $table = $this->getDatabaseName();
@@ -128,15 +129,12 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 $table = $this->getDatabaseName();
                 $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
                 if ($row->num_rows === 1) {
-                    $this->log("Loading saved IDs from database.");
                     $paymentID = empty($row->row['paymentId']) ? null : $row->row['paymentId'];
                     $paymentProcessor->setPaymentId($paymentID);
-                    $this->log("Payment-ID loaded:" . $paymentID);
 
                     $clientObject = new Services_Paymill_Clients($privateKey, 'https://api.paymill.com/v2/');
                     $client = $clientObject->getOne($row->row['clientId']);
                     $paymentProcessor->setClientId($row->row['clientId']);
-                    $this->log("Client-ID loaded:" . $row->row['clientId']);
                     if ($client['email'] !== $this->order_info['email']) {
                         $clientObject->update(array(
                             'id' => $row->row['clientId'],
@@ -164,7 +162,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 $this->redirect($this->url->link('checkout/success'));
             } else {
                 $this->session->data['error_message'] = 'An error occured while processing your payment';
-                $this->redirect($this->url->link('payment/' . $this->getPaymentName() . '/error'));
+                $this->redirect($this->url->link('checkout/checkout'));
             }
         }
     }

@@ -17,15 +17,16 @@
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
 <script type="text/javascript" src="<?php echo $paymill_js; ?>"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $paymill_css; ?>" />
-<?php if (isset($error)) { ?>
-<div class="warning"><?php echo $error; ?></div>
-<?php } ?>
 
 <div class="right">
     <form id='paymill_form' action="<?php echo $paymill_form_action; ?>" method="POST">
-        <div class="error" style="display: none">
-            <ul id="paymill_errors"></ul>
-        </div>
+        <?php if(isset($paymill_error)){ ?>
+            <div id="paymill_errors">
+                <p class=warning><?php echo $paymill_error;?></p>
+            </div>
+        <?php }else{ ?>
+            <div id="paymill_errors" style="display: none"></div>
+        <?php }?>
         <div class="debit">
             <?php if($paymill_activepayment === 'paymillcreditcard'){ ?>
             <p class="none">
