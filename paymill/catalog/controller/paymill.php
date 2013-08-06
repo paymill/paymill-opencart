@@ -128,18 +128,21 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 $table = $this->getDatabaseName();
                 $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
                 if ($row->num_rows === 1) {
-                    if ($this->config->get($this->getPaymentName() . '_fast_checkout')) {
-                        $paymentProcessor->setPaymentId(empty($row->row['paymentId']) ? null : $row->row['paymentId']);
-                    }
+                    $this->log("Loading saved IDs from database.");
+                    $paymentID = empty($row->row['paymentId']) ? null : $row->row['paymentId'];
+                    $paymentProcessor->setPaymentId($paymentID);
+                    $this->log("Payment-ID loaded:" . $paymentID);
+
                     $clientObject = new Services_Paymill_Clients($privateKey, 'https://api.paymill.com/v2/');
                     $client = $clientObject->getOne($row->row['clientId']);
                     $paymentProcessor->setClientId($row->row['clientId']);
+                    $this->log("Client-ID loaded:" . $row->row['clientId']);
                     if ($client['email'] !== $this->order_info['email']) {
                         $clientObject->update(array(
                             'id' => $row->row['clientId'],
                             'email' => $this->order_info['email'],
                         ));
-                        $this->log("Client has been changed. Client updated");
+                        $this->log("Client-mail has been changed. Client updated");
                     }
                 }
             }

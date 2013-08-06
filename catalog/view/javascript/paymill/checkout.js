@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+var prefilled = new Array();
 $(document).ready(function() {
+    prefilled = getFormData(prefilled);
     $('#paymill_card_number').keyup(function() {
         var brand = paymill.cardType($('#paymill_card_number').val());
         brand = brand.toLowerCase();
@@ -52,8 +54,17 @@ $(document).ready(function() {
         });
     });
 
-    $("#paymill_submit").click(function(event) {
-        if(PAYMILL_FASTCHECKOUT != 1){
+    $("#paymill_submit").click(function() {
+        var formdata = new Array();
+        formdata = getFormData(formdata);
+
+        debug("Data has been changed:" + prefilled.toString() === formdata.toString());
+        if(prefilled.toString() === formdata.toString()){
+            $("#paymill_form").append("<input type='hidden' name='paymillFastcheckout' value='"+ true + "'/>");
+            result = new Object();
+            result.token = 'dummyToken';
+            PaymillResponseHandler(null,result);
+        }else{
             if (validate()) {
                 try {
                     var params;
@@ -83,24 +94,18 @@ $(document).ready(function() {
                     scrollTop: $("#paymill_errors").offset().top - 100
                 }, 1000);
             }
-            return false;
-        }else{
-            result = new Object();
-            result.token = 'dummyToken';
-            PaymillResponseHandler(null,result);
         }
+        return false;
     });
-
-    $('#paymill_form :input').focus(function(event){
-        if($(this).attr('id') == 'paymill_card_number'){
-            $('#paymill_card_cvc').val('');
-        }
-        $(this).val('');
-        PAYMILL_FASTCHECKOUT = 0;
-    });
-
-
 });
+
+
+function getFormData(array){
+    $('#paymill_form :input').not(':[type=hidden]').each(function(){
+        array.push($(this).val());
+    });
+    return array;
+}
 
 function validate() {
     debug("Paymill handler triggered");
@@ -153,7 +158,6 @@ function PaymillResponseHandler(error, result) {
         var form = $("#paymill_form");
         var token = result.token;
         form.append("<input type='hidden' name='paymillToken' value='" + token + "'/>");
-        form.append("<input type='hidden' name='paymillFastcheckout' value='" + PAYMILL_FASTCHECKOUT + "'/>");
         form.get(0).submit();
     }
 }

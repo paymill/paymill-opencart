@@ -6,15 +6,13 @@
 * @copyright  Copyright (c) 2011 PayIntelligent GmbH (http://payintelligent.de)
 */
 ?>
-
 <script type="text/javascript">
-    var PAYMILL_PUBLIC_KEY = "<?php echo $paymill_publickey; ?>";
+    var PAYMILL_PUBLIC_KEY = "<?php echo $paymill_publickey;?>";
     var PAYMILL_CURRENCY = "<?php echo $paymill_currency;?>";
     var PAYMILL_AMOUNT = "<?php echo $paymill_amount * 100;?>";
     var PAYMILL_PAYMENT = "<?php echo $paymill_activepayment;?>";
     var PAYMILL_DEBUG = "<?php echo $paymill_debugging;?>";
     var PAYMILL_IMAGE = "<?php echo $paymill_image_folder;?>";
-    var PAYMILL_FASTCHECKOUT = "<? echo isset($paymill_prefilled['id'])?1:0;?>";
 </script>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
 <script type="text/javascript" src="<?php echo $paymill_js; ?>"></script>
@@ -32,11 +30,11 @@
             <?php if($paymill_activepayment === 'paymillcreditcard'){ ?>
             <p class="none">
                 <label><?php echo $paymill_cardholder;?></label>
-                <input id="paymill_account_holder" type="text" size="20" class="paymill_text" value="<?php echo $paymill_prefilled['card_holder']?:$paymill_fullname;?>"/>
+                <input id="paymill_account_holder" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['card_holder'])?$paymill_prefilled['card_holder']:$paymill_fullname;?>"/>
             </p>
             <p class="none">
                 <label><?php echo $paymill_cardnumber;?></label>
-                <input id="paymill_card_number" type="text" size="20" class="paymill_text" value="<?php echo $paymill_prefilled['last4']? '**********'.$paymill_prefilled['last4']:'';?>"/>
+                <input id="paymill_card_number" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['last4'])? '**********'.$paymill_prefilled['last4']:'';?>"/>
                 <span id="paymill_card_icon"></span>
             </p>
             <p class="none">
@@ -81,15 +79,15 @@
             <?php }elseif($paymill_activepayment === 'paymilldirectdebit'){ ?>
             <p class="none">
                 <label><?php echo $paymill_accountholder;?></label>
-                <input id="paymill_accountholder" type="text" size="20" class="paymill_text" value="<?php echo $paymill_prefilled['holder']?:$paymill_fullname; ?>"/>
+                <input id="paymill_accountholder" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['holder'])?$paymill_prefilled['holder']:$paymill_fullname; ?>"/>
             </p>
             <p class="none">
                 <label><?php echo $paymill_accountnumber;?></label>
-                <input id="paymill_accountnumber" type="text" size="20" class="paymill_text" value="<?php echo $paymill_prefilled['account']?:''; ?>" />
+                <input id="paymill_accountnumber" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['account'])?$paymill_prefilled['account']:''; ?>" />
             </p>
             <p class="none">
                 <label><?php echo $paymill_banknumber;?></label>
-                <input id="paymill_banknumber" type="text" size="20" class="paymill_text" value="<?php echo $paymill_prefilled['code']?:''; ?>" />
+                <input id="paymill_banknumber" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['code'])?$paymill_prefilled['code']:''; ?>" />
             </p>
             <p class="description"><?php echo $paymill_description;?></p>
             <p>
