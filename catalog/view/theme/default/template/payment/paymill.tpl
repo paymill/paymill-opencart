@@ -20,13 +20,7 @@
 
 <div class="right">
     <form id='paymill_form' action="<?php echo $paymill_form_action; ?>" method="POST">
-        <?php if(isset($paymill_error)){ ?>
-            <div id="paymill_errors">
-                <p class=warning><?php echo $paymill_error;?></p>
-            </div>
-        <?php }else{ ?>
-            <div id="paymill_errors" style="display: none"></div>
-        <?php }?>
+        <div id="paymill_errors" style="display: none"></div>
         <div class="debit">
             <?php if($paymill_activepayment === 'paymillcreditcard'){ ?>
             <p class="none">

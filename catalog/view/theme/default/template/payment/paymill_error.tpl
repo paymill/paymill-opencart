@@ -11,7 +11,7 @@
         <div class="buttons">
             <table>
                 <tr>
-                <center>
+                <center class="warning">
                     <?php echo $error_message; ?>
                 </center>
                 </tr>

@@ -162,7 +162,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 $this->redirect($this->url->link('checkout/success'));
             } else {
                 $this->session->data['error_message'] = 'An error occured while processing your payment';
-                $this->redirect($this->url->link('checkout/checkout'));
+                $this->redirect($this->url->link('payment/'.$this->getPaymentName().'/error'));
             }
         }
     }
