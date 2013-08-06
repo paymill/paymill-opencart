@@ -5,14 +5,13 @@ $_['heading_title'] = 'PAYMILL';
 $_['button_viewcart'] = 'Show Cart';
 
 // Entry
-$_['entry_status'] = 'Plugin activated:';
-$_['entry_publickey'] = 'Publickey:';
-$_['entry_privatekey'] = 'Privatekey:';
+$_['entry_status'] = 'Plugin Activated:';
+$_['entry_publickey'] = 'Public Key:';
+$_['entry_privatekey'] = 'Private Key:';
 $_['entry_apiurl'] = 'ApiUrl:';
-$_['entry_bridgeurl'] = 'BridgeUrl:';
 $_['entry_sort_order'] = 'Sort Order:';
-$_['entry_different_amount'] = '3DSecure tolerance:';
-$_['entry_fast_checkout'] = 'FastCheckout:';
+$_['entry_different_amount'] = '3D Secure Tolerance:';
+$_['entry_fast_checkout'] = 'Fast Checkout:';
 $_['entry_logging'] = 'Logging:';
 $_['entry_debugging'] = 'Debug:';
 
