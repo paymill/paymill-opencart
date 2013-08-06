@@ -113,7 +113,7 @@ function validate() {
     errors.parent().hide();
     errors.html("");
     var result = true;
-    if(PAYMILL_PAYMENT == "paymillcreditcard"){
+    if(PAYMILL_PAYMENT === "paymillcreditcard"){
         if (!paymill.validateCardNumber($('#paymill_card_number').val())) {
             errors.append("<li>Bitte geben Sie eine gültige Kartennummer ein</li>");
             result = false;
@@ -126,7 +126,11 @@ function validate() {
             errors.append("<li>Das Ablaufdatum der Karte ist ungültig.</li>");
             result = false;
         }
-    }else if(PAYMILL_PAYMENT == "paymilldirectdebit"){
+        if (!$('#paymill_card_holder').val()) {
+            errors.append("<li>Bitte geben Sie den Karteninhaber an.</li>");
+            result = false;
+        }
+    }else if(PAYMILL_PAYMENT === "paymilldirectdebit"){
         if (!$('#paymill_accountholder').val()) {
             errors.append("<li>Bitte geben Sie den Kontoinhaber an.</li>");
             result = false;

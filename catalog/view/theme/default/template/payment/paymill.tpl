@@ -30,7 +30,7 @@
             <?php if($paymill_activepayment === 'paymillcreditcard'){ ?>
             <p class="none">
                 <label><?php echo $paymill_cardholder;?></label>
-                <input id="paymill_account_holder" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['card_holder'])?$paymill_prefilled['card_holder']:$paymill_fullname;?>"/>
+                <input id="paymill_card_holder" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['card_holder'])?$paymill_prefilled['card_holder']:$paymill_fullname;?>"/>
             </p>
             <p class="none">
                 <label><?php echo $paymill_cardnumber;?></label>
