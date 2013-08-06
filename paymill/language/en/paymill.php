@@ -32,12 +32,12 @@ $_['paymill_paymilllabel_cc'] = 'Secure creditcard payments';
 $_['paymill_paymilllabel_elv'] = 'Directdebit payments';
 
 $_['text_paymilldirectdebit'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
-$_['text_payment_paymilldirectdebit_title'] = 'PAYMILL Directdebit';
-$_['text_payment_paymilldirectdebit_detail'] = 'PAYMILL Directdebit';
+$_['text_payment_paymilldirectdebit_title'] = 'PAYMILL Direct Debit';
+$_['text_payment_paymilldirectdebit_detail'] = 'PAYMILL Direct Debit';
 
 $_['text_paymillcreditcard'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
-$_['text_payment_paymillcreditcard_title'] = 'PAYMILL Creditcard';
-$_['text_payment_paymillcreditcard_detail'] = 'PAYMILL Creditcard';
+$_['text_payment_paymillcreditcard_title'] = 'PAYMILL Credit Card';
+$_['text_payment_paymillcreditcard_detail'] = 'PAYMILL Credit Card';
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify payment PAYMILL!';
 $_['error_different_amount'] = 'Warning: 3DSecure tolerance must be a valid number';
