@@ -1,7 +1,7 @@
 <?php
 
 // Heading
-$_['heading_title'] = 'Paymill';
+$_['heading_title'] = 'PAYMILL';
 $_['button_viewcart'] = 'Warenkorb anzeigen';
 
 // Entry
@@ -17,7 +17,7 @@ $_['entry_debugging'] = 'Debug:';
 
 //Text
 $_['text_payment'] = 'Payment';
-$_['text_success'] = 'Erfolg: Sie haben ihre Paymill Account Details angepasst!';
+$_['text_success'] = 'Erfolg: Sie haben ihre PAYMILL Account Details angepasst!';
 $_['paymill_accountholder'] = 'Kontoinhaber *';
 $_['paymill_accountnumber'] = 'Kontonummer *';
 $_['paymill_banknumber'] = 'Bankleitzahl *';
@@ -40,4 +40,4 @@ $_['text_paymillcreditcard'] = '<img src="view/image/payment/paymill_logo.jpeg" 
 $_['text_payment_paymillcreditcard_title'] = 'Kreditkartenzahlung';
 $_['text_payment_paymillcreditcard_detail'] = 'Kreditkartenzahlung';
 // Error
-$_['error_permission'] = 'Warnung: Sie haben nicht die Rechte Paymill anzupassen!';
+$_['error_permission'] = 'Warnung: Sie haben nicht die Rechte PAYMILL anzupassen!';
