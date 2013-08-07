@@ -35,9 +35,14 @@ abstract class ControllerPaymentPaymill extends Controller
             $newConfig[$this->getPaymentName() . '_privatekey'] = trim($this->request->post['paymill_privatekey']);
             $newConfig[$this->getPaymentName() . '_sort_order'] = $this->request->post['paymill_sort_order'];
             $newConfig[$this->getPaymentName() . '_fast_checkout'] = $this->request->post['paymill_fast_checkout'];
-            $newConfig[$this->getPaymentName() . '_different_amount'] = number_format($this->request->post['paymill_differnet_amount'], 2, '.', '');
             $newConfig[$this->getPaymentName() . '_logging'] = $this->request->post['paymill_logging'];
             $newConfig[$this->getPaymentName() . '_debugging'] = $this->request->post['paymill_debugging'];
+
+            if ($this->getPaymentName() === "paymillcreditcard") {
+                $newConfig[$this->getPaymentName() . '_different_amount'] = number_format($this->request->post['paymill_differnet_amount'], 2, '.', '');
+            }else{
+                $newConfig[$this->getPaymentName() . '_different_amount'] = number_format("0.00", 2, '.', '');
+            }
 
             $this->model_setting_setting->editSetting($this->getPaymentName(), $newConfig);
             $this->session->data['success'] = $this->language->get('text_success');
@@ -59,7 +64,6 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['entry_privatekey'] = $this->language->get('entry_privatekey');
         $this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
         $this->data['entry_fast_checkout'] = $this->language->get('entry_fast_checkout');
-        $this->data['entry_different_amount'] = $this->language->get('entry_different_amount');
         $this->data['entry_logging'] = $this->language->get('entry_logging');
         $this->data['entry_debugging'] = $this->language->get('entry_debugging');
 
@@ -74,11 +78,16 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_privatekey'] = $this->getConfigValue($this->getPaymentName() . '_privatekey');
         $this->data['paymill_sort_order'] = $this->getConfigValue($this->getPaymentName() . '_sort_order');
         $this->data['paymill_fast_checkout'] = $this->getConfigValue($this->getPaymentName() . '_fast_checkout');
-        $this->data['paymill_different_amount'] = $this->getConfigValue($this->getPaymentName() . '_different_amount');
         $this->data['paymill_logging'] = $this->getConfigValue($this->getPaymentName() . '_logging');
         $this->data['paymill_debugging'] = $this->getConfigValue($this->getPaymentName() . '_debugging');
         $this->data['paymill_logfile'] = file_get_contents(dirname(dirname(dirname(__FILE__))) . '/log/log.txt');
+        $this->data['paymill_payment'] = $this->getPaymentName();
 
+        $this->data['paymill_different_amount'] = $this->getConfigValue($this->getPaymentName() . '_different_amount');
+        if ($this->getPaymentName() === "paymillcreditcard") {
+            $this->data['entry_different_amount'] = $this->language->get('entry_different_amount');
+            $this->data['paymill_different_amount'] = $this->getConfigValue($this->getPaymentName() . '_different_amount');
+        }
 
         $this->template = 'payment/' . $this->getPaymentName() . '.tpl';
         $this->children = array(
@@ -128,9 +137,11 @@ abstract class ControllerPaymentPaymill extends Controller
             $error = true;
         }
 
-        if (!is_numeric($this->request->post['paymill_differnet_amount'])) {
-            $this->data['error_warning'] = $this->language->get('error_different_amount');
-            $error = true;
+        if (isset($this->request->post['paymill_differnet_amount'])) {
+            if (!is_numeric($this->request->post['paymill_differnet_amount'])) {
+                $this->data['error_warning'] = $this->language->get('error_different_amount');
+                $error = true;
+            }
         }
         return !$error;
     }

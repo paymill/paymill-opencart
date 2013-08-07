@@ -31,15 +31,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $entry_publickey; ?></td>
-                        <td>
-                            <input type="text" name="paymill_publickey" value="<?php echo $paymill_publickey; ?>" />
-                        </td>
-                    </tr>
-                    <tr>
                         <td><?php echo $entry_privatekey; ?></td>
                         <td>
                             <input type="text" name="paymill_privatekey" value="<?php echo $paymill_privatekey; ?>" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $entry_publickey; ?></td>
+                        <td>
+                            <input type="text" name="paymill_publickey" value="<?php echo $paymill_publickey; ?>" />
                         </td>
                     </tr>
                     <tr>
@@ -55,10 +55,12 @@
                             </select>
                         </td>
                     </tr>
+                    <?php if($paymill_payment === "paymillcreditcard"){ ?>
                     <tr>
                         <td><?php echo $entry_different_amount; ?></td>
                         <td><input type="text" name="paymill_differnet_amount" value="<?php echo $paymill_different_amount; ?>" size="9" /></td>
                     </tr>
+                    <?php } ?>
                     <tr>
                         <td><?php echo $entry_logging; ?></td>
                         <td>
