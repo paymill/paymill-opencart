@@ -55,7 +55,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_description'] = $this->language->get('paymill_description');
         $this->data['paymill_paymilllabel_cc'] = $this->language->get('paymill_paymilllabel_cc');
         $this->data['paymill_paymilllabel_elv'] = $this->language->get('paymill_paymilllabel_elv');
-        $this->data['paymill_error'] = isset($this->session->data['error_message'])?$this->session->data['error_message']:null;
+        $this->data['paymill_error'] = isset($this->session->data['error_message']) ? $this->session->data['error_message'] : null;
 
         $this->session->data['paymill_authorized_amount'] = $amount;
         $table = $this->getDatabaseName();
@@ -119,7 +119,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $paymentProcessor->setPrivateKey($privateKey);
             $paymentProcessor->setApiUrl('https://api.paymill.com/v2/');
             $paymentProcessor->setCurrency($this->order_info['currency_code']);
-            $paymentProcessor->setDescription($this->config->get('config_name') . " " . $this->order_info['email']);
+            $paymentProcessor->setDescription("OrderID:" . $this->order_info['order_id'] . " " . $this->order_info['email']);
             $paymentProcessor->setEmail($this->order_info['email']);
             $paymentProcessor->setLogger($this);
             $paymentProcessor->setName($this->order_info['lastname'] . ', ' . $this->order_info['firstname']);
@@ -129,7 +129,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 $table = $this->getDatabaseName();
                 $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
                 if ($row->num_rows === 1) {
-                    if($fastcheckout){
+                    if ($fastcheckout) {
                         $paymentID = empty($row->row['paymentId']) ? null : $row->row['paymentId'];
                         $paymentProcessor->setPaymentId($paymentID);
                     }
@@ -164,7 +164,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 $this->redirect($this->url->link('checkout/success'));
             } else {
                 $this->session->data['error_message'] = 'An error occured while processing your payment';
-                $this->redirect($this->url->link('payment/'.$this->getPaymentName().'/error'));
+                $this->redirect($this->url->link('payment/' . $this->getPaymentName() . '/error'));
             }
         }
     }
