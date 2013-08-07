@@ -114,32 +114,32 @@ function validate() {
     var result = true;
     if (PAYMILL_PAYMENT === "paymillcreditcard") {
         if (!paymill.validateCardNumber($('#paymill_card_number').val())) {
-            errors.append("<p>Bitte geben Sie eine gültige Kartennummer ein</p>");
+            errors.append("<p>" + PAYMILL_TRANSLATION.paymill_card_number + "</p>");
             result = false;
         }
         if (!paymill.validateCvc($('#paymill_card_cvc').val())) {
-            errors.append("<p>Bitte geben sie einen gültigen Sicherheitscode ein (Rückseite der Karte).</p>");
+            errors.append("<p>" + PAYMILL_TRANSLATION.paymill_card_cvc + "</p>");
             result = false;
         }
         if (!paymill.validateExpiry($('#paymill_card_expiry_month').val(), $('#paymill_card_expiry_year').val())) {
-            errors.append("<p>Das Ablaufdatum der Karte ist ungültig.</p>");
+            errors.append("<p>" + PAYMILL_TRANSLATION.paymill_card_expiry_date + "</p>");
             result = false;
         }
         if (!$('#paymill_card_holder').val()) {
-            errors.append("<p>Bitte geben Sie den Karteninhaber an.</p>");
+            errors.append("<p>" + PAYMILL_TRANSLATION.paymill_card_holder + "</p>");
             result = false;
         }
     } else if (PAYMILL_PAYMENT === "paymilldirectdebit") {
         if (!$('#paymill_accountholder').val()) {
-            errors.append("<p>Bitte geben Sie den Kontoinhaber an.</p>");
+            errors.append("<p>" + PAYMILL_TRANSLATION.paymill_accountholder + "</p>");
             result = false;
         }
         if (!paymill.validateAccountNumber($('#paymill_accountnumber').val())) {
-            errors.append("<p>Bitte geben Sie eine g&uuml;ltige Kontonummer ein.</p>");
+            errors.append("<p>" + PAYMILL_TRANSLATION.paymill_accountnumber + "</p>");
             result = false;
         }
         if (!paymill.validateBankCode($('#paymill_banknumber').val())) {
-            errors.append("<p>Bitte geben Sie eine g&uuml;ltige BLZ ein.</p>");
+            errors.append("<p>" + PAYMILL_TRANSLATION.paymill_banknumber + "</p>");
             result = false;
         }
     }

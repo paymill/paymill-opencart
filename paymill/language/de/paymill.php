@@ -9,8 +9,8 @@ $_['entry_status'] = 'Plugin aktiv:';
 $_['entry_publickey'] = 'Publickey:';
 $_['entry_privatekey'] = 'Privatekey:';
 $_['entry_apiurl'] = 'ApiUrl:';
-$_['entry_bridgeurl'] = 'BridgeUrl:';
 $_['entry_sort_order'] = 'Sortier Reihenfolge:';
+$_['entry_different_amount'] = '3D Secure Toleranz:';
 $_['entry_fast_checkout'] = 'FastCheckout:';
 $_['entry_logging'] = 'Logging:';
 $_['entry_debugging'] = 'Debug:';
@@ -31,7 +31,6 @@ $_['paymill_description'] = "Die mit einem * markierten Felder sind Pflichtfelde
 $_['paymill_paymilllabel_cc'] = 'Sichere Kreditkartenzahlung';
 $_['paymill_paymilllabel_elv'] = 'Lastschrift';
 
-
 $_['text_paymilldirectdebit'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
 $_['text_payment_paymilldirectdebit_title'] = 'Elektronisches Lastschriftverfahren';
 $_['text_payment_paymilldirectdebit_detail'] = 'Elektronisches Lastschriftverfahren';
@@ -41,3 +40,15 @@ $_['text_payment_paymillcreditcard_title'] = 'Kreditkartenzahlung';
 $_['text_payment_paymillcreditcard_detail'] = 'Kreditkartenzahlung';
 // Error
 $_['error_permission'] = 'Warnung: Sie haben nicht die Rechte PAYMILL anzupassen!';
+$_['error_different_amount'] = 'Warning: 3DSecure Toleranz muss eine valide Zahl sein!';
+
+// JavaScript Errormessages
+$_['error_javascript'] = array(
+    "paymill_card_number" => "Bitte geben Sie eine g&uuml;ltige Kartennummer ein",
+    "paymill_card_cvc" => "Bitte geben sie einen g&uuml;ltigen Sicherheitscode ein (R&uuml;ckseite der Karte).",
+    "paymill_card_expiry_date" => "Das Ablaufdatum der Karte ist ung&uuml;ltig.",
+    "paymill_card_holder" => "Bitte geben Sie den Karteninhaber an.",
+    "paymill_accountholder" => "Bitte geben Sie den Kontoinhaber an.",
+    "paymill_accountnumber" => "Bitte geben Sie eine g&uuml;ltige Kontonummer ein.",
+    "paymill_banknumber" => "Bitte geben Sie eine g&uuml;ltige BLZ ein."
+);

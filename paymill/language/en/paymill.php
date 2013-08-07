@@ -41,3 +41,14 @@ $_['text_payment_paymillcreditcard_detail'] = 'PAYMILL Credit Card';
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify payment PAYMILL!';
 $_['error_different_amount'] = 'Warning: 3DSecure tolerance must be a valid number';
+
+// JavaScript Errormessages
+$_['error_javascript'] = array(
+    "paymill_card_number" => "Please enter a valid cardnumber.",
+    "paymill_card_cvc" => "Please enter a valid securecode (back of card).",
+    "paymill_card_expiry_date" => "The expirydate is invalid.",
+    "paymill_card_holder" => "Please enter the cardholders name.",
+    "paymill_accountholder" => "Please enter the accountholders name.",
+    "paymill_accountnumber" => "Please enter a valid accountnumber.",
+    "paymill_banknumber" => "Please enter a valid bankcode."
+);

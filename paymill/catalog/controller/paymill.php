@@ -56,6 +56,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_paymilllabel_cc'] = $this->language->get('paymill_paymilllabel_cc');
         $this->data['paymill_paymilllabel_elv'] = $this->language->get('paymill_paymilllabel_elv');
         $this->data['paymill_error'] = isset($this->session->data['error_message']) ? $this->session->data['error_message'] : null;
+        $this->data['paymill_javascript_error'] = $this->language->get('error_javascript');
 
         $this->session->data['paymill_authorized_amount'] = $amount;
         $table = $this->getDatabaseName();

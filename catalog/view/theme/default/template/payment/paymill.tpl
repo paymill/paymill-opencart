@@ -6,14 +6,17 @@
 * @copyright  Copyright (c) 2011 PayIntelligent GmbH (http://payintelligent.de)
 */
 ?>
-<script type="text/javascript">
-    var PAYMILL_PUBLIC_KEY = "<?php echo $paymill_publickey;?>";
-    var PAYMILL_CURRENCY = "<?php echo $paymill_currency;?>";
-    var PAYMILL_AMOUNT = "<?php echo $paymill_amount * 100;?>";
-    var PAYMILL_PAYMENT = "<?php echo $paymill_activepayment;?>";
-    var PAYMILL_DEBUG = "<?php echo $paymill_debugging;?>";
-    var PAYMILL_IMAGE = "<?php echo $paymill_image_folder;?>";
-</script>
+<?php
+    echo '<script type="text/javascript">';
+    echo 'var PAYMILL_PUBLIC_KEY  = "' . $paymill_publickey . '"; '
+       . 'var PAYMILL_CURRENCY  = "' . $paymill_currency . '"; '
+       . 'var PAYMILL_AMOUNT  = ' . $paymill_amount * 100 . '; '
+       . 'var PAYMILL_PAYMENT  = "' . $paymill_activepayment . '"; '
+       . 'var PAYMILL_DEBUG  = "' . $paymill_debugging . '"; '
+       . 'var PAYMILL_IMAGE  = "' . $paymill_image_folder . '"; '
+       . 'var PAYMILL_TRANSLATION = ' . json_encode($paymill_javascript_error) . '; ';
+    echo '</script>';
+?>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
 <script type="text/javascript" src="<?php echo $paymill_js; ?>"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $paymill_css; ?>" />
