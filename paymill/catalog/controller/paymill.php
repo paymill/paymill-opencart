@@ -125,12 +125,14 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $paymentProcessor->setName($this->order_info['lastname'] . ', ' . $this->order_info['firstname']);
             $paymentProcessor->setSource($source);
 
-            if ($this->customer->getId() != null && $fastcheckout) {
+            if ($this->customer->getId() != null) {
                 $table = $this->getDatabaseName();
                 $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
                 if ($row->num_rows === 1) {
-                    $paymentID = empty($row->row['paymentId']) ? null : $row->row['paymentId'];
-                    $paymentProcessor->setPaymentId($paymentID);
+                    if($fastcheckout){
+                        $paymentID = empty($row->row['paymentId']) ? null : $row->row['paymentId'];
+                        $paymentProcessor->setPaymentId($paymentID);
+                    }
 
                     $clientObject = new Services_Paymill_Clients($privateKey, 'https://api.paymill.com/v2/');
                     $client = $clientObject->getOne($row->row['clientId']);
