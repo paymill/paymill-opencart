@@ -6,12 +6,11 @@ $_['button_viewcart'] = 'Warenkorb anzeigen';
 
 // Entry
 $_['entry_status'] = 'Plugin aktiv:';
-$_['entry_publickey'] = 'Publickey:';
-$_['entry_privatekey'] = 'Privatekey:';
-$_['entry_apiurl'] = 'ApiUrl:';
+$_['entry_publickey'] = 'Public Key:';
+$_['entry_privatekey'] = 'Private Key:';
 $_['entry_sort_order'] = 'Sortier Reihenfolge:';
 $_['entry_different_amount'] = '3D Secure Toleranz:';
-$_['entry_fast_checkout'] = 'FastCheckout:';
+$_['entry_fast_checkout'] = 'Fast Checkout:';
 $_['entry_label'] = 'Label anzeigen:';
 $_['entry_logging'] = 'Logging:';
 $_['entry_debugging'] = 'Debug:';
