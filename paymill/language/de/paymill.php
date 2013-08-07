@@ -12,6 +12,7 @@ $_['entry_apiurl'] = 'ApiUrl:';
 $_['entry_sort_order'] = 'Sortier Reihenfolge:';
 $_['entry_different_amount'] = '3D Secure Toleranz:';
 $_['entry_fast_checkout'] = 'FastCheckout:';
+$_['entry_label'] = 'Label anzeigen:';
 $_['entry_logging'] = 'Logging:';
 $_['entry_debugging'] = 'Debug:';
 

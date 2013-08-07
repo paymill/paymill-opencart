@@ -67,13 +67,15 @@
                 </select>
             </p>
             <p class="description"><?php echo $paymill_description;?></p>
-            <p>
-            <div class="paymill_powered">
-                <div class="paymill_credits">
-                    <?php echo $paymill_paymilllabel_cc;?> powered by <a href="http://www.paymill.de" target="_blank">PAYMILL</a>
+                <?php if($paymill_label){ ?>
+                <p>
+                <div class="paymill_powered">
+                    <div class="paymill_credits">
+                        <?php echo $paymill_paymilllabel_cc;?> powered by <a href="http://www.paymill.de" target="_blank">PAYMILL</a>
+                    </div>
                 </div>
-            </div>
-            </p>
+                </p>
+                <?php } ?>
             <?php }elseif($paymill_activepayment === 'paymilldirectdebit'){ ?>
             <p class="none">
                 <label><?php echo $paymill_accountholder;?></label>
@@ -88,13 +90,15 @@
                 <input id="paymill_banknumber" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['code'])?$paymill_prefilled['code']:''; ?>" />
             </p>
             <p class="description"><?php echo $paymill_description;?></p>
-            <p>
-            <div class="paymill_powered">
-                <div class="paymill_credits">
-                    <?php echo $paymill_paymilllabel_elv;?> powered by <a href="http://www.paymill.de" target="_blank">PAYMILL</a>
+                <?php if($paymill_label){ ?>
+                <p>
+                <div class="paymill_powered">
+                    <div class="paymill_credits">
+                        <?php echo $paymill_paymilllabel_elv;?> powered by <a href="http://www.paymill.de" target="_blank">PAYMILL</a>
+                    </div>
                 </div>
-            </div>
-            </p>
+                </p>
+                <?php } ?>
             <?php } ?>
         </div>
         <div class="buttons">

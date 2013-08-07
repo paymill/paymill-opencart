@@ -62,6 +62,15 @@
                     </tr>
                     <?php } ?>
                     <tr>
+                        <td><?php echo $entry_label; ?></td>
+                        <td>
+                            <select name="paymill_label">
+                                <option value="1" <?php if ($paymill_label) { echo 'selected="selected"';}?>> <?php echo $text_enabled; ?></option>
+                                <option value="0" <?php if (!$paymill_label) { echo 'selected="selected"';}?>> <?php echo $text_disabled; ?></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <td><?php echo $entry_logging; ?></td>
                         <td>
                             <select name="paymill_logging">
