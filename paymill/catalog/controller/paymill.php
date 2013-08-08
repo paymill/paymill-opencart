@@ -185,9 +185,9 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 }
             } else {
                 if ($this->config->get($this->getPaymentName() . '_fast_checkout')) {
-                    $this->db->query("UPDATE `$table` SET `userId`=$userId, `clientId`='$clientId', `paymentId`='$paymentId';");
+                    $this->db->query("UPDATE `$table` SET `clientId`='$clientId', `paymentId`='$paymentId';");
                 } else {
-                    $this->db->query("UPDATE `$table` SET `userId`=$userId, `clientId`='$clientId';");
+                    $this->db->query("UPDATE `$table` SET `clientId`='$clientId';");
                 }
             }
             $this->log("Userdata stored.");

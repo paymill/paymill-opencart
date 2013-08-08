@@ -8,49 +8,40 @@ $(document).ready(function() {
     $('#paymill_card_number').keyup(function() {
         var brand = paymill.cardType($('#paymill_card_number').val());
         brand = brand.toLowerCase();
+        $('#paymill_card_number').prev("img").remove();
         switch (brand) {
             case 'visa':
-                $('#paymill_card_icon').html('<img src="' + PAYMILL_IMAGE + '/32x20_visa.png" >');
-                $('#paymill_card_icon').show();
+                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_visa.png" >');
                 break;
             case 'mastercard':
-                $('#paymill_card_icon').html('<img src="' + PAYMILL_IMAGE + '/32x20_mastercard.png" >');
-                $('#paymill_card_icon').show();
+                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_mastercard.png" >');
                 break;
             case 'american express':
-                $('#paymill_card_icon').html('<img src="' + PAYMILL_IMAGE + '/32x20_amex.png" >');
-                $('#paymill_card_icon').show();
+                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_amex.png" >');
                 break;
             case 'jcb':
-                $('#paymill_card_icon').html('<img src="' + PAYMILL_IMAGE + '/32x20_jcb.png" >');
-                $('#paymill_card_icon').show();
+                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_jcb.png" >');
                 break;
             case 'maestro':
-                $('#paymill_card_icon').html('<img src="' + PAYMILL_IMAGE + '/32x20_maestro.png" >');
-                $('#paymill_card_icon').show();
+                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_maestro.png" >');
                 break;
             case 'diners club':
-                $('#paymill_card_icon').html('<img src="' + PAYMILL_IMAGE + '/32x20_dinersclub.png" >');
-                $('#paymill_card_icon').show();
+                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_dinersclub.png" >');
                 break;
             case 'discover':
-                $('#paymill_card_icon').html('<img src="' + PAYMILL_IMAGE + '/32x20_discover.png" >');
-                $('#paymill_card_icon').show();
+                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_discover.png" >');
                 break;
             case 'unionpay':
-                $('#paymill_card_icon').html('<img src="' + PAYMILL_IMAGE + '/32x20_unionpay.png" >');
-                $('#paymill_card_icon').show();
+                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_unionpay.png" >');
                 break;
             case 'unknown':
             default:
-                $('#paymill_card_icon').hide();
+                $('#paymill_card_number').prev("img").remove();
                 break;
         }
-        $('#paymill_card_icon').css('position', 'absolute');
         $('#paymill_card_icon :first-child').css({
-            'position': 'relative',
-            'left': '195px',
-            'top': '3px'
+            "vertical-align": "middle",
+            "margin-top": "-4px"
         });
     });
 

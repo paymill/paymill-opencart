@@ -30,10 +30,12 @@
                 <label><?php echo $paymill_cardholder;?></label>
                 <input id="paymill_card_holder" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['card_holder'])?$paymill_prefilled['card_holder']:$paymill_fullname;?>"/>
             </p>
-            <p class="none">
+            <p class="none" style="margin-bottom:7px;">
                 <label><?php echo $paymill_cardnumber;?></label>
-                <input id="paymill_card_number" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['last4'])? '**********'.$paymill_prefilled['last4']:'';?>"/>
-                <span id="paymill_card_icon"></span>
+                <span id="paymill_card_icon" style="float:right;">
+                    <input id="paymill_card_number" type="text" size="20"  value="<?php echo isset($paymill_prefilled['last4'])? '**********'.$paymill_prefilled['last4']:'';?>"/>
+                </span>
+                <span style="display:block;clear:both;"></span>
             </p>
             <p class="none">
                 <label><?php echo $paymill_cvc;?></label>
@@ -41,7 +43,7 @@
             </p>
             <p class="none">
                 <label><?php echo $paymill_birthday;?></label>
-                <select id="paymill_card_expiry_year" style="width: 60px; display: inline-block;" class="paymill_text">
+                <select id="paymill_card_expiry_year" style="width: 65px; display: inline-block;" class="paymill_text">
                 <?php
                 $prefilled = $paymill_prefilled['expire_year']?:null;
                 foreach($paymill_form_year as $year){
