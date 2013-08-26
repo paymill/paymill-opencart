@@ -74,12 +74,12 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_prefilled'] = $payment;
 
         $this->data['paymill_form_year'] = array_map(function($year) {
-                    return $year;
-                }, range(date('Y', time('now')), date('Y', time('now')) + 10));
+                return $year;
+            }, range(date('Y', time('now')), date('Y', time('now')) + 10));
 
         $this->data['paymill_form_month'] = array_map(function($month) {
-                    return $month;
-                }, range(1, 12));
+                return $month;
+            }, range(1, 12));
 
         if ($this->getPaymentName() == 'paymillcreditcard') {
             $this->data['paymill_form_action'] = "index.php?route=payment/paymillcreditcard/confirm";
@@ -152,8 +152,8 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             // process the payment
             $result = $paymentProcessor->processPayment();
             $this->log(
-                    "Payment processing resulted in: "
-                    . ($result ? "Success" : "Fail")
+                "Payment processing resulted in: "
+                . ($result ? "Success" : "Fail")
             );
 
             // finish the order if payment was sucessfully processed
@@ -161,7 +161,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 $this->log("Finish order.");
                 $this->_saveUserData($this->customer->getId(), $paymentProcessor->getClientId(), $paymentProcessor->getPaymentId());
                 $this->model_checkout_order->confirm(
-                        $this->session->data['order_id'], $this->config->get('config_complete_status_id'), '', true
+                    $this->session->data['order_id'], $this->config->get('config_complete_status_id'), '', true
                 );
                 $this->redirect($this->url->link('checkout/success'));
             } else {
@@ -175,22 +175,24 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
     {
         $table = $this->getDatabaseName();
         try {
-            $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
-            $dataAvailable = $row->num_rows === 1;
-            if (!$dataAvailable) {
-                if ($this->config->get($this->getPaymentName() . '_fast_checkout')) {
-                    $this->db->query("REPLACE INTO `$table` (`userId`, `clientId`, `paymentId`) VALUES($userId, '$clientId', '$paymentId')");
+            if ($this->customer->getId() != null) {
+                $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
+                $dataAvailable = $row->num_rows === 1;
+                if (!$dataAvailable) {
+                    if ($this->config->get($this->getPaymentName() . '_fast_checkout')) {
+                        $this->db->query("REPLACE INTO `$table` (`userId`, `clientId`, `paymentId`) VALUES($userId, '$clientId', '$paymentId')");
+                    } else {
+                        $this->db->query("REPLACE INTO `$table` (`userId`, `clientId`) VALUES($userId, '$clientId')");
+                    }
                 } else {
-                    $this->db->query("REPLACE INTO `$table` (`userId`, `clientId`) VALUES($userId, '$clientId')");
+                    if ($this->config->get($this->getPaymentName() . '_fast_checkout')) {
+                        $this->db->query("UPDATE `$table` SET `clientId`='$clientId', `paymentId`='$paymentId';");
+                    } else {
+                        $this->db->query("UPDATE `$table` SET `clientId`='$clientId';");
+                    }
                 }
-            } else {
-                if ($this->config->get($this->getPaymentName() . '_fast_checkout')) {
-                    $this->db->query("UPDATE `$table` SET `clientId`='$clientId', `paymentId`='$paymentId';");
-                } else {
-                    $this->db->query("UPDATE `$table` SET `clientId`='$clientId';");
-                }
+                $this->log("Userdata stored.");
             }
-            $this->log("Userdata stored.");
         } catch (Exception $exception) {
             $this->log("Error while saving Userdata: " . $exception->getMessage());
         }

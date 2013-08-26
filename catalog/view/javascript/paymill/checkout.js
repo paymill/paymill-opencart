@@ -4,7 +4,7 @@
  */
 var prefilled = new Array();
 $(document).ready(function() {
-    prefilled = getFormData(prefilled);
+    prefilled = getFormData(prefilled, true);
     $('#paymill_card_number').keyup(function() {
         var brand = paymill.cardType($('#paymill_card_number').val());
         brand = brand.toLowerCase();
@@ -47,7 +47,7 @@ $(document).ready(function() {
 
     $("#paymill_submit").click(function() {
         var formdata = new Array();
-        formdata = getFormData(formdata);
+        formdata = getFormData(formdata, false);
 
         if (prefilled.toString() === formdata.toString()) {
             $("#paymill_form").append("<input type='hidden' name='paymillFastcheckout' value='" + true + "'/>");
@@ -56,6 +56,7 @@ $(document).ready(function() {
             PaymillResponseHandler(null, result);
         } else {
             if (validate()) {
+                $("#paymill_form").append("<input type='hidden' name='paymillFastcheckout' value='" + false + "'/>");
                 try {
                     var params;
                     if (PAYMILL_PAYMENT === "paymillcreditcard") {
@@ -90,8 +91,11 @@ $(document).ready(function() {
 });
 
 
-function getFormData(array) {
+function getFormData(array, ignoreEmptyValues) {
     $('#paymill_form :input').not(':[type=hidden]').each(function() {
+        if($(this).val() === "" && ignoreEmptyValues){
+           return;
+        }
         array.push($(this).val());
     });
     return array;
