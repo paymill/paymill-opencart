@@ -8,7 +8,7 @@
  */
 class metadata
 {
-    private $_version = "1.0.5";
+    private $_version = "1.0.6";
 
     public function getVersion()
     {
