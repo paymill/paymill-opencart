@@ -72,14 +72,8 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             }
         }
         $this->data['paymill_prefilled'] = $payment;
-
-        $this->data['paymill_form_year'] = array_map(function($year) {
-                return $year;
-            }, range(date('Y', time('now')), date('Y', time('now')) + 10));
-
-        $this->data['paymill_form_month'] = array_map(function($month) {
-                return $month;
-            }, range(1, 12));
+        $this->data['paymill_form_year'] = range(date('Y', time('now')), date('Y', time('now')) + 10);
+        $this->data['paymill_form_month'] = range(1, 12);
 
         if ($this->getPaymentName() == 'paymillcreditcard') {
             $this->data['paymill_form_action'] = "index.php?route=payment/paymillcreditcard/confirm";
