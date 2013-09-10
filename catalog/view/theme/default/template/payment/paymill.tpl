@@ -104,9 +104,7 @@
             <?php } ?>
         </div>
         <div class="buttons">
-            <a class="button" id="paymill_submit">
-                <span><?php echo $button_confirm; ?></span>
-            </a>
+            <input type="submit" class="button" id="paymill_submit" value="<?php echo $button_confirm; ?>">
         </div>
     </form>
 </div>

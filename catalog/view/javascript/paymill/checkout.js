@@ -46,6 +46,7 @@ $(document).ready(function() {
     });
 
     $("#paymill_submit").click(function() {
+        $("#paymill_submit").attr('disabled',true);
         var formdata = new Array();
         formdata = getFormData(formdata, false);
 
@@ -139,6 +140,7 @@ function validate() {
         }
     }
     if (!result) {
+        $("#paymill_submit").removeAttr('disabled');
         errors.children().removeClass('warning').addClass('warning');
         errors.show();
     } else {
@@ -150,6 +152,7 @@ function validate() {
 function PaymillResponseHandler(error, result) {
     debug("Started Paymill response handler");
     if (error) {
+        $("#paymill_submit").removeAttr('disabled');
         debug("API returned error:" + error.apierror);
         alert("API returned error:" + error.apierror);
         $(".checkout-heading").children('a :last').click(); //click on step5 Modify
