@@ -45,7 +45,11 @@ $(document).ready(function() {
         });
     });
 
-    $("#paymill_submit").click(function() {
+    $("#paymill_form").submit(function(e) {
+        if(!$("input[name=paymillToken]")){
+            e.preventDefault();
+        }
+
         $("#paymill_submit").attr('disabled',true);
         var formdata = new Array();
         formdata = getFormData(formdata, false);
