@@ -113,7 +113,9 @@ function validate() {
     errors.html("");
     var result = true;
     if (PAYMILL_PAYMENT === "paymillcreditcard") {
-        if (!paymill.validateCardNumber($('#paymill_card_number').val())) {
+        if (paymill.cardType($('#paymill_card_number').val()).toLowerCase() === 'maestro' && (!$('#paymill_card_cvc').val() || $('#paymill_card_cvc').val() === "000")) {
+            $('#paymill_card_cvc').val('000');
+        } else if (!paymill.validateCvc($('#paymill_card_cvc').val())) {
             errors.append("<p>" + PAYMILL_TRANSLATION.paymill_card_number + "</p>");
             result = false;
         }
