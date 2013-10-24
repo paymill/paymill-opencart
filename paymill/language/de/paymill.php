@@ -29,11 +29,11 @@ $_['paymill_birthday'] = 'Gültig bis (MM/YYYY) *';
 
 $_['paymill_description'] = "Die mit einem * markierten Felder sind Pflichtfelder.";
 $_['paymill_paymilllabel_cc'] = 'Sichere Kreditkartenzahlung';
-$_['paymill_paymilllabel_elv'] = 'Lastschrift';
+$_['paymill_paymilllabel_elv'] = 'ELV';
 
 $_['text_paymilldirectdebit'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
-$_['text_payment_paymilldirectdebit_title'] = 'Elektronisches Lastschriftverfahren';
-$_['text_payment_paymilldirectdebit_detail'] = 'Elektronisches Lastschriftverfahren';
+$_['text_payment_paymilldirectdebit_title'] = 'ELV';
+$_['text_payment_paymilldirectdebit_detail'] = 'ELV';
 
 $_['text_paymillcreditcard'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
 $_['text_payment_paymillcreditcard_title'] = 'Kreditkartenzahlung';
