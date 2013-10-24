@@ -125,12 +125,12 @@ function validate() {
             errors.append("<p>" + PAYMILL_TRANSLATION.paymill_card_expiry_date + "</p>");
             result = false;
         }
-        if (!$('#paymill_card_holder').val()) {
+        if (!paymill.validateHolder($('#paymill_card_holder').val())) {
             errors.append("<p>" + PAYMILL_TRANSLATION.paymill_card_holder + "</p>");
             result = false;
         }
     } else if (PAYMILL_PAYMENT === "paymilldirectdebit") {
-        if (!$('#paymill_accountholder').val()) {
+        if (!paymill.validateHolder($('#paymill_accountholder').val())) {
             errors.append("<p>" + PAYMILL_TRANSLATION.paymill_accountholder + "</p>");
             result = false;
         }
