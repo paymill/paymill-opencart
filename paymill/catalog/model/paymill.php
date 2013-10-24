@@ -15,7 +15,10 @@ abstract class ModelPaymentPaymill extends Model
     {
         $this->load->language('payment/' . $this->getPaymentName());
         $method_data = array();
-        if ($this->config->get($this->getPaymentName() . '_status')) {
+        $publicKey = $this->config->get($this->getPaymentName() . '_publickey');
+        $privateKey = $this->config->get($this->getPaymentName() . '_privatekey');
+        
+        if ($this->config->get($this->getPaymentName() . '_status') && !(empty($publicKey) || empty($privateKey))) {
             $method_data = array(
                 'code' => $this->getPaymentName(),
                 'title' => $this->language->get('text_payment_' . $this->getPaymentName() . '_title'),
