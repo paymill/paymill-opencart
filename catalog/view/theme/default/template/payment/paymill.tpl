@@ -28,22 +28,19 @@
             <?php if($paymill_activepayment === 'paymillcreditcard'){ ?>
             <p class="none">
                 <label><?php echo $paymill_cardholder;?></label>
-                <input id="paymill_card_holder" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['card_holder'])?$paymill_prefilled['card_holder']:$paymill_fullname;?>"/>
+                <input id="paymill_card_holder" type="text" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['card_holder'])?$paymill_prefilled['card_holder']:$paymill_fullname;?>"/>
             </p>
-            <p class="none" style="margin-bottom:7px;">
+            <p class="none">
                 <label><?php echo $paymill_cardnumber;?></label>
-                <span id="paymill_card_icon" style="float:right;">
-                    <input id="paymill_card_number" type="text" size="20"  value="<?php echo isset($paymill_prefilled['last4'])? '**********'.$paymill_prefilled['last4']:'';?>"/>
-                </span>
-                <span style="display:block;clear:both;"></span>
+                <input id="paymill_card_number" type="text" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['last4'])? '**********'.$paymill_prefilled['last4']:'';?>"/>
             </p>
             <p class="none">
                 <label><?php echo $paymill_cvc;?></label>
-                <input id="paymill_card_cvc" type="text" size="4" class="paymill_text" value="<?php echo isset($paymill_prefilled['id'])?'***':'' ?>"/>
+                <input id="paymill_card_cvc" type="text" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['id'])?'***':'' ?>"/>
             </p>
             <p class="none">
                 <label><?php echo $paymill_birthday;?></label>
-                <select id="paymill_card_expiry_year" style="width: 65px; display: inline-block;" class="paymill_text">
+                <select id="paymill_card_expiry_year" class="paymill_select">
                 <?php
                 $prefilled = isset($paymill_prefilled['expire_year'])?$paymill_prefilled['expire_year']:null;
                 foreach($paymill_form_year as $year){
@@ -55,7 +52,8 @@
                 }
                 ?>
                 </select>
-                <select id="paymill_card_expiry_month" style="width: 50px; display: inline-block;" class="paymill_text">
+                <span class="paymill_select_spacing"></span>
+                <select id="paymill_card_expiry_month" class="paymill_select">
                 <?php
                 $prefilled = isset($paymill_prefilled['expire_month'])?$paymill_prefilled['expire_month']:null;
                 foreach($paymill_form_month as $month){
@@ -81,15 +79,15 @@
             <?php }elseif($paymill_activepayment === 'paymilldirectdebit'){ ?>
             <p class="none">
                 <label><?php echo $paymill_accountholder;?></label>
-                <input id="paymill_accountholder" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['holder'])?$paymill_prefilled['holder']:$paymill_fullname; ?>"/>
+                <input id="paymill_accountholder" type="text" size="20" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['holder'])?$paymill_prefilled['holder']:$paymill_fullname; ?>"/>
             </p>
             <p class="none">
                 <label><?php echo $paymill_accountnumber;?></label>
-                <input id="paymill_accountnumber" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['account'])?$paymill_prefilled['account']:''; ?>" />
+                <input id="paymill_accountnumber" type="text" size="20" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['account'])?$paymill_prefilled['account']:''; ?>" />
             </p>
             <p class="none">
                 <label><?php echo $paymill_banknumber;?></label>
-                <input id="paymill_banknumber" type="text" size="20" class="paymill_text" value="<?php echo isset($paymill_prefilled['code'])?$paymill_prefilled['code']:''; ?>" />
+                <input id="paymill_banknumber" type="text" size="20" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['code'])?$paymill_prefilled['code']:''; ?>" />
             </p>
             <p class="description"><?php echo $paymill_description;?></p>
                 <?php if($paymill_label){ ?>
