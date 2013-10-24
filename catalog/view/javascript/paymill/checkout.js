@@ -8,49 +8,21 @@ $(document).ready(function() {
     $('#paymill_card_number').keyup(function() {
         var brand = paymill.cardType($('#paymill_card_number').val());
         brand = brand.toLowerCase();
-        $('#paymill_card_number').prev("img").remove();
-        switch (brand) {
-            case 'visa':
-                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_visa.png" >');
-                break;
-            case 'mastercard':
-                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_mastercard.png" >');
-                break;
-            case 'american express':
-                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_amex.png" >');
-                break;
-            case 'jcb':
-                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_jcb.png" >');
-                break;
-            case 'maestro':
-                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_maestro.png" >');
-                break;
-            case 'diners club':
-                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_dinersclub.png" >');
-                break;
-            case 'discover':
-                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_discover.png" >');
-                break;
-            case 'unionpay':
-                $('#paymill_card_number').before('<img src="' + PAYMILL_IMAGE + '/32x20_unionpay.png" >');
-                break;
-            case 'unknown':
-            default:
-                $('#paymill_card_number').prev("img").remove();
-                break;
+        $("#paymill_card_number")[0].className = $("#paymill_card_number")[0].className.replace(/paymill-card-number-.*/g, '');
+        if (brand !== 'unknown') {
+            if (brand === 'american express') {
+                brand = 'amex';
+            }
+            $('#paymill_card_number').addClass("paymill-card-number-" + brand);
         }
-        $('#paymill_card_icon :first-child').css({
-            "vertical-align": "middle",
-            "margin-top": "-4px"
-        });
     });
 
     $("#paymill_form").submit(function(e) {
-        if(!$("input[name=paymillToken]")){
+        if (!$("input[name=paymillToken]")) {
             e.preventDefault();
         }
 
-        $("#paymill_submit").attr('disabled',true);
+        $("#paymill_submit").attr('disabled', true);
         var formdata = new Array();
         formdata = getFormData(formdata, false);
 
@@ -98,8 +70,8 @@ $(document).ready(function() {
 
 function getFormData(array, ignoreEmptyValues) {
     $('#paymill_form :input').not(':[type=hidden]').each(function() {
-        if($(this).val() === "" && ignoreEmptyValues){
-           return;
+        if ($(this).val() === "" && ignoreEmptyValues) {
+            return;
         }
         array.push($(this).val());
     });

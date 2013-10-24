@@ -17,3 +17,43 @@
 .paymill_text{
     float:right;
 }
+
+.paymill-card-number-visa
+{
+    background: url('../image/payment/32x20_visa.png') no-repeat center right !important;
+}
+
+.paymill-card-number-mastercard
+{
+    background: url('../image/payment/32x20_mastercard.png') no-repeat center right !important;
+}
+
+.paymill-card-number-amex
+{
+    background: url('../image/payment/32x20_amex.png') no-repeat center right !important;
+}
+
+.paymill-card-number-jcb
+{
+    background: url('../image/payment/32x20_jcb.png') no-repeat center right !important;
+}
+
+.paymill-card-number-maestro
+{
+    background: url('../image/payment/32x20_maestro.png') no-repeat center right !important;
+}
+
+.paymill-card-number-carte-bleue
+{
+    background: url('../image/payment/32x20_unionpay.png') no-repeat center right !important;
+}
+
+.paymill-card-number-diners
+{
+    background: url('../image/payment/32x20_dinersclub.png') no-repeat center right !important;
+}
+
+.paymill-card-number-discover
+{
+    background: url('../image/payment/32x20_discover.png') no-repeat center right !important;
+}
