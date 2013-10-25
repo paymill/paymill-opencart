@@ -29,6 +29,10 @@
     height: 23px;
 }
 
+.paymill_error{
+    display: none;
+    margin-top:15px;
+}
 
 .paymill-card-number-visa
 {
