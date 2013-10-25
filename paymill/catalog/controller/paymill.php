@@ -15,7 +15,8 @@ require_once dirname(dirname(dirname(__FILE__))) . '/metadata.php';
 abstract class ControllerPaymentPaymill extends Controller implements Services_Paymill_LoggingInterface
 {
 
-    protected $_response_codes = array (
+    protected $_logId;
+    protected $_response_codes = array(
         '10001' => 'General undefined response.',
         '10002' => 'Still waiting on something.',
         '20000' => 'General success response.',
@@ -147,12 +148,14 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $paymillToken = $this->request->post['paymillToken'];
         $fastcheckout = $this->request->post['paymillFastcheckout'];
 
+        $this->_logId = time();
+
         // check if token present
         if (empty($paymillToken)) {
-            $this->log("No paymill token was provided. Redirect to payments page.");
+            $this->log("No paymill token was provided. Redirect to payments page." ,'');
             $this->redirect($this->url->link('checkout/checkout'));
         } else {
-            $this->log("Start processing payment with token " . $paymillToken);
+            $this->log("Start processing payment with token." , $paymillToken);
             $this->load->model('checkout/order');
             $this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -192,7 +195,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                             'id' => $row->row['clientId'],
                             'email' => $this->order_info['email'],
                         ));
-                        $this->log("Client-mail has been changed. Client updated");
+                        $this->log("Client-mail has been changed. Client updated", $this->order_info['email']);
                     }
                 }
             }
@@ -201,19 +204,19 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $result = $paymentProcessor->processPayment();
             $this->log(
                 "Payment processing resulted in: "
-                . ($result ? "Success" : "Fail")
+                , ($result ? "Success" : "Fail")
             );
 
             // finish the order if payment was sucessfully processed
             if ($result === true) {
-                $this->log("Finish order.");
+                $this->log("Finish order." ,'');
                 $this->_saveUserData($this->customer->getId(), $paymentProcessor->getClientId(), $paymentProcessor->getPaymentId());
                 $this->model_checkout_order->confirm(
                     $this->session->data['order_id'], $this->config->get('config_complete_status_id'), '', true
                 );
                 $this->redirect($this->url->link('checkout/success'));
             } else {
-                $this->session->data['error_message'] = 'An error occured while processing your payment: '.$this->_response_codes[$paymentProcessor->getErrorCode()];
+                $this->session->data['error_message'] = 'An error occured while processing your payment: ' . $this->_response_codes[$paymentProcessor->getErrorCode()];
                 $this->redirect($this->url->link('payment/' . $this->getPaymentName() . '/error'));
             }
         }
@@ -239,7 +242,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                         $this->db->query("UPDATE `$table` SET `clientId`='$clientId';");
                     }
                 }
-                $this->log("Userdata stored.");
+                $this->log("Userdata stored.", '');
             }
         } catch (Exception $exception) {
             $this->log("Error while saving Userdata: " . $exception->getMessage());
@@ -250,13 +253,10 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
      * Logger for events
      * @return void
      */
-    public function log($message, $debuginfo = null)
+    public function log($message, $debuginfo)
     {
-        $logfile = dirname(dirname(dirname(dirname(__FILE__)))) . '/paymill/log/log.txt';
-        if (is_writable($logfile) && $this->config->get($this->getPaymentName() . '_logging')) {
-            $handle = fopen($logfile, 'a'); //
-            fwrite($handle, "[" . date(DATE_RFC822) . "] " . $message . "\n");
-            fclose($handle);
+        if ($this->config->get($this->getPaymentName() . '_logging')) {
+            $this->db->query("INSERT INTO `pigmbh_paymill_logging` (`identifier`,`debug`,`message`) VALUES ('" . $this->_logId . "', '" . $debuginfo . "', '" . $message . "')");
         }
     }
 

@@ -11,8 +11,6 @@ require_once dirname(dirname(dirname(__FILE__))) . '/metadata.php';
 abstract class ControllerPaymentPaymill extends Controller
 {
 
-    protected $_version = "1.0.4";
-
     abstract protected function getPaymentName();
 
     public function getVersion()
@@ -134,19 +132,19 @@ abstract class ControllerPaymentPaymill extends Controller
 
     protected function validate()
     {
-        $error = false;
+        $validation = true;
         if (!$this->user->hasPermission('modify', 'payment/' . $this->getPaymentName())) {
             $this->data['error_warning'] = $this->language->get('error_permission');
-            $error = true;
+            $validation = false;
         }
 
         if (isset($this->request->post['paymill_differnet_amount'])) {
             if (!is_numeric($this->request->post['paymill_differnet_amount'])) {
                 $this->data['error_warning'] = $this->language->get('error_different_amount');
-                $error = true;
+                $validation = false;
             }
         }
-        return !$error;
+        return $validation;
     }
 
     public function install()
@@ -163,6 +161,16 @@ abstract class ControllerPaymentPaymill extends Controller
 
         $this->load->model('setting/setting');
         $this->model_setting_setting->editSetting($this->getPaymentName(), $config);
+
+        $this->db->query("CREATE TABLE IF NOT EXISTS `pigmbh_paymill_logging` ("
+            . "`id` int(11) NOT NULL AUTO_INCREMENT,"
+            . "`identifier` text NOT NULL,"
+            . "`debug` text NOT NULL,"
+            . "`message` text NOT NULL,"
+            . "`date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+            . "PRIMARY KEY (`id`)"
+            . ") AUTO_INCREMENT=1");
+
     }
 
     public function uninstall()
