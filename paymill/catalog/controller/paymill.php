@@ -15,6 +15,46 @@ require_once dirname(dirname(dirname(__FILE__))) . '/metadata.php';
 abstract class ControllerPaymentPaymill extends Controller implements Services_Paymill_LoggingInterface
 {
 
+    protected $_response_codes = array (
+        '10001' => 'General undefined response.',
+        '10002' => 'Still waiting on something.',
+        '20000' => 'General success response.',
+        '40000' => 'General problem with data.',
+        '40001' => 'General problem with payment data.',
+        '40100' => 'Problem with credit card data.',
+        '40101' => 'Problem with cvv.',
+        '40102' => 'Card expired or not yet valid.',
+        '40103' => 'Limit exceeded.',
+        '40104' => 'Card invalid.',
+        '40105' => 'Expiry date not valid.',
+        '40106' => 'Credit card brand required.',
+        '40200' => 'Problem with bank account data.',
+        '40201' => 'Bank account data combination mismatch.',
+        '40202' => 'User authentication failed.',
+        '40300' => 'Problem with 3d secure data.',
+        '40301' => 'Currency / amount mismatch',
+        '40400' => 'Problem with input data.',
+        '40401' => 'Amount too low or zero.',
+        '40402' => 'Usage field too long.',
+        '40403' => 'Currency not allowed.',
+        '50000' => 'General problem with backend.',
+        '50001' => 'Country blacklisted.',
+        '50100' => 'Technical error with credit card.',
+        '50101' => 'Error limit exceeded.',
+        '50102' => 'Card declined by authorization system.',
+        '50103' => 'Manipulation or stolen card.',
+        '50104' => 'Card restricted.',
+        '50105' => 'Invalid card configuration data.',
+        '50200' => 'Technical error with bank account.',
+        '50201' => 'Card blacklisted.',
+        '50300' => 'Technical error with 3D secure.',
+        '50400' => 'Decline because of risk issues.',
+        '50500' => 'General timeout.',
+        '50501' => 'Timeout on side of the acquirer.',
+        '50502' => 'Risk management transaction timeout.',
+        '50600' => 'Duplicate transaction.'
+    );
+
     abstract protected function getPaymentName();
 
     abstract protected function getDatabaseName();
@@ -173,7 +213,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 );
                 $this->redirect($this->url->link('checkout/success'));
             } else {
-                $this->session->data['error_message'] = 'An error occured while processing your payment';
+                $this->session->data['error_message'] = 'An error occured while processing your payment: '.$this->_response_codes[$paymentProcessor->getErrorCode()];
                 $this->redirect($this->url->link('payment/' . $this->getPaymentName() . '/error'));
             }
         }
