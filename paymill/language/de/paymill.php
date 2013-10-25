@@ -42,6 +42,10 @@ $_['text_payment_paymillcreditcard_detail'] = 'Kreditkartenzahlung';
 $_['error_permission'] = 'Warnung: Sie haben nicht die Rechte PAYMILL anzupassen!';
 $_['error_different_amount'] = 'Warning: 3DSecure Toleranz muss eine valide Zahl sein!';
 
+$_['date_month'] = array(
+    "Januar", "Februar", "M&auml;rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"
+);
+
 // JavaScript Errormessages
 $_['error_javascript'] = array(
     "paymill_card_number" => "Bitte geben Sie eine g&uuml;ltige Kartennummer ein",

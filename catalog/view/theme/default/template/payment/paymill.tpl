@@ -56,11 +56,11 @@
                 <select id="paymill_card_expiry_month" class="paymill_select">
                 <?php
                 $prefilled = isset($paymill_prefilled['expire_month'])?$paymill_prefilled['expire_month']:null;
-                foreach($paymill_form_month as $month){
+                foreach($paymill_form_month as $key => $month){
                     if(!is_null($prefilled) && $prefilled == $month){
-                        echo "<option value=$month selected>$month</option>";
+                        echo "<option value=$key selected>$month</option>";
                     }else{
-                        echo "<option value=$month>$month</option>";
+                        echo "<option value=$key>$month</option>";
                     }
                 }
                 ?>

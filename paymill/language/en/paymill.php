@@ -43,6 +43,11 @@ $_['text_payment_paymillcreditcard_detail'] = 'PAYMILL Credit Card';
 $_['error_permission'] = 'Warning: You do not have permission to modify payment PAYMILL!';
 $_['error_different_amount'] = 'Warning: 3DSecure tolerance must be a valid number';
 
+
+$_['date_month'] = array(
+    "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+);
+
 // JavaScript Errormessages
 $_['error_javascript'] = array(
     "paymill_card_number" => "Please enter a valid cardnumber.",
