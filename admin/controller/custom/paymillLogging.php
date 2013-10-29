@@ -8,6 +8,7 @@
  * @copyright  Copyright (c) 2011 PayIntelligent GmbH (http://payintelligent.de)
  */
 class ControllercustompaymillLogging extends Controller{
+
     public function index(){
         $this->load->model('custom/paymillLogging');
         $this->template = 'custom/paymillLogging.tpl';
@@ -22,7 +23,7 @@ class ControllercustompaymillLogging extends Controller{
         $this->baseUrl = preg_replace("/\/index\.php/", "", $this->request->server['SCRIPT_NAME']);
 
         $this->data['breadcrumbs'] = $this->getBreadcrumbs();
-
+        $this->data['button_delete'] = $this->language->get('button_delete');
         $this->data['headingTitle'] = $this->language->get('headingTitle');
         $this->data['paymillTotal'] = $this->model_custom_paymillLogging->getTotal();
         $this->data['paymillEntries'] = $this->model_custom_paymillLogging->getEntries();

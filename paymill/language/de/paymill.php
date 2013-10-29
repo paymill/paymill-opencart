@@ -16,6 +16,7 @@ $_['entry_logging'] = 'Logging:';
 $_['entry_debugging'] = 'Debug:';
 
 //Text
+$_['button_logging'] = 'Logging';
 $_['text_payment'] = 'Payment';
 $_['text_success'] = 'Erfolg: Sie haben ihre PAYMILL Account Details angepasst!';
 $_['paymill_accountholder'] = 'Kontoinhaber *';
