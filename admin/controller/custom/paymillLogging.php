@@ -7,9 +7,20 @@
  * @package    Expression package is undefined on line 6, column 18 in Templates/Scripting/PHPClass.php.
  * @copyright  Copyright (c) 2011 PayIntelligent GmbH (http://payintelligent.de)
  */
-class ControllercustompaymillLogging extends Controller{
+class ControllercustompaymillLogging extends Controller
+{
 
-    public function index(){
+    private function getPost($name, $default = null)
+    {
+        $value = $default;
+        if(isset($this->request->post[$name])){
+            $value = $this->request->post[$name];
+        }
+        return $value;
+    }
+
+    public function index()
+    {
         $this->load->model('custom/paymillLogging');
         $this->template = 'custom/paymillLogging.tpl';
         $this->language->load('custom/paymillLogging');
@@ -18,16 +29,28 @@ class ControllercustompaymillLogging extends Controller{
             'common/footer'
         );
 
+        $connectedSearch = $this->getPost("connectedSearch", "off");
+        $page = 0;
+
+
+        $this->data['paymillDebug'][] = $this->getPost("button", "search");
+        $this->data['paymillCheckboxConnectedSearch'] = $connectedSearch;
+        $searchValue = $this->getPost("searchValue", "");
 
         $this->document->setTitle($this->language->get('headingTitle'));
         $this->baseUrl = preg_replace("/\/index\.php/", "", $this->request->server['SCRIPT_NAME']);
 
         $this->data['breadcrumbs'] = $this->getBreadcrumbs();
         $this->data['button_delete'] = $this->language->get('button_delete');
+        $this->data['button_search'] = $this->language->get('button_search');
         $this->data['headingTitle'] = $this->language->get('headingTitle');
         $this->data['paymillTotal'] = $this->model_custom_paymillLogging->getTotal();
-        $this->data['paymillEntries'] = $this->model_custom_paymillLogging->getEntries();
+        $this->data['paymillEntries'] = $this->model_custom_paymillLogging->getEntries($page, $searchValue , $connectedSearch);
         $this->data['paymillCSS'] = $this->baseUrl . '/../catalog/view/theme/default/stylesheet/paymill_styles.css';
+        $this->data['paymillJS'] = $this->baseUrl . '/../catalog/view/javascript/paymill/loggingOverview.js';
+
+        $this->data['paymillAction'] = $this->url->link('custom/paymillLogging', 'token=' . $this->session->data['token'], 'SSL');
+
         $this->response->setOutput($this->render());
     }
 
@@ -47,4 +70,5 @@ class ControllercustompaymillLogging extends Controller{
         );
         return $breadcrumbs;
     }
+
 }

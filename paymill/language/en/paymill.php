@@ -18,6 +18,7 @@ $_['entry_debugging'] = 'Debug:';
 
 //Text
 $_['button_logging'] = 'Logging';
+$_['button_search'] = 'Search';
 $_['text_payment'] = 'Payment';
 $_['text_success'] = 'Success: You have modified your Paymill account details!';
 $_['paymill_accountholder'] = 'Accountholder *';
