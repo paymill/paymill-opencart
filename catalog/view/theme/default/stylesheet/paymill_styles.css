@@ -73,3 +73,13 @@
 {
     background: url('../image/payment/32x20_discover.png') no-repeat center right !important;
 }
+
+#paymillDetail{
+    border: black solid 1px;
+    position: absolute;
+    top: 25%;
+    left: 40%;
+    width: 400px;
+    background-color: white;
+    z-index: 100;
+}

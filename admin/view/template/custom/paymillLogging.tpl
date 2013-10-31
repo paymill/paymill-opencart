@@ -1,4 +1,5 @@
 <?php echo $header; ?>
+
 <link rel="stylesheet" type="text/css" href="<?php echo $paymillCSS; ?>" />
 <script type="text/javascript" src="<?php echo $paymillJS; ?>"></script>
 <div id="content">
@@ -8,6 +9,7 @@
         <?php } ?>
     </div>
     <form method="POST" action="<?php echo $paymillAction;?>" enctype="multipart/form-data" id="paymillForm">
+        <input type='hidden' name='page' value='<?php echo $paymillPage; ?>'/>
         <div class="box">
             <div class="left"></div>
             <div class="right"></div>
@@ -18,9 +20,9 @@
                 </h1>
 
                 <div class="buttons">
-                    <input type="search" name="searchValue">
+                    <input type="search" name="searchValue" value="<?php echo $paymillInputSearch;?>">
                     <input type="checkbox" name="connectedSearch" <?php if($paymillCheckboxConnectedSearch === "on"){ echo "checked"; }?> > Include connected Logs
-                    <a onclick="submitForm('search');" class="button">
+                           <a onclick="submitForm('search');" class="button">
                         <span><?php echo $button_search; ?></span>
                     </a>
                     <a onclick="submitForm('delete');" class="button">
@@ -29,8 +31,16 @@
                 </div>
             </div>
             <div class="content">
-                <?php var_dump($paymillTotal); ?>
-                <?php var_dump($paymillDebug); ?>
+                <?php for($i=0;$i < $paymillMaxPages; $i++){
+                echo "<a onclick='ChangePage($i);' class='button'>";
+                echo "<span>";
+                echo $i+1;
+                echo "</span>";
+                echo "</a>";
+                } ?>
+                <span id="paymillDetail">
+
+                </span>
                 <table class="list">
                     <thead>
                         <tr>
@@ -51,8 +61,14 @@
                         <td class="left"><?php echo $row['date']; ?></td>
                         <td class="left"><?php echo $row['identifier']; ?></td>
                         <td class="left"><?php echo $row['message']; ?></td>
-                        <?php if(strlen($row['debug']) > 100){ ?>
-                        <td class="left">INSERT SEE MORE LINK HERE</td>
+                        <?php if(strlen($row['debug']) > 200){ ?>
+                        <td class="left">
+                            <?php
+                            echo "<a onclick='showDetails(\"".urlencode($row['debug'])."\");' class='button'>";
+                            echo "<span>TEST</span>";
+                            echo "</a>";
+                            ?>
+                        </td>
                         <?php }else{ ?>
                         <td><pre><?php echo $row['debug']; ?></pre></td>
                         <?php } ?>

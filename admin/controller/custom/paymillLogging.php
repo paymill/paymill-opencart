@@ -29,23 +29,32 @@ class ControllercustompaymillLogging extends Controller
             'common/footer'
         );
 
+        //Get Post Vars
         $connectedSearch = $this->getPost("connectedSearch", "off");
-        $page = 0;
-
-
-        $this->data['paymillDebug'][] = $this->getPost("button", "search");
-        $this->data['paymillCheckboxConnectedSearch'] = $connectedSearch;
         $searchValue = $this->getPost("searchValue", "");
+        $page = (int)$this->getPost("page", 0);
+        $selectedIds = $this->getPost("selected");
 
+        if($this->getPost("button", "search") === "delete" && is_array($selectedIds)){
+            //kill those ids with fire!
+            $this->model_custom_paymillLogging->deleteEntries($selectedIds);
+        }
+
+
+        $this->model_custom_paymillLogging->setSearchValue($searchValue);
+        $this->model_custom_paymillLogging->setConnectedSearch($connectedSearch);
+        $this->data['paymillMaxPages'] = ceil($this->model_custom_paymillLogging->getTotal() / $this->model_custom_paymillLogging->getPageSize());
+        $this->data['paymillEntries'] = $this->model_custom_paymillLogging->getEntries($page);
+        $this->data['paymillInputSearch'] = $searchValue;
+        $this->data['paymillCheckboxConnectedSearch'] = $connectedSearch;
+        $this->data['paymillPage'] = $page;
+        
         $this->document->setTitle($this->language->get('headingTitle'));
         $this->baseUrl = preg_replace("/\/index\.php/", "", $this->request->server['SCRIPT_NAME']);
-
         $this->data['breadcrumbs'] = $this->getBreadcrumbs();
         $this->data['button_delete'] = $this->language->get('button_delete');
         $this->data['button_search'] = $this->language->get('button_search');
         $this->data['headingTitle'] = $this->language->get('headingTitle');
-        $this->data['paymillTotal'] = $this->model_custom_paymillLogging->getTotal();
-        $this->data['paymillEntries'] = $this->model_custom_paymillLogging->getEntries($page, $searchValue , $connectedSearch);
         $this->data['paymillCSS'] = $this->baseUrl . '/../catalog/view/theme/default/stylesheet/paymill_styles.css';
         $this->data['paymillJS'] = $this->baseUrl . '/../catalog/view/javascript/paymill/loggingOverview.js';
 

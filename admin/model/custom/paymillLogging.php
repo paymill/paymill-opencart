@@ -11,39 +11,61 @@ class ModelCustompaymillLogging extends Model
 {
 
     private $_pageSize = 10;
+    private $_searchValue;
+    private $_connectedSearch;
+
+    public function getPageSize()
+    {
+        return $this->_pageSize;
+    }
+
+    public function setSearchValue($string)
+    {
+        $this->_searchValue = $string;
+    }
+
+    public function setConnectedSearch($string)
+    {
+        $this->_connectedSearch = $string === "on";
+    }
 
     public function getTotal()
     {
         $sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "pigmbh_paymill_logging`";
-        $query = $this->db->query($sql);
+        $where = $this->_getWhereForSearch();
+        $query = $this->db->query($sql . $where);
         return (int) $query->row["total"];
     }
 
-    public function getEntries($page, $searchValue, $connectedSearch)
+    public function getEntries($page)
     {
-        // TODO: PDO nutzen, das unten kann man doch keinem zumuten >_<
         $sql = "SELECT * FROM `" . DB_PREFIX . "pigmbh_paymill_logging`";
-        $where = '';
-        if (!is_null($searchValue)) {
-            $where = ' WHERE `date` LIKE "%' . $searchValue . '%"'
-                . ' OR `message` LIKE "%' . $searchValue . '%"'
-                . ' OR `debug` LIKE "%' . $searchValue . '%"'
-                . ' OR `identifier` LIKE "%' . $searchValue . '%"';
+        $where = $this->_getWhereForSearch();
+        $limit = '';
+        // no Limit for connected Search.
+        if (!$this->_connectedSearch) {
+            $start = $page * $this->_pageSize;
+            $limit = ' LIMIT ' . $start . ',' . $this->_pageSize;
         }
+        $query = $this->db->query($sql . $where . $limit);
+        return $query->rows;
+    }
 
-
-        if ($connectedSearch === "on" && !is_null($searchValue)) {
+    private function _getWhereForSearch()
+    {
+        $where = ' WHERE `date` LIKE "%' . $this->_searchValue . '%"'
+            . ' OR `message` LIKE "%' . $this->_searchValue . '%"'
+            . ' OR `debug` LIKE "%' . $this->_searchValue . '%"'
+            . ' OR `identifier` LIKE "%' . $this->_searchValue . '%"';
+        if ($this->_connectedSearch && !is_null($this->_searchValue)) {
             $where = ' WHERE `identifier`= (' . "SELECT `identifier` FROM `" . DB_PREFIX . "pigmbh_paymill_logging`" . $where . ' LIMIT 0,1)';
         }
-        $sql .= $where;
-        if ($connectedSearch === "on" && !is_null($searchValue)) {
-            $start = $page * $this->_pageSize;
-            $sql .= ' LIMIT ' . $start . ',' . $this->_pageSize;
-        }
+        return $where;
+    }
 
-
-        $query = $this->db->query($sql);
-        return $query->rows;
+    public function deleteEntries(array $ids){
+        $sql = "DELETE FROM `" . DB_PREFIX . "pigmbh_paymill_logging` WHERE `id` in(".implode(", ", $ids).")";
+        $this->db->query($sql);
     }
 
 }
