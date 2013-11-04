@@ -138,6 +138,9 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
 
         $this->data['paymill_activepayment'] = $this->getPaymentName();
         $this->template = 'default/template/payment/paymill.tpl';
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paymill.tpl')) {
+            $this->template = DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paymill.tpl';
+        }
 
         $this->render();
     }
@@ -152,10 +155,10 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
 
         // check if token present
         if (empty($paymillToken)) {
-            $this->log("No paymill token was provided. Redirect to payments page." ,'');
+            $this->log("No paymill token was provided. Redirect to payments page.", '');
             $this->redirect($this->url->link('checkout/checkout'));
         } else {
-            $this->log("Start processing payment with token." , $paymillToken);
+            $this->log("Start processing payment with token.", $paymillToken);
             $this->load->model('checkout/order');
             $this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
@@ -209,7 +212,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
 
             // finish the order if payment was sucessfully processed
             if ($result === true) {
-                $this->log("Finish order." ,'');
+                $this->log("Finish order.", '');
                 $this->_saveUserData($this->customer->getId(), $paymentProcessor->getClientId(), $paymentProcessor->getPaymentId());
                 $this->model_checkout_order->confirm(
                     $this->session->data['order_id'], $this->config->get('config_complete_status_id'), '', true
