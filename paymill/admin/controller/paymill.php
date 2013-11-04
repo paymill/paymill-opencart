@@ -39,7 +39,7 @@ abstract class ControllerPaymentPaymill extends Controller
 
             if ($this->getPaymentName() === "paymillcreditcard") {
                 $newConfig[$this->getPaymentName() . '_different_amount'] = number_format($this->request->post['paymill_differnet_amount'], 2, '.', '');
-            }else{
+            } else {
                 $newConfig[$this->getPaymentName() . '_different_amount'] = number_format("0.00", 2, '.', '');
             }
 
@@ -135,6 +135,9 @@ abstract class ControllerPaymentPaymill extends Controller
     protected function validate()
     {
         $validation = true;
+        $publickey = $this->request->post['paymill_publickey'];
+        $privatekey = $this->request->post['paymill_privatekey'];
+
         if (!$this->user->hasPermission('modify', 'payment/' . $this->getPaymentName())) {
             $this->data['error_warning'] = $this->language->get('error_permission');
             $validation = false;
@@ -145,6 +148,16 @@ abstract class ControllerPaymentPaymill extends Controller
                 $this->data['error_warning'] = $this->language->get('error_different_amount');
                 $validation = false;
             }
+        }
+
+        if (empty($publickey)) {
+            $this->data['error_warning'] = $this->language->get('error_missing_publickey');
+            $validation = false;
+        }
+
+        if (empty($privatekey)) {
+            $this->data['error_warning'] = $this->language->get('error_missing_privatekey');
+            $validation = false;
         }
         return $validation;
     }
@@ -172,7 +185,6 @@ abstract class ControllerPaymentPaymill extends Controller
             . "`date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,"
             . "PRIMARY KEY (`id`)"
             . ") AUTO_INCREMENT=1");
-
     }
 
     public function uninstall()

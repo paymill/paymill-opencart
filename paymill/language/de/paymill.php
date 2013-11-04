@@ -42,6 +42,8 @@ $_['text_payment_paymillcreditcard_detail'] = 'Kreditkartenzahlung';
 // Error
 $_['error_permission'] = 'Warnung: Sie haben nicht die Rechte PAYMILL anzupassen!';
 $_['error_different_amount'] = 'Warning: 3DSecure Toleranz muss eine valide Zahl sein!';
+$_['error_missing_publickey'] = 'Warning: Bitte hinterlegen Sie den Publickey!';
+$_['error_missing_privatekey'] = 'Warning: Bitte hinterlegen Sie den Privatekey!';
 
 $_['date_month'] = array(
     "Januar", "Februar", "M&auml;rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"
