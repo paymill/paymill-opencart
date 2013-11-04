@@ -28,18 +28,26 @@
             <?php if($paymill_activepayment === 'paymillcreditcard'){ ?>
             <p class="none">
                 <label><?php echo $paymill_cardholder;?></label>
+            </p>
+            <p class="none">
                 <input id="paymill_card_holder" type="text" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['card_holder'])?$paymill_prefilled['card_holder']:$paymill_fullname;?>"/>
             </p>
             <p class="none">
                 <label><?php echo $paymill_cardnumber;?></label>
+            </p>
+            <p class="none">
                 <input id="paymill_card_number" type="text" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['last4'])? '**********'.$paymill_prefilled['last4']:'';?>"/>
             </p>
             <p class="none">
                 <label><?php echo $paymill_cvc;?></label>
+            </p>
+            <p class="none">
                 <input id="paymill_card_cvc" type="text" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['id'])?'***':'' ?>"/>
             </p>
             <p class="none">
                 <label><?php echo $paymill_birthday;?></label>
+            </p>
+            <p class="none">
                 <select id="paymill_card_expiry_year" class="paymill_select">
                 <?php
                 $prefilled = isset($paymill_prefilled['expire_year'])?$paymill_prefilled['expire_year']:null;
@@ -52,7 +60,7 @@
                 }
                 ?>
                 </select>
-                <span class="paymill_select_spacing"></span>
+                <span class="paymill_select_spacing">/</span>
                 <select id="paymill_card_expiry_month" class="paymill_select">
                 <?php
                 $prefilled = isset($paymill_prefilled['expire_month'])?$paymill_prefilled['expire_month']:null;
@@ -79,14 +87,20 @@
             <?php }elseif($paymill_activepayment === 'paymilldirectdebit'){ ?>
             <p class="none">
                 <label><?php echo $paymill_accountholder;?></label>
+            </p>
+            <p class="none">
                 <input id="paymill_accountholder" type="text" size="20" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['holder'])?$paymill_prefilled['holder']:$paymill_fullname; ?>"/>
             </p>
             <p class="none">
                 <label><?php echo $paymill_accountnumber;?></label>
+            </p>
+            <p class="none">
                 <input id="paymill_accountnumber" type="text" size="20" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['account'])?$paymill_prefilled['account']:''; ?>" />
             </p>
             <p class="none">
                 <label><?php echo $paymill_banknumber;?></label>
+            </p>
+            <p class="none">
                 <input id="paymill_banknumber" type="text" size="20" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['code'])?$paymill_prefilled['code']:''; ?>" />
             </p>
             <p class="description"><?php echo $paymill_description;?></p>
@@ -102,7 +116,7 @@
             <?php } ?>
         </div>
         <div class="buttons">
-            <input type="submit" class="button" id="paymill_submit" value="<?php echo $button_confirm; ?>">
+            <input type="submit" class="button paymill_confirm_button" id="paymill_submit" value="<?php echo $button_confirm; ?>">
         </div>
     </form>
 </div>

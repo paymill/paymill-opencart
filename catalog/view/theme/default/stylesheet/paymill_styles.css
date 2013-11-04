@@ -15,18 +15,18 @@
     text-decoration: underline;
 }
 .paymill_inputfield{
-    float:right;
     width:200px;
 }
 .paymill_select{
-    float:right;
     width:100px;
 }
 .paymill_select_spacing{
     width: 8px;
     display: inline-block;
-    float: right;
     height: 23px;
+}
+.paymill_confirm_button{
+    float:right;
 }
 
 .paymill_error{
