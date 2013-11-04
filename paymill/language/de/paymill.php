@@ -57,3 +57,12 @@ $_['error_javascript'] = array(
     "paymill_accountnumber" => "Bitte geben Sie eine g&uuml;ltige Kontonummer ein.",
     "paymill_banknumber" => "Bitte geben Sie eine g&uuml;ltige BLZ ein."
 );
+
+//Logging Overview
+$_['paymillTableHeadDate'] = "Datum";
+$_['paymillTableHeadID'] = "ID";
+$_['paymillTableHeadMessage'] = "Nachricht";
+$_['paymillTableHeadDebug'] = "Debug Info";
+$_['paymillTableHeadDetail'] = "Details";
+$_['paymillTableShowDetails'] = "Zeige Details";
+$_['paymillCheckboxConnectedSearch'] = "Zusammenh&auml;ngende Suche";

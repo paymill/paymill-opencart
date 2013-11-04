@@ -21,7 +21,7 @@
 
                 <div class="buttons">
                     <input type="search" name="searchValue" value="<?php echo $paymillInputSearch;?>">
-                    <input type="checkbox" name="connectedSearch" <?php if($paymillCheckboxConnectedSearch === "on"){ echo "checked"; }?> > Include connected Logs
+                    <input type="checkbox" name="connectedSearch" <?php if($paymillCheckboxConnectedSearch === "on"){ echo "checked"; }?> > <?php echo $paymillCheckboxConnectedSearch; ?>
                            <a onclick="submitForm('search');" class="button">
                         <span><?php echo $button_search; ?></span>
                     </a>
@@ -38,19 +38,16 @@
                 echo "</span>";
                 echo "</a>";
                 } ?>
-                <span id="paymillDetail">
-
-                </span>
                 <table class="list">
                     <thead>
                         <tr>
                             <td width="1" style="text-align: center;">
                                 <input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);">
                             </td>
-                            <td class="left">Datum</td>
-                            <td class="left">Identifier</td>
-                            <td class="left">Message</td>
-                            <td class="left">Debug</td>
+                            <td class="left"><?php echo $paymillTableHeadDate; ?></td>
+                            <td class="left"><?php echo $paymillTableHeadID; ?></td>
+                            <td class="left"><?php echo $paymillTableHeadMessage; ?></td>
+                            <td class="left"><?php echo $paymillTableHeadDebug; ?></td>
                         </tr>
                     </thead>
                     <?php foreach($paymillEntries as $id => $row){ ?>
@@ -65,7 +62,7 @@
                         <td class="left">
                             <?php
                             echo "<a onclick='showDetails(\"".urlencode($row['debug'])."\");' class='button'>";
-                            echo "<span>TEST</span>";
+                            echo "<span>$paymillTableShowDetails</span>";
                             echo "</a>";
                             ?>
                         </td>
@@ -74,6 +71,16 @@
                         <?php } ?>
                     </tr>
                     <?php } ?>
+                </table>
+                <table class="list" id="paymillDetail">
+                    <thead>
+                        <tr>
+                            <td><?php echo $paymillTableHeadDetail; ?></td>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td id="paymillDetailContent">&nbsp;</td>
+                    </tr>
                 </table>
             </div>
         </div>

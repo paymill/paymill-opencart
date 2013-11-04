@@ -48,22 +48,19 @@ class ControllercustompaymillLogging extends Controller
         $this->data['paymillInputSearch'] = $searchValue;
         $this->data['paymillCheckboxConnectedSearch'] = $connectedSearch;
         $this->data['paymillPage'] = $page;
-        
-        $this->document->setTitle($this->language->get('headingTitle'));
+
+
         $this->baseUrl = preg_replace("/\/index\.php/", "", $this->request->server['SCRIPT_NAME']);
-        $this->data['breadcrumbs'] = $this->getBreadcrumbs();
-        $this->data['button_delete'] = $this->language->get('button_delete');
-        $this->data['button_search'] = $this->language->get('button_search');
-        $this->data['headingTitle'] = $this->language->get('headingTitle');
+        $this->data['breadcrumbs'] = $this->_getBreadcrumbs();
         $this->data['paymillCSS'] = $this->baseUrl . '/../catalog/view/theme/default/stylesheet/paymill_styles.css';
         $this->data['paymillJS'] = $this->baseUrl . '/../catalog/view/javascript/paymill/loggingOverview.js';
-
         $this->data['paymillAction'] = $this->url->link('custom/paymillLogging', 'token=' . $this->session->data['token'], 'SSL');
 
+        $this->_loadTranslation();
         $this->response->setOutput($this->render());
     }
 
-    protected function getBreadcrumbs()
+    protected function _getBreadcrumbs()
     {
         $breadcrumbs = array();
         $breadcrumbs[] = array(
@@ -78,6 +75,20 @@ class ControllercustompaymillLogging extends Controller
             'separator' => ' :: '
         );
         return $breadcrumbs;
+    }
+
+    private function _loadTranslation(){
+        $this->document->setTitle($this->language->get('headingTitle'));
+        $this->data['button_delete'] = $this->language->get('button_delete');
+        $this->data['button_search'] = $this->language->get('button_search');
+        $this->data['headingTitle'] = $this->language->get('headingTitle');
+        $this->data['paymillTableHeadDate'] = $this->language->get('paymillTableHeadDate');
+        $this->data['paymillTableHeadID'] = $this->language->get('paymillTableHeadID');
+        $this->data['paymillTableHeadMessage'] = $this->language->get('paymillTableHeadMessage');
+        $this->data['paymillTableHeadDebug'] = $this->language->get('paymillTableHeadDebug');
+        $this->data['paymillTableHeadDetail'] = $this->language->get('paymillTableHeadDetail');
+        $this->data['paymillTableShowDetails'] = $this->language->get('paymillTableShowDetails');
+        $this->data['paymillCheckboxConnectedSearch'] = $this->language->get('paymillCheckboxConnectedSearch');
     }
 
 }

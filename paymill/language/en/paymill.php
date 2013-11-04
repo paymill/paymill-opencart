@@ -8,7 +8,6 @@ $_['button_viewcart'] = 'Show Cart';
 $_['entry_status'] = 'Plugin Activated:';
 $_['entry_publickey'] = 'Public Key:';
 $_['entry_privatekey'] = 'Private Key:';
-$_['entry_apiurl'] = 'ApiUrl:';
 $_['entry_sort_order'] = 'Sort Order:';
 $_['entry_different_amount'] = '3D Secure Tolerance:';
 $_['entry_fast_checkout'] = 'Fast Checkout:';
@@ -18,7 +17,6 @@ $_['entry_debugging'] = 'Debug:';
 
 //Text
 $_['button_logging'] = 'Logging';
-$_['button_search'] = 'Search';
 $_['text_payment'] = 'Payment';
 $_['text_success'] = 'Success: You have modified your Paymill account details!';
 $_['paymill_accountholder'] = 'Accountholder *';
@@ -45,7 +43,6 @@ $_['text_payment_paymillcreditcard_detail'] = 'PAYMILL Credit Card';
 $_['error_permission'] = 'Warning: You do not have permission to modify payment PAYMILL!';
 $_['error_different_amount'] = 'Warning: 3DSecure tolerance must be a valid number';
 
-
 $_['date_month'] = array(
     "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
 );
@@ -60,3 +57,12 @@ $_['error_javascript'] = array(
     "paymill_accountnumber" => "Please enter a valid accountnumber.",
     "paymill_banknumber" => "Please enter a valid bankcode."
 );
+
+//Logging Overview
+$_['paymillTableHeadDate'] = "Date";
+$_['paymillTableHeadID'] = "Identifier";
+$_['paymillTableHeadMessage'] = "Message";
+$_['paymillTableHeadDebug'] = "Debug";
+$_['paymillTableHeadDetail'] = "Details";
+$_['paymillTableShowDetails'] = "Show Details";
+$_['paymillCheckboxConnectedSearch'] = "Connected Search";

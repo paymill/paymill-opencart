@@ -10,7 +10,7 @@ function ChangePage(page) {
 
 function showDetails(info){
     info = decodeURIComponent(info);
-    info = info.replace(/\+/g, " ");
+    info = info.replace(/\+/g, "&nbsp;");
     info = info.replace(/\n/g, "<br>");
-    $("#paymillDetail").html(info);
+    $("#paymillDetailContent").html(info);
 }
