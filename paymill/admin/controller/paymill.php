@@ -37,12 +37,6 @@ abstract class ControllerPaymentPaymill extends Controller
             $newConfig[$this->getPaymentName() . '_logging'] = $this->request->post['paymill_logging'];
             $newConfig[$this->getPaymentName() . '_debugging'] = $this->request->post['paymill_debugging'];
 
-            if ($this->getPaymentName() === "paymillcreditcard") {
-                $newConfig[$this->getPaymentName() . '_different_amount'] = number_format($this->request->post['paymill_differnet_amount'], 2, '.', '');
-            } else {
-                $newConfig[$this->getPaymentName() . '_different_amount'] = number_format("0.00", 2, '.', '');
-            }
-
             $this->model_setting_setting->editSetting($this->getPaymentName(), $newConfig);
             $this->session->data['success'] = $this->language->get('text_success');
             $this->redirect($this->url->link('extension/payment', '&token=' . $this->session->data['token']));
@@ -85,12 +79,6 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_debugging'] = $this->getConfigValue($this->getPaymentName() . '_debugging');
         $this->data['paymill_logfile'] = file_get_contents(dirname(dirname(dirname(__FILE__))) . '/log/log.txt');
         $this->data['paymill_payment'] = $this->getPaymentName();
-
-        $this->data['paymill_different_amount'] = $this->getConfigValue($this->getPaymentName() . '_different_amount');
-        if ($this->getPaymentName() === "paymillcreditcard") {
-            $this->data['entry_different_amount'] = $this->language->get('entry_different_amount');
-            $this->data['paymill_different_amount'] = $this->getConfigValue($this->getPaymentName() . '_different_amount');
-        }
 
         $this->template = 'payment/' . $this->getPaymentName() . '.tpl';
         $this->children = array(

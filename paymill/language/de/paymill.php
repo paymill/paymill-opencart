@@ -9,7 +9,6 @@ $_['entry_status'] = 'Plugin aktiv:';
 $_['entry_publickey'] = 'Public Key:';
 $_['entry_privatekey'] = 'Private Key:';
 $_['entry_sort_order'] = 'Sortier Reihenfolge:';
-$_['entry_different_amount'] = '3D Secure Toleranz:';
 $_['entry_fast_checkout'] = 'Fast Checkout:';
 $_['entry_label'] = 'Label anzeigen:';
 $_['entry_logging'] = 'Logging:';
@@ -32,11 +31,9 @@ $_['paymill_description'] = "Die mit einem * markierten Felder sind Pflichtfelde
 $_['paymill_paymilllabel_cc'] = 'Sichere Kreditkartenzahlung';
 $_['paymill_paymilllabel_elv'] = 'ELV';
 
-$_['text_paymilldirectdebit'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
 $_['text_payment_paymilldirectdebit_title'] = 'ELV';
 $_['text_payment_paymilldirectdebit_detail'] = 'ELV';
 
-$_['text_paymillcreditcard'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
 $_['text_payment_paymillcreditcard_title'] = 'Kreditkartenzahlung';
 $_['text_payment_paymillcreditcard_detail'] = 'Kreditkartenzahlung';
 // Error

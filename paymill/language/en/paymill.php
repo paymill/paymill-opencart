@@ -9,7 +9,6 @@ $_['entry_status'] = 'Plugin Activated:';
 $_['entry_publickey'] = 'Public Key:';
 $_['entry_privatekey'] = 'Private Key:';
 $_['entry_sort_order'] = 'Sort Order:';
-$_['entry_different_amount'] = '3D Secure Tolerance:';
 $_['entry_fast_checkout'] = 'Fast Checkout:';
 $_['entry_label'] = 'Show Label:';
 $_['entry_logging'] = 'Logging:';
@@ -32,11 +31,9 @@ $_['paymill_description'] = "Fields marked with * are required";
 $_['paymill_paymilllabel_cc'] = 'Secure creditcard payments';
 $_['paymill_paymilllabel_elv'] = 'Directdebit payments';
 
-$_['text_paymilldirectdebit'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
 $_['text_payment_paymilldirectdebit_title'] = 'PAYMILL Direct Debit';
 $_['text_payment_paymilldirectdebit_detail'] = 'PAYMILL Direct Debit';
 
-$_['text_paymillcreditcard'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
 $_['text_payment_paymillcreditcard_title'] = 'PAYMILL Credit Card';
 $_['text_payment_paymillcreditcard_detail'] = 'PAYMILL Credit Card';
 // Error
