@@ -39,7 +39,7 @@ $(document).ready(function() {
                     if (PAYMILL_PAYMENT === "paymillcreditcard") {
                         params = {
                             number: $('#paymill_card_number').val(),
-                            cardholder: $('#paymill_account_holder').val(),
+                            cardholder: $('#paymill_card_holder').val(),
                             exp_month: $('#paymill_card_expiry_month').val(),
                             exp_year: $('#paymill_card_expiry_year').val(),
                             cvc: $('#paymill_card_cvc').val(),
@@ -57,7 +57,7 @@ $(document).ready(function() {
                 } catch (e) {
                     alert("Ein Fehler ist aufgetreten: " + e);
                 }
-            } 
+            }
         }
         return false;
     });

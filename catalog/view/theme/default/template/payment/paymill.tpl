@@ -48,19 +48,6 @@
                 <label><?php echo $paymill_birthday;?></label>
             </p>
             <p class="none">
-                <select id="paymill_card_expiry_year" class="paymill_select">
-                <?php
-                $prefilled = isset($paymill_prefilled['expire_year'])?$paymill_prefilled['expire_year']:null;
-                foreach($paymill_form_year as $year){
-                    if(!is_null($prefilled) && $prefilled == $year){
-                        echo "<option value=$year selected>$year</option>";
-                    }else{
-                        echo "<option value=$year>$year</option>";
-                    }
-                }
-                ?>
-                </select>
-                <span class="paymill_select_spacing">/</span>
                 <select id="paymill_card_expiry_month" class="paymill_select">
                 <?php
                 $prefilled = isset($paymill_prefilled['expire_month'])?$paymill_prefilled['expire_month']:null;
@@ -69,6 +56,19 @@
                         echo "<option value=$key selected>$month</option>";
                     }else{
                         echo "<option value=$key>$month</option>";
+                    }
+                }
+                ?>
+                </select>
+                <span class="paymill_select_spacing">/</span>
+                <select id="paymill_card_expiry_year" class="paymill_select">
+                <?php
+                $prefilled = isset($paymill_prefilled['expire_year'])?$paymill_prefilled['expire_year']:null;
+                foreach($paymill_form_year as $year){
+                    if(!is_null($prefilled) && $prefilled == $year){
+                        echo "<option value=$year selected>$year</option>";
+                    }else{
+                        echo "<option value=$year>$year</option>";
                     }
                 }
                 ?>

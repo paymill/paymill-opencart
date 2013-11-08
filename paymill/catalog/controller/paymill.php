@@ -230,8 +230,14 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
     {
         $table = $this->getDatabaseName();
         try {
-            if ($this->customer->getId() != null) {
-                $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $this->customer->getId());
+            if ($userId != null) {
+                $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $userId);
+
+                $this->log("USERDATA-userid" , $userId);
+                $this->log("USERDATA-client" , $clientId);
+                $this->log("USERDATA-payment" , $paymentId);
+                $this->log("USERDATA-row" , var_export($row,true));
+
                 $dataAvailable = $row->num_rows === 1;
                 if (!$dataAvailable) {
                     if ($this->config->get($this->getPaymentName() . '_fast_checkout')) {
