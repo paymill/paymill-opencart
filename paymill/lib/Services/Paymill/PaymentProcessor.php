@@ -258,12 +258,12 @@ class Services_Paymill_PaymentProcessor
         $this->_lastResponse = $paymillObject;
         if (isset($paymillObject['data']['response_code']) && $paymillObject['data']['response_code'] !== 20000) {
             $this->_log("An Error occured: " . $paymillObject['data']['response_code'], var_export($paymillObject, true));
-            throw new Exception("Invalid Result Exception: Invalid ResponseCode", $paymillObject['data']['response_code']);
+            throw new Exception("Invalid Result Exception: Invalid ResponseCode", (int)$paymillObject['data']['response_code']);
         }
-        
+
         if (isset($paymillObject['response_code']) && $paymillObject['response_code'] !== 20000) {
             $this->_log("An Error occured: " . $paymillObject['response_code'], var_export($paymillObject, true));
-            throw new Exception("Invalid Result Exception: Invalid ResponseCode", $paymillObject['response_code']);
+            throw new Exception("Invalid Result Exception: Invalid ResponseCode", (int)$paymillObject['response_code']);
         }
 
         if (!isset($paymillObject['id']) && !isset($paymillObject['data']['id'])) {
@@ -430,7 +430,7 @@ class Services_Paymill_PaymentProcessor
     {
         return $this->_lastResponse;
     }
-    
+
     public function getErrorCode()
     {
         return $this->_errorCode;

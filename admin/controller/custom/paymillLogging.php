@@ -36,7 +36,6 @@ class ControllercustompaymillLogging extends Controller
         $selectedIds = $this->getPost("selected");
 
         if($this->getPost("button", "search") === "delete" && is_array($selectedIds)){
-            //kill those ids with fire!
             $this->model_custom_paymillLogging->deleteEntries($selectedIds);
         }
 

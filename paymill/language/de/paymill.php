@@ -16,6 +16,7 @@ $_['entry_debugging'] = 'Debug:';
 
 //Text
 $_['button_logging'] = 'Logging';
+$_['button_search'] = 'Suchen';
 $_['text_payment'] = 'Payment';
 $_['text_success'] = 'Erfolg: Sie haben ihre PAYMILL Account Details angepasst!';
 $_['paymill_accountholder'] = 'Kontoinhaber *';
@@ -33,9 +34,13 @@ $_['paymill_paymilllabel_elv'] = 'ELV';
 
 $_['text_payment_paymilldirectdebit_title'] = 'ELV';
 $_['text_payment_paymilldirectdebit_detail'] = 'ELV';
+$_['text_paymilldirectdebit'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
+
 
 $_['text_payment_paymillcreditcard_title'] = 'Kreditkartenzahlung';
 $_['text_payment_paymillcreditcard_detail'] = 'Kreditkartenzahlung';
+$_['text_paymillcreditcard'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
+
 // Error
 $_['error_permission'] = 'Warnung: Sie haben nicht die Rechte PAYMILL anzupassen!';
 $_['error_different_amount'] = 'Warning: 3DSecure Toleranz muss eine valide Zahl sein!';

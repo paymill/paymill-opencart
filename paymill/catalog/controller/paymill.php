@@ -192,12 +192,14 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                     $clientObject = new Services_Paymill_Clients($privateKey, 'https://api.paymill.com/v2/');
                     $client = $clientObject->getOne($row->row['clientId']);
                     $paymentProcessor->setClientId($row->row['clientId']);
-                    if ($client['email'] !== $this->order_info['email']) {
-                        $clientObject->update(array(
-                            'id' => $row->row['clientId'],
-                            'email' => $this->order_info['email'],
-                        ));
-                        $this->log("Client-mail has been changed. Client updated", $this->order_info['email']);
+                    if (array_key_exists('email', $client)) {
+                        if ($client['email'] !== $this->order_info['email']) {
+                            $clientObject->update(array(
+                                'id' => $row->row['clientId'],
+                                'email' => $this->order_info['email'],
+                            ));
+                            $this->log("Client-mail has been changed. Client updated", $this->order_info['email']);
+                        }
                     }
                 }
             }
@@ -258,7 +260,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
     public function log($message, $debuginfo)
     {
         if ($this->config->get($this->getPaymentName() . '_logging')) {
-            $this->db->query("INSERT INTO `pigmbh_paymill_logging` (`identifier`,`debug`,`message`) VALUES ('" . $this->_logId . "', '" . $debuginfo . "', '" . $message . "')");
+            $this->db->query("INSERT INTO `pigmbh_paymill_logging` (`identifier`,`debug`,`message`) VALUES ('" . $this->_logId . "', '" . $this->db->escape($debuginfo) . "', '" . $this->db->escape($message) . "')");
         }
     }
 
@@ -276,7 +278,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
 
         $this->data['error_message'] = $this->session->data['error_message'];
         $this->template = 'default/template/payment/paymill_error.tpl';
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/paymill_error.tpl')) {
+        if (file_exists($this->config->get('config_template') . '/template/payment/paymill_error.tpl')) {
             $this->template = $this->config->get('config_template') . '/template/payment/paymill_error.tpl';
         }
 

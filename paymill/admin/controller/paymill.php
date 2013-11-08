@@ -165,7 +165,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->load->model('setting/setting');
         $this->model_setting_setting->editSetting($this->getPaymentName(), $config);
 
-        $this->db->query("CREATE TABLE IF NOT EXISTS `pigmbh_paymill_logging` ("
+        $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "pigmbh_paymill_logging` ("
             . "`id` int(11) NOT NULL AUTO_INCREMENT,"
             . "`identifier` text NOT NULL,"
             . "`debug` text NOT NULL,"

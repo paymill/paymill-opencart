@@ -16,6 +16,7 @@ $_['entry_debugging'] = 'Debug:';
 
 //Text
 $_['button_logging'] = 'Logging';
+$_['button_search'] = 'Search';
 $_['text_payment'] = 'Payment';
 $_['text_success'] = 'Success: You have modified your Paymill account details!';
 $_['paymill_accountholder'] = 'Accountholder *';
@@ -31,11 +32,15 @@ $_['paymill_description'] = "Fields marked with * are required";
 $_['paymill_paymilllabel_cc'] = 'Secure creditcard payments';
 $_['paymill_paymilllabel_elv'] = 'Directdebit payments';
 
-$_['text_payment_paymilldirectdebit_title'] = 'PAYMILL Direct Debit';
-$_['text_payment_paymilldirectdebit_detail'] = 'PAYMILL Direct Debit';
+$_['text_payment_paymilldirectdebit_title'] = 'Direct Debit';
+$_['text_payment_paymilldirectdebit_detail'] = 'Direct Debit';
+$_['text_paymilldirectdebit'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
 
-$_['text_payment_paymillcreditcard_title'] = 'PAYMILL Credit Card';
-$_['text_payment_paymillcreditcard_detail'] = 'PAYMILL Credit Card';
+
+$_['text_payment_paymillcreditcard_title'] = 'Credit Card';
+$_['text_payment_paymillcreditcard_detail'] = 'Credit Card';
+$_['text_paymillcreditcard'] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
+
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify payment PAYMILL!';
 $_['error_different_amount'] = 'Warning: 3DSecure tolerance must be a valid number';
