@@ -33,9 +33,9 @@ abstract class ControllerPaymentPaymill extends Controller
             $newConfig[$this->getPaymentName() . '_privatekey'] = trim($this->request->post['paymill_privatekey']);
             $newConfig[$this->getPaymentName() . '_sort_order'] = $this->request->post['paymill_sort_order'];
             $newConfig[$this->getPaymentName() . '_fast_checkout'] = $this->request->post['paymill_fast_checkout'];
-            $newConfig[$this->getPaymentName() . '_label'] = $this->request->post['paymill_label'];
             $newConfig[$this->getPaymentName() . '_logging'] = $this->request->post['paymill_logging'];
             $newConfig[$this->getPaymentName() . '_debugging'] = $this->request->post['paymill_debugging'];
+            $newConfig[$this->getPaymentName() . '_buttonSolution'] = $this->request->post['paymill_buttonSolution'];
 
             $this->model_setting_setting->editSetting($this->getPaymentName(), $newConfig);
             $this->session->data['success'] = $this->language->get('text_success');
@@ -57,9 +57,9 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['entry_privatekey'] = $this->language->get('entry_privatekey');
         $this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
         $this->data['entry_fast_checkout'] = $this->language->get('entry_fast_checkout');
-        $this->data['entry_label'] = $this->language->get('entry_label');
         $this->data['entry_logging'] = $this->language->get('entry_logging');
         $this->data['entry_debugging'] = $this->language->get('entry_debugging');
+        $this->data['entry_buttonSolution'] = $this->language->get('entry_buttonSolution');
 
         $this->data['button_save'] = $this->language->get('button_save');
         $this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -74,10 +74,9 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_privatekey'] = $this->getConfigValue($this->getPaymentName() . '_privatekey');
         $this->data['paymill_sort_order'] = $this->getConfigValue($this->getPaymentName() . '_sort_order');
         $this->data['paymill_fast_checkout'] = $this->getConfigValue($this->getPaymentName() . '_fast_checkout');
-        $this->data['paymill_label'] = $this->getConfigValue($this->getPaymentName() . '_label');
         $this->data['paymill_logging'] = $this->getConfigValue($this->getPaymentName() . '_logging');
         $this->data['paymill_debugging'] = $this->getConfigValue($this->getPaymentName() . '_debugging');
-        $this->data['paymill_logfile'] = file_get_contents(dirname(dirname(dirname(__FILE__))) . '/log/log.txt');
+        $this->data['paymill_buttonSolution'] = $this->getConfigValue($this->getPaymentName() . '_buttonSolution');
         $this->data['paymill_payment'] = $this->getPaymentName();
 
         $this->template = 'payment/' . $this->getPaymentName() . '.tpl';
@@ -159,8 +158,8 @@ abstract class ControllerPaymentPaymill extends Controller
         $config[$this->getPaymentName() . '_fast_checkout'] = '0';
         $config[$this->getPaymentName() . '_different_amount'] = '0.00';
         $config[$this->getPaymentName() . '_logging'] = '1';
-        $config[$this->getPaymentName() . '_label'] = '1';
         $config[$this->getPaymentName() . '_debugging'] = '1';
+        $config[$this->getPaymentName() . '_buttonSolution'] = '0';
 
         $this->load->model('setting/setting');
         $this->model_setting_setting->editSetting($this->getPaymentName(), $config);

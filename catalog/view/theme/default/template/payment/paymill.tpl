@@ -23,6 +23,12 @@
 
 <div class="right">
     <form id='paymill_form' action="<?php echo $paymill_form_action; ?>" method="POST">
+        <?php if($paymill_buttonSolution){ ?>
+        <div class="buttons">
+            <input type="submit" class="button paymill_confirm_button" id="paymill_submit" value="<?php echo $button_confirm; ?>">
+        </div>
+        <?php } ?>
+        <div class="right">
         <div id="paymill_errors" style="display: none"></div>
         <div class="debit">
             <?php if($paymill_activepayment === 'paymillcreditcard'){ ?>
@@ -75,15 +81,6 @@
                 </select>
             </p>
             <p class="description"><?php echo $paymill_description;?></p>
-                <?php if($paymill_label){ ?>
-                <p>
-                <div class="paymill_powered">
-                    <div class="paymill_credits">
-                        <?php echo $paymill_paymilllabel_cc;?> powered by <a href="http://www.paymill.de" target="_blank">PAYMILL</a>
-                    </div>
-                </div>
-                </p>
-                <?php } ?>
             <?php }elseif($paymill_activepayment === 'paymilldirectdebit'){ ?>
             <p class="none">
                 <label><?php echo $paymill_accountholder;?></label>
@@ -104,19 +101,13 @@
                 <input id="paymill_banknumber" type="text" size="20" class="paymill_inputfield" value="<?php echo isset($paymill_prefilled['code'])?$paymill_prefilled['code']:''; ?>" />
             </p>
             <p class="description"><?php echo $paymill_description;?></p>
-                <?php if($paymill_label){ ?>
-                <p>
-                <div class="paymill_powered">
-                    <div class="paymill_credits">
-                        <?php echo $paymill_paymilllabel_elv;?> powered by <a href="http://www.paymill.de" target="_blank">PAYMILL</a>
-                    </div>
-                </div>
-                </p>
-                <?php } ?>
             <?php } ?>
         </div>
+        </div>
+        <?php if(!$paymill_buttonSolution){ ?>
         <div class="buttons">
             <input type="submit" class="button paymill_confirm_button" id="paymill_submit" value="<?php echo $button_confirm; ?>">
         </div>
+        <?php } ?>
     </form>
 </div>

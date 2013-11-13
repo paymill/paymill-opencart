@@ -13,6 +13,7 @@ $_['entry_fast_checkout'] = 'Fast Checkout:';
 $_['entry_label'] = 'Label anzeigen:';
 $_['entry_logging'] = 'Logging:';
 $_['entry_debugging'] = 'Debug:';
+$_['entry_buttonSolution'] = 'Buttonlösung(TrustedShops):';
 
 //Text
 $_['button_logging'] = 'Logging';

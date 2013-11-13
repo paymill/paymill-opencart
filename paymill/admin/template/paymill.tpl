@@ -66,15 +66,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $entry_label; ?></td>
-                        <td>
-                            <select name="paymill_label">
-                                <option value="1" <?php if ($paymill_label) { echo 'selected="selected"';}?>> <?php echo $text_enabled; ?></option>
-                                <option value="0" <?php if (!$paymill_label) { echo 'selected="selected"';}?>> <?php echo $text_disabled; ?></option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
                         <td><?php echo $entry_logging; ?></td>
                         <td>
                             <select name="paymill_logging">
@@ -93,8 +84,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2">
-                            <textarea style="width:1000px;" rows="15" readonly /><?php echo $paymill_logfile; ?></textarea>
+                        <td><?php echo $entry_buttonSolution; ?></td>
+                        <td>
+                            <select name="paymill_buttonSolution">
+                                <option value="1" <?php if ($paymill_buttonSolution) { echo 'selected="selected"';}?>> <?php echo $text_enabled; ?></option>
+                                <option value="0" <?php if (!$paymill_buttonSolution) { echo 'selected="selected"';}?>> <?php echo $text_disabled; ?></option>
+                            </select>
                         </td>
                     </tr>
                 </table>
