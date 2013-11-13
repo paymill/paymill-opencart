@@ -233,10 +233,10 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             if ($userId != null) {
                 $row = $this->db->query("SELECT `clientId`, `paymentId` FROM $table WHERE `userId`=" . $userId);
 
-                $this->log("USERDATA-userid" , $userId);
-                $this->log("USERDATA-client" , $clientId);
-                $this->log("USERDATA-payment" , $paymentId);
-                $this->log("USERDATA-row" , var_export($row,true));
+                $this->log("USERDATA-userid", $userId);
+                $this->log("USERDATA-client", $clientId);
+                $this->log("USERDATA-payment", $paymentId);
+                $this->log("USERDATA-row", var_export($row, true));
 
                 $dataAvailable = $row->num_rows === 1;
                 if (!$dataAvailable) {
@@ -266,7 +266,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
     public function log($message, $debuginfo)
     {
         if ($this->config->get($this->getPaymentName() . '_logging')) {
-            $this->db->query("INSERT INTO `pigmbh_paymill_logging` (`identifier`,`debug`,`message`) VALUES ('" . $this->_logId . "', '" . $this->db->escape($debuginfo) . "', '" . $this->db->escape($message) . "')");
+            $this->db->query("INSERT INTO `" . DB_PREFIX . "pigmbh_paymill_logging` (`identifier`,`debug`,`message`) VALUES ('" . $this->_logId . "', '" . $this->db->escape($debuginfo) . "', '" . $this->db->escape($message) . "')");
         }
     }
 
