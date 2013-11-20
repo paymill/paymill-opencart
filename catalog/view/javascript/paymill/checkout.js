@@ -76,57 +76,59 @@ function getFormData(array, ignoreEmptyValues) {
 
 function validate() {
     debug("Paymill handler triggered");
-    $(".paymill_error").remove();
+    $(".field-error").removeClass('field-error').animate(300);
     var result = true;
     var field = new Array();
-    var message = new Array();
+    var message = '';
     if (PAYMILL_PAYMENT === "paymillcreditcard") {
         if (paymill.cardType($('#paymill_card_number').val()).toLowerCase() === 'maestro' && (!$('#paymill_card_cvc').val() || $('#paymill_card_cvc').val() === "000")) {
             $('#paymill_card_cvc').val('000');
         } else if (!paymill.validateCvc($('#paymill_card_cvc').val())) {
             field.push($('#paymill_card_cvc'));
-            message.push(PAYMILL_TRANSLATION.paymill_card_cvc);
-            result = false;
-        }
-        if (!paymill.validateCardNumber($('#paymill_card_number').val())) {
-            field.push($('#paymill_card_number'));
-            message.push(PAYMILL_TRANSLATION.paymill_card_number);
-            result = false;
-        }
-        if (!paymill.validateExpiry($('#paymill_card_expiry_month').val(), $('#paymill_card_expiry_year').val())) {
-            field.push($('#paymill_card_expiry_month'));
-            message.push(PAYMILL_TRANSLATION.paymill_card_expiry_date);
+            message = PAYMILL_TRANSLATION.paymill_card_cvc;
             result = false;
         }
         if (!paymill.validateHolder($('#paymill_card_holder').val())) {
             field.push($('#paymill_card_holder'));
-            message.push(PAYMILL_TRANSLATION.paymill_card_holder);
+            message = PAYMILL_TRANSLATION.paymill_card_holder;
+            result = false;
+        }
+        if (!paymill.validateExpiry($('#paymill_card_expiry_month').val(), $('#paymill_card_expiry_year').val())) {
+            field.push($('#paymill_card_expiry_month'));
+            message = PAYMILL_TRANSLATION.paymill_card_expiry_date;
+            result = false;
+        }
+        if (!paymill.validateCardNumber($('#paymill_card_number').val())) {
+            field.push($('#paymill_card_number'));
+            message = PAYMILL_TRANSLATION.paymill_card_number;
             result = false;
         }
     } else if (PAYMILL_PAYMENT === "paymilldirectdebit") {
         if (!paymill.validateHolder($('#paymill_accountholder').val())) {
             field.push($('#paymill_accountholder'));
-            message.push(PAYMILL_TRANSLATION.paymill_accountholder);
-            result = false;
-        }
-        if (!paymill.validateAccountNumber($('#paymill_accountnumber').val())) {
-            field.push($('#paymill_accountnumber'));
-            message.push(PAYMILL_TRANSLATION.paymill_accountnumber);
+            message = PAYMILL_TRANSLATION.paymill_accountholder;
             result = false;
         }
         if (!paymill.validateBankCode($('#paymill_banknumber').val())) {
             field.push($('#paymill_banknumber'));
-            message.push(PAYMILL_TRANSLATION.paymill_banknumber);
+            message = PAYMILL_TRANSLATION.paymill_banknumber;
+            result = false;
+        }
+        if (!paymill.validateAccountNumber($('#paymill_accountnumber').val())) {
+            field.push($('#paymill_accountnumber'));
+            message = PAYMILL_TRANSLATION.paymill_accountnumber;
             result = false;
         }
     }
     if (!result) {
-        $("#paymill_submit").removeAttr('disabled');
         for (var i = 0; i < field.length; i++) {
-            field[i].after("<div class='paymill_error warning'>" + message[i] + "</div>");
+            field[i].addClass('field-error');
         }
-        $(".paymill_error").fadeIn(800);
+        $("#paymill_submit").removeAttr('disabled');
+        $(".paymill_error").html(message);
+        $(".paymill_error").show(500);
     } else {
+        $(".paymill_error").hide(800);
         debug("Validations successful");
     }
     return result;

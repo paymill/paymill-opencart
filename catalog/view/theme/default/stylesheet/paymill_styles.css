@@ -1,31 +1,65 @@
-.paymill_powered {
-    border: 1px solid #ccc;
-    padding: 4px;
-    background: white url('../image/payment/paymill_icon.png') no-repeat center right;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    margin-top: 10px;
+#paymill_form {
+    float: right;
+    width: 365px;
 }
-.paymill_powered > .paymill_credits {
-    width: 160px;
-    color: #666;
+#paymill_form input[type="text"] {
+    position: absolute;
+    padding: 7px;
+    top: 20px;
+    height: 24px;
+    font-family: inherit;
+    font-size: 15px;
+    color: #6d7578;
+    background: #eaeff1;
+    border: 1px solid #bdc5c8;
+    border-radius: 4px;
+    box-shadow: inset 0 2px 2px #dde2e4;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
 }
-.paymill_powered > a {
-    color: #666;
-    text-decoration: underline;
+
+#paymill_form input[type="text"]:focus {
+    border-color: #6d7578;
+    outline: none;
+    color: #424a4d;
 }
-.paymill_inputfield{
-    width:200px;
+
+#paymill_form .field-error {
+    border-color: #FF0000 !important;
 }
-.paymill_select{
-    width:100px;
+
+#paymill_form .field-left {
+    width: 180px;
+    left: 0px;
 }
-.paymill_select_spacing{
-    width: 8px;
-    display: inline-block;
-    height: 23px;
+
+#paymill_form .field-right {
+    left: 240px;
+    width: 100px;
 }
-.paymill_confirm_button{
+
+#paymill_form .field-full {
+    width: 340px;
+    left: 0px;
+}
+
+
+#paymill_form fieldset {
+    position: relative;
+    border: none;
+    height: 70px;
+}
+
+#paymill_form label {
+    position: absolute;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+#paymill_form .paymill_confirm_button{
     float:right;
 }
 
