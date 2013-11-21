@@ -20,14 +20,14 @@ $_['button_logging'] = 'Logging';
 $_['button_search'] = 'Suchen';
 $_['text_payment'] = 'Payment';
 $_['text_success'] = 'Erfolg: Sie haben ihre PAYMILL Account Details angepasst!';
-$_['paymill_accountholder'] = 'Kontoinhaber *';
-$_['paymill_accountnumber'] = 'Kontonummer *';
-$_['paymill_banknumber'] = 'Bankleitzahl *';
+$_['paymill_accountholder'] = 'Kontoinhaber';
+$_['paymill_accountnumber'] = 'Kontonummer';
+$_['paymill_banknumber'] = 'Bankleitzahl';
 
-$_['paymill_cardholder'] = 'Kreditkartenbesitzer *';
-$_['paymill_cardnumber'] = 'Kreditkarten-nummer *';
-$_['paymill_cvc'] = 'CVC *';
-$_['paymill_birthday'] = 'Gültig bis (MM/YYYY) *';
+$_['paymill_cardholder'] = 'Kreditkartenbesitzer';
+$_['paymill_cardnumber'] = 'Kreditkartennummer';
+$_['paymill_cvc'] = 'CVC';
+$_['paymill_expirydate'] = 'Gültig bis';
 
 $_['paymill_description'] = "Die mit einem * markierten Felder sind Pflichtfelder.";
 $_['paymill_paymilllabel_cc'] = 'Sichere Kreditkartenzahlung';
@@ -47,10 +47,6 @@ $_['error_permission'] = 'Warnung: Sie haben nicht die Rechte PAYMILL anzupassen
 $_['error_different_amount'] = 'Warning: 3DSecure Toleranz muss eine valide Zahl sein!';
 $_['error_missing_publickey'] = 'Warning: Bitte hinterlegen Sie den Publickey!';
 $_['error_missing_privatekey'] = 'Warning: Bitte hinterlegen Sie den Privatekey!';
-
-$_['date_month'] = array(
-    "Januar", "Februar", "M&auml;rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"
-);
 
 // JavaScript Errormessages
 $_['error_javascript'] = array(

@@ -32,27 +32,27 @@ echo '</script>';
         <div class="debit">
             <?php if($paymill_activepayment === 'paymillcreditcard'){ ?>
             <fieldset>
-                <label for="paymill_card_number" class="field-left"><?php echo $paymill_cardnumber;?></label>
+                <label for="paymill_card_number" class="field-left"><?php echo $paymill_cardnumber;?>*</label>
                 <input id="paymill_card_number" type="text" class="field-left" value="<?php echo isset($paymill_prefilled['last4'])? '**********'.$paymill_prefilled['last4']:'';?>"/>
-                <label for="paymill_card_expiry_date" class="field-right"><?php echo $paymill_birthday;?></label>
+                <label for="paymill_card_expiry_date" class="field-right"><?php echo $paymill_expirydate;?>*</label>
                 <input id="paymill_card_expiry_date" type="text" class="field-right" value="<?php echo isset($paymill_prefilled['expire_date'])? $paymill_prefilled['expire_date']:'MM/YYYY';?>"/>
             </fieldset>
             <fieldset>
-                <label for="paymill_card_holder" class="field-left"><?php echo $paymill_cardholder;?></label>
+                <label for="paymill_card_holder" class="field-left"><?php echo $paymill_cardholder;?>*</label>
                 <input id="paymill_card_holder" type="text" class="field-left" value="<?php echo isset($paymill_prefilled['card_holder'])?$paymill_prefilled['card_holder']:$paymill_fullname;?>"/>
-                <label for="paymill_card_cvc" class="field-right"><?php echo $paymill_cvc;?></label>
+                <label for="paymill_card_cvc" class="field-right"><?php echo $paymill_cvc;?>*</label>
                 <input id="paymill_card_cvc" type="text" class="field-right" value="<?php echo isset($paymill_prefilled['id'])?'***':'' ?>"/>
             </fieldset>
             <p class="description"><?php echo $paymill_description;?></p>
             <?php }elseif($paymill_activepayment === 'paymilldirectdebit'){ ?>
             <fieldset>
-                <label for="paymill_accountnumber" class="field-left"><?php echo $paymill_accountnumber;?></label>
+                <label for="paymill_accountnumber" class="field-left"><?php echo $paymill_accountnumber;?>*</label>
                 <input id="paymill_accountnumber" type="text" size="20" class="field-left" value="<?php echo isset($paymill_prefilled['account'])?$paymill_prefilled['account']:''; ?>" />
-                <label for="paymill_banknumber" class="field-right"><?php echo $paymill_banknumber;?></label>
+                <label for="paymill_banknumber" class="field-right"><?php echo $paymill_banknumber;?>*</label>
                 <input id="paymill_banknumber" type="text" size="20" class="field-right" value="<?php echo isset($paymill_prefilled['code'])?$paymill_prefilled['code']:''; ?>" />
             </fieldset>
             <fieldset>
-                <label for="paymill_accountholder" class="field-full"><?php echo $paymill_accountholder;?></label>
+                <label for="paymill_accountholder" class="field-full"><?php echo $paymill_accountholder;?>*</label>
                 <input id="paymill_accountholder" type="text" size="20" class="field-full" value="<?php echo isset($paymill_prefilled['holder'])?$paymill_prefilled['holder']:$paymill_fullname; ?>"/>
             </fieldset>
             <p class="description"><?php echo $paymill_description;?></p>

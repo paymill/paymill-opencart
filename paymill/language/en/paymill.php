@@ -20,14 +20,14 @@ $_['button_logging'] = 'Logging';
 $_['button_search'] = 'Search';
 $_['text_payment'] = 'Payment';
 $_['text_success'] = 'Success: You have modified your Paymill account details!';
-$_['paymill_accountholder'] = 'Accountholder *';
-$_['paymill_accountnumber'] = 'Accountnumber *';
-$_['paymill_banknumber'] = 'Banknumber *';
+$_['paymill_accountholder'] = 'Accountholder';
+$_['paymill_accountnumber'] = 'Accountnumber';
+$_['paymill_banknumber'] = 'Banknumber';
 
-$_['paymill_cardholder'] = 'Cardholder *';
-$_['paymill_cardnumber'] = 'Creditcardnumber *';
-$_['paymill_cvc'] = 'CVC *';
-$_['paymill_birthday'] = 'Valid until (MM/YYYY) *';
+$_['paymill_cardholder'] = 'Cardholder';
+$_['paymill_cardnumber'] = 'Creditcardnumber';
+$_['paymill_cvc'] = 'CVC';
+$_['paymill_expirydate'] = 'Valid until';
 
 $_['paymill_description'] = "Fields marked with * are required";
 $_['paymill_paymilllabel_cc'] = 'Secure creditcard payments';
@@ -47,10 +47,6 @@ $_['error_permission'] = 'Warning: You do not have permission to modify payment 
 $_['error_different_amount'] = 'Warning: 3DSecure tolerance must be a valid number';
 $_['error_missing_publickey'] = 'Warning: Please set up your Publickey!';
 $_['error_missing_privatekey'] = 'Warning: Please set up your Privatekey!';
-
-$_['date_month'] = array(
-    "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
-);
 
 // JavaScript Errormessages
 $_['error_javascript'] = array(
