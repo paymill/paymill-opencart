@@ -35,7 +35,7 @@ echo '</script>';
                 <label for="paymill_card_number" class="field-left"><?php echo $paymill_cardnumber;?></label>
                 <input id="paymill_card_number" type="text" class="field-left" value="<?php echo isset($paymill_prefilled['last4'])? '**********'.$paymill_prefilled['last4']:'';?>"/>
                 <label for="paymill_card_expiry_date" class="field-right"><?php echo $paymill_birthday;?></label>
-                <input id="paymill_card_expiry_date" type="text" class="field-right" value="MM/YYYY"/>
+                <input id="paymill_card_expiry_date" type="text" class="field-right" value="<?php echo isset($paymill_prefilled['expire_date'])? $paymill_prefilled['expire_date']:'MM/YYYY';?>"/>
             </fieldset>
             <fieldset>
                 <label for="paymill_card_holder" class="field-left"><?php echo $paymill_cardholder;?></label>

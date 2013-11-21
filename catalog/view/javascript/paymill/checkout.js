@@ -17,6 +17,14 @@ $(document).ready(function() {
         }
     });
 
+    $('#paymill_card_expiry_date').keyup(function() {
+        var expiryDate = $("#paymill_card_expiry_date").val();
+        if(expiryDate.match(/^.{2}$/)){
+            expiryDate += "/";
+            $("#paymill_card_expiry_date").val(expiryDate);
+        }
+    });
+
     $("#paymill_form").submit(function(e) {
         if (!$("input[name=paymillToken]")) {
             e.preventDefault();
@@ -40,8 +48,8 @@ $(document).ready(function() {
                         params = {
                             number: $('#paymill_card_number').val(),
                             cardholder: $('#paymill_card_holder').val(),
-                            exp_month: $('#paymill_card_expiry_month').val(),
-                            exp_year: $('#paymill_card_expiry_year').val(),
+                            exp_month: $("#paymill_card_expiry_date").val().split("/")[0],
+                            exp_year: $("#paymill_card_expiry_date").val().split("/")[1],
                             cvc: $('#paymill_card_cvc').val(),
                             amount_int: PAYMILL_AMOUNT,
                             currency: PAYMILL_CURRENCY
@@ -93,8 +101,8 @@ function validate() {
             message = PAYMILL_TRANSLATION.paymill_card_holder;
             result = false;
         }
-        if (!paymill.validateExpiry($('#paymill_card_expiry_month').val(), $('#paymill_card_expiry_year').val())) {
-            field.push($('#paymill_card_expiry_month'));
+        if (!paymill.validateExpiry($("#paymill_card_expiry_date").val().split("/")[0], $("#paymill_card_expiry_date").val().split("/")[1])) {
+            field.push($('#paymill_card_expiry_date'));
             message = PAYMILL_TRANSLATION.paymill_card_expiry_date;
             result = false;
         }
