@@ -29,7 +29,10 @@ echo '</script>';
         </div>
         <?php } ?>
         <div class='paymill_error warning' style="display: none"></div>
-        <div class="debit">
+        <div class="debit paymill_relative">
+            <span class="paymill_loading_layer">
+                <img src="<?php echo $paymill_image_folder. '/ajax-loader.gif';?>">
+            </span>
             <?php if($paymill_activepayment === 'paymillcreditcard'){ ?>
             <fieldset>
                 <label for="paymill_card_number" class="field-left"><?php echo $paymill_cardnumber;?>*</label>

@@ -2,6 +2,7 @@
     float: right;
     width: 365px;
 }
+
 #paymill_form input[type="text"] {
     position: absolute;
     padding: 7px;
@@ -58,9 +59,19 @@
     font-weight: bold;
     font-size: 13px;
 }
+#paymill_form .paymill_relative{
+    position: relative;
+}
 
 #paymill_form .paymill_confirm_button{
     float:right;
+}
+#paymill_form .paymill_loading_layer{
+    position: absolute;
+    top: 45px;
+    left: 45%;
+    z-index: 10;
+    display:none;
 }
 
 .paymill_error{

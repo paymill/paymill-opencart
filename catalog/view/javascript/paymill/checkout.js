@@ -29,7 +29,7 @@ $(document).ready(function() {
         if (!$("input[name=paymillToken]")) {
             e.preventDefault();
         }
-
+        toggleLoading('show');
         $("#paymill_submit").attr('disabled', true);
         var formdata = new Array();
         formdata = getFormData(formdata, false);
@@ -66,6 +66,7 @@ $(document).ready(function() {
                     alert("Ein Fehler ist aufgetreten: " + e);
                 }
             }
+            toggleLoading('hide');
         }
         return false;
     });
@@ -145,6 +146,7 @@ function validate() {
 function PaymillResponseHandler(error, result) {
     debug("Started Paymill response handler");
     if (error) {
+        toggleLoading('hide');
         $("#paymill_submit").removeAttr('disabled');
         debug("API returned error:" + error.apierror);
         alert("API returned error:" + error.apierror);
@@ -166,4 +168,21 @@ function debug(message) {
             console.log("[PaymillELV] " + message);
         }
     }
+}
+
+function toggleLoading(newStatus){
+    debug("ToggleLoadingwheel: " + newStatus);
+    switch(newStatus){
+        case 'show':
+            // show waitingwheel disable input
+            $('#paymill_form').find('input').attr('disabled',true);
+            $('.paymill_loading_layer').show();
+            break;
+        case 'hide':
+            // hide waitingwheel enable input
+            $('#paymill_form').find('input').attr('disabled',false);
+            $('.paymill_loading_layer').hide();
+            break;
+    }
+
 }
