@@ -14,6 +14,7 @@ $_['entry_label'] = 'Show Label:';
 $_['entry_logging'] = 'Logging:';
 $_['entry_debugging'] = 'Debug:';
 $_['entry_buttonSolution'] = 'Buttonsolution(TrustedShops):';
+$_['entry_sepa'] = 'Activate SEPA:';
 
 //Text
 $_['button_logging'] = 'Logging';
@@ -23,6 +24,8 @@ $_['text_success'] = 'Success: You have modified your Paymill account details!';
 $_['paymill_accountholder'] = 'Accountholder';
 $_['paymill_accountnumber'] = 'Accountnumber';
 $_['paymill_banknumber'] = 'Banknumber';
+$_['paymill_iban'] = 'IBAN';
+$_['paymill_bic'] = 'BIC';
 
 $_['paymill_cardholder'] = 'Cardholder';
 $_['paymill_cardnumber'] = 'Creditcardnumber';
@@ -56,7 +59,9 @@ $_['error_javascript'] = array(
     "paymill_card_holder" => "Please enter the cardholders name.",
     "paymill_accountholder" => "Please enter the accountholders name.",
     "paymill_accountnumber" => "Please enter a valid accountnumber.",
-    "paymill_banknumber" => "Please enter a valid bankcode."
+    "paymill_banknumber" => "Please enter a valid bankcode.",
+    "paymill_iban" => "Please enter a valid IBAN.",
+    "paymill_bic" => "Please enter a valid BIC."
 );
 
 //Logging Overview

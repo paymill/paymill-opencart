@@ -92,6 +92,15 @@
                             </select>
                         </td>
                     </tr>
+                    <tr>
+                        <td><?php echo $entry_sepa; ?></td>
+                        <td>
+                            <select name="paymill_sepa">
+                                <option value="1" <?php if ($paymill_sepa) { echo 'selected="selected"';}?>> <?php echo $text_enabled; ?></option>
+                                <option value="0" <?php if (!$paymill_sepa) { echo 'selected="selected"';}?>> <?php echo $text_disabled; ?></option>
+                            </select>
+                        </td>
+                    </tr>
                 </table>
             </form>
         </div>

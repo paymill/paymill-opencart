@@ -19,7 +19,7 @@ $(document).ready(function() {
 
     $('#paymill_card_expiry_date').keyup(function() {
         var expiryDate = $("#paymill_card_expiry_date").val();
-        if(expiryDate.match(/^.{2}$/)){
+        if (expiryDate.match(/^.{2}$/)) {
             expiryDate += "/";
             $("#paymill_card_expiry_date").val(expiryDate);
         }
@@ -55,11 +55,19 @@ $(document).ready(function() {
                             currency: PAYMILL_CURRENCY
                         };
                     } else if (PAYMILL_PAYMENT === "paymilldirectdebit") {
-                        params = {
-                            number: $('#paymill_accountnumber').val(),
-                            bank: $('#paymill_banknumber').val(),
-                            accountholder: $('#paymill_accountholder').val()
-                        };
+                        if (PAYMILL_SEPA === "1") {
+                            params = {
+                                iban: $('#paymill_iban').val(),
+                                bic: $('#paymill_bic').val(),
+                                accountholder: $('#paymill_accountholder').val()
+                            };
+                        } else {
+                            params = {
+                                number: $('#paymill_accountnumber').val(),
+                                bank: $('#paymill_banknumber').val(),
+                                accountholder: $('#paymill_accountholder').val()
+                            };
+                        }
                     }
                     paymill.createToken(params, PaymillResponseHandler);
                 } catch (e) {
@@ -70,6 +78,20 @@ $(document).ready(function() {
         }
         return false;
     });
+
+    if (PAYMILL_SEPA === "1") {
+        $('#paymill_iban').keyup(function() {
+            var iban = $('#paymill_iban').val();
+            if (!iban.match(/^DE/)) {
+                var newVal = "DE";
+                if (iban.match(/^.{2}(.*)/)) {
+                    newVal += iban.match(/^.{2}(.*)/)[1];
+                }
+                $('#paymill_iban').val(newVal);
+            }
+        });
+        $('#paymill_iban').trigger('keyup');
+    }
 });
 
 
@@ -113,20 +135,33 @@ function validate() {
             result = false;
         }
     } else if (PAYMILL_PAYMENT === "paymilldirectdebit") {
-        if (!paymill.validateHolder($('#paymill_accountholder').val())) {
-            field.push($('#paymill_accountholder'));
-            message = PAYMILL_TRANSLATION.paymill_accountholder;
-            result = false;
-        }
-        if (!paymill.validateBankCode($('#paymill_banknumber').val())) {
-            field.push($('#paymill_banknumber'));
-            message = PAYMILL_TRANSLATION.paymill_banknumber;
-            result = false;
-        }
-        if (!paymill.validateAccountNumber($('#paymill_accountnumber').val())) {
-            field.push($('#paymill_accountnumber'));
-            message = PAYMILL_TRANSLATION.paymill_accountnumber;
-            result = false;
+        if (PAYMILL_SEPA === "1") {
+            if ("" === $('#paymill_bic').val()) {
+                field.push($('#paymill_bic'));
+                message = PAYMILL_TRANSLATION.paymill_bic;
+                result = false;
+            }
+            if ("" === $('#paymill_iban').val()) {
+                field.push($('#paymill_iban'));
+                message = PAYMILL_TRANSLATION.paymill_iban;
+                result = false;
+            }
+        } else {
+            if (!paymill.validateHolder($('#paymill_accountholder').val())) {
+                field.push($('#paymill_accountholder'));
+                message = PAYMILL_TRANSLATION.paymill_accountholder;
+                result = false;
+            }
+            if (!paymill.validateBankCode($('#paymill_banknumber').val())) {
+                field.push($('#paymill_banknumber'));
+                message = PAYMILL_TRANSLATION.paymill_banknumber;
+                result = false;
+            }
+            if (!paymill.validateAccountNumber($('#paymill_accountnumber').val())) {
+                field.push($('#paymill_accountnumber'));
+                message = PAYMILL_TRANSLATION.paymill_accountnumber;
+                result = false;
+            }
         }
     }
     if (!result) {
@@ -170,17 +205,17 @@ function debug(message) {
     }
 }
 
-function toggleLoading(newStatus){
+function toggleLoading(newStatus) {
     debug("ToggleLoadingwheel: " + newStatus);
-    switch(newStatus){
+    switch (newStatus) {
         case 'show':
             // show waitingwheel disable input
-            $('#paymill_form').find('input').attr('disabled',true);
+            $('#paymill_form').find('input').attr('disabled', true);
             $('.paymill_loading_layer').show();
             break;
         case 'hide':
             // hide waitingwheel enable input
-            $('#paymill_form').find('input').attr('disabled',false);
+            $('#paymill_form').find('input').attr('disabled', false);
             $('.paymill_loading_layer').hide();
             break;
     }

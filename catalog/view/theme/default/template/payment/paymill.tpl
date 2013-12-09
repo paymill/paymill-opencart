@@ -14,7 +14,8 @@ echo 'var PAYMILL_PUBLIC_KEY  = "' . $paymill_publickey . '"; '
 . 'var PAYMILL_PAYMENT  = "' . $paymill_activepayment . '"; '
 . 'var PAYMILL_DEBUG  = "' . $paymill_debugging . '"; '
 . 'var PAYMILL_IMAGE  = "' . $paymill_image_folder . '"; '
-. 'var PAYMILL_TRANSLATION = ' . json_encode($paymill_javascript_error) . '; ';
+. 'var PAYMILL_TRANSLATION = ' . json_encode($paymill_javascript_error) . '; '
+. 'var PAYMILL_SEPA = "' . $paymill_sepa . '"; ';
 echo '</script>';
 ?>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
@@ -48,12 +49,21 @@ echo '</script>';
             </fieldset>
             <p class="description"><?php echo $paymill_description;?></p>
             <?php }elseif($paymill_activepayment === 'paymilldirectdebit'){ ?>
+            <?php if($paymill_sepa){ ?>
+            <fieldset>
+                <label for="paymill_iban" class="field-left"><?php echo $paymill_iban;?>*</label>
+                <input id="paymill_iban" type="text" size="20" class="field-left" value="<?php echo isset($paymill_prefilled['iban'])?$paymill_prefilled['iban']:''; ?>" />
+                <label for="paymill_bic" class="field-right"><?php echo $paymill_bic;?>*</label>
+                <input id="paymill_bic" type="text" size="20" class="field-right" value="<?php echo isset($paymill_prefilled['bic'])?$paymill_prefilled['bic']:''; ?>" />
+            </fieldset>
+            <?php }else{ ?>
             <fieldset>
                 <label for="paymill_accountnumber" class="field-left"><?php echo $paymill_accountnumber;?>*</label>
                 <input id="paymill_accountnumber" type="text" size="20" class="field-left" value="<?php echo isset($paymill_prefilled['account'])?$paymill_prefilled['account']:''; ?>" />
                 <label for="paymill_banknumber" class="field-right"><?php echo $paymill_banknumber;?>*</label>
                 <input id="paymill_banknumber" type="text" size="20" class="field-right" value="<?php echo isset($paymill_prefilled['code'])?$paymill_prefilled['code']:''; ?>" />
             </fieldset>
+            <?php } ?>
             <fieldset>
                 <label for="paymill_accountholder" class="field-full"><?php echo $paymill_accountholder;?>*</label>
                 <input id="paymill_accountholder" type="text" size="20" class="field-full" value="<?php echo isset($paymill_prefilled['holder'])?$paymill_prefilled['holder']:$paymill_fullname; ?>"/>

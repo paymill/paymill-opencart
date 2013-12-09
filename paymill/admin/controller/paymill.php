@@ -36,6 +36,7 @@ abstract class ControllerPaymentPaymill extends Controller
             $newConfig[$this->getPaymentName() . '_logging'] = $this->request->post['paymill_logging'];
             $newConfig[$this->getPaymentName() . '_debugging'] = $this->request->post['paymill_debugging'];
             $newConfig[$this->getPaymentName() . '_buttonSolution'] = $this->request->post['paymill_buttonSolution'];
+            $newConfig[$this->getPaymentName() . '_sepa'] = $this->request->post['paymill_sepa'];
 
             $this->model_setting_setting->editSetting($this->getPaymentName(), $newConfig);
             $this->session->data['success'] = $this->language->get('text_success');
@@ -60,6 +61,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['entry_logging'] = $this->language->get('entry_logging');
         $this->data['entry_debugging'] = $this->language->get('entry_debugging');
         $this->data['entry_buttonSolution'] = $this->language->get('entry_buttonSolution');
+        $this->data['entry_sepa'] = $this->language->get('entry_sepa');
 
         $this->data['button_save'] = $this->language->get('button_save');
         $this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -77,6 +79,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_logging'] = $this->getConfigValue($this->getPaymentName() . '_logging');
         $this->data['paymill_debugging'] = $this->getConfigValue($this->getPaymentName() . '_debugging');
         $this->data['paymill_buttonSolution'] = $this->getConfigValue($this->getPaymentName() . '_buttonSolution');
+        $this->data['paymill_sepa'] = $this->getConfigValue($this->getPaymentName() . '_sepa');
         $this->data['paymill_payment'] = $this->getPaymentName();
 
         $this->template = 'payment/' . $this->getPaymentName() . '.tpl';
@@ -160,6 +163,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $config[$this->getPaymentName() . '_logging'] = '1';
         $config[$this->getPaymentName() . '_debugging'] = '1';
         $config[$this->getPaymentName() . '_buttonSolution'] = '0';
+        $config[$this->getPaymentName() . '_sepa'] = '0';
 
         $this->load->model('setting/setting');
         $this->model_setting_setting->editSetting($this->getPaymentName(), $config);
