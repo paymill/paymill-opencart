@@ -61,7 +61,30 @@ $_['error_javascript'] = array(
     "paymill_accountnumber" => "Bitte geben Sie eine g&uuml;ltige Kontonummer ein.",
     "paymill_banknumber" => "Bitte geben Sie eine g&uuml;ltige BLZ ein.",
     "paymill_iban" => "Bitte geben Sie eine g&uuml;ltige IBAN ein.",
-    "paymill_bic" => "Bitte geben Sie eine g&uuml;ltige BIC ein."
+    "paymill_bic" => "Bitte geben Sie eine g&uuml;ltige BIC ein.",
+    "bridge" => array(
+        'internal_server_error' => 'Kommunikation mit dem PSP fehlgeschlagen',
+        'invalid_public_key' => ' Public Key ungültig',
+        'invalid_payment_data' => 'Für diesen Zahlungsmodus, Kreditkartentyp, Währung oder Land nicht zugelassen',
+        'unknown_error' => 'Unbekannter Fehler',
+        '3ds_cancelled' => '3-D Secure Prozess wurde vom User abgebrochen',
+        'field_invalid_card_number' => 'Fehlende oder ungültige Kreditkartennummer',
+        'field_invalid_card_exp_year' => 'Fehlendes oder ungültiges Ablaufjahr',
+        'field_invalid_card_exp_month' => 'Fehlender oder ungültiger Ablaufmonat',
+        'field_invalid_card_exp' => 'Karte nicht mehr gültig oder noch nicht gültig',
+        'field_invalid_card_cvc' => 'Ungültige Prüfziffer',
+        'field_invalid_card_holder' => 'Ungültiger Karteninhaber',
+        'field_invalid_amount_int' => 'Fehlender oder ungültiger Betrag für 3-D Secure',
+        'field_field_invalid_amount' => 'Fehlender oder ungültiger Betrag für 3-D Secure',
+        'field_field_field_invalid_currency' => 'Fehlende oder ungültige Währung für 3-D Secure',
+        'field_invalid_account_number' => 'Fehlende oder ungültige Kontonummer',
+        'field_invalid_account_holder' => 'Fehlender oder ungültiger Karteninhaber',
+        'field_invalid_bank_code' => 'Fehlende oder ungültige Bankleitzahl',
+        'field_invalid_iban' => 'Fehlende oder ungültige IBAN',
+        'field_invalid_bic' => 'Fehlende oder ungültiger BIC',
+        'field_invalid_country' => 'Fehlendes oder nicht unterstütztes Land',
+        'field_invalid_bank_data' => 'Fehlende oder ungültige Bankdatenkombination',
+    )
 );
 
 //Logging Overview

@@ -61,7 +61,30 @@ $_['error_javascript'] = array(
     "paymill_accountnumber" => "Please enter a valid accountnumber.",
     "paymill_banknumber" => "Please enter a valid bankcode.",
     "paymill_iban" => "Please enter a valid IBAN.",
-    "paymill_bic" => "Please enter a valid BIC."
+    "paymill_bic" => "Please enter a valid BIC.",
+    "bridge" => array(
+        'internal_server_error' => 'Communication with PSP failed',
+        'invalid_public_key' => 'Public Key is invalid',
+        'invalid_payment_data' => 'Payment mode, card type, currency or country not accepted.',
+        'unknown_error' => 'Unknown Error',
+        '3ds_cancelled' => '3-D Secure process has been aborted',
+        'field_invalid_card_number' => 'Invalid or missing card number',
+        'field_invalid_card_exp_year' => 'Invalid or missing expiry year',
+        'field_invalid_card_exp_month' => 'Invalid or missing expiry month',
+        'field_invalid_card_exp' => 'Card no longer (or not yet) valid',
+        'field_invalid_card_cvc' => 'Invalid CVC',
+        'field_invalid_card_holder' => 'Invalid card holder',
+        'field_invalid_amount_int' => 'Invalid or missing amount for 3-D Secure',
+        'field_invalid_amount' => 'Invalid or missing amount for 3-D Secure',
+        'field_invalid_currency' => 'Invalid or missing currency for 3-D Secure',
+        'field_invalid_account_number' => 'Invalid or missing account number',
+        'field_invalid_account_holder' => 'Invalid or missing account holder',
+        'field_invalid_bank_code' => 'Invalid or missing bank code',
+        'field_invalid_iban' => 'Invalid or missing IBAN',
+        'field_invalid_bic' => 'Invalid or missing BIC',
+        'field_invalid_country' => 'Missing or not supported country',
+        'field_invalid_bank_data' => 'Bank data does not match',
+    )
 );
 
 //Logging Overview

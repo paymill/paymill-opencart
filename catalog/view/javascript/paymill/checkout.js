@@ -183,8 +183,13 @@ function PaymillResponseHandler(error, result) {
     if (error) {
         toggleLoading('hide');
         $("#paymill_submit").removeAttr('disabled');
+        if(PAYMILL_TRANSLATION.bridge.hasOwnProperty(error.apierror)){
+            alert("API returned error:" + PAYMILL_TRANSLATION.bridge[error.apierror]);
+            debug("API returned error:" + PAYMILL_TRANSLATION.bridge[error.apierror]);
+        }else{
+            alert("API returned error(raw):" + error.apierror);
+        }
         debug("API returned error:" + error.apierror);
-        alert("API returned error:" + error.apierror);
         $(".checkout-heading").children('a :last').click(); //click on step5 Modify
     } else {
         debug("Received token from Paymill API: " + result.token);
