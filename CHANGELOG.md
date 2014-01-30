@@ -1,3 +1,6 @@
+## 1.2.0
+ * Added Feature: SEPA
+
 ## 1.1.0
  * Added Feature: Show CC-Brand in CC-Number field
  * Added Feature: Maestro handling (no cvc)
