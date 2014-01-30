@@ -19,6 +19,7 @@ echo 'var PAYMILL_PUBLIC_KEY  = "' . $paymill_publickey . '"; '
 echo '</script>';
 ?>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
+<script type="text/javascript" src="<?php echo $paymill_js_ccdetection; ?>"></script>
 <script type="text/javascript" src="<?php echo $paymill_js; ?>"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $paymill_css; ?>" />
 

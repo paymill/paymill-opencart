@@ -106,10 +106,10 @@
 
 .paymill-card-number-carte-bleue
 {
-    background: url('../image/payment/32x20_unionpay.png') no-repeat center right !important;
+    background: url('../image/payment/32x20_carte-bleue.png') no-repeat center right !important;
 }
 
-.paymill-card-number-diners
+.paymill-card-number-diners-club
 {
     background: url('../image/payment/32x20_dinersclub.png') no-repeat center right !important;
 }
@@ -117,4 +117,19 @@
 .paymill-card-number-discover
 {
     background: url('../image/payment/32x20_discover.png') no-repeat center right !important;
+}
+
+.paymill-card-number-carta-si
+{
+    background: url('../image/payment/32x20_carta-si.png') no-repeat center right !important;
+}
+
+.paymill-card-number-china-unionpay
+{
+    background: url('../image/payment/32x20_unionpay.png') no-repeat center right !important;
+}
+
+.paymill-card-number-china-unionpay
+{
+    background: url('../image/payment/32x20_unionpay.png') no-repeat center right !important;
 }

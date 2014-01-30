@@ -6,7 +6,7 @@ var prefilled = new Array();
 $(document).ready(function() {
     prefilled = getFormData(prefilled, true);
     $('#paymill_card_number').keyup(function() {
-        var brand = paymill.cardType($('#paymill_card_number').val());
+        var brand = detectCreditcardBranding($('#paymill_card_number').val());
         brand = brand.toLowerCase();
         $("#paymill_card_number")[0].className = $("#paymill_card_number")[0].className.replace(/paymill-card-number-.*/g, '');
         if (brand !== 'unknown') {
