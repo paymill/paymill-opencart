@@ -10,7 +10,7 @@
 class ModelCustompaymillLogging extends Model
 {
 
-    private $_pageSize = 10;
+    private $_pageSize = 15;
     private $_searchValue;
     private $_connectedSearch;
 
@@ -47,7 +47,8 @@ class ModelCustompaymillLogging extends Model
             $start = $page * $this->_pageSize;
             $limit = ' LIMIT ' . $start . ',' . $this->_pageSize;
         }
-        $query = $this->db->query($sql . $where . $limit);
+        $orderBy = " ORDER BY `date` DESC, `id` ASC";
+        $query = $this->db->query($sql . $where . $orderBy . $limit);
         return $query->rows;
     }
 

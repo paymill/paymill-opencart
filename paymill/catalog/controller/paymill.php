@@ -4,6 +4,7 @@ require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/Paymen
 require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/LoggingInterface.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/Clients.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/Payments.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/Transactions.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/metadata.php';
 
 /**
@@ -115,10 +116,10 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 $payment = $paymentObject->getOne($row->row['paymentID']);
             }
         }
-        if(isset($payment['expire_month'])){
-            $payment['expire_month'] = $payment['expire_month'] <= 9? '0'.$payment['expire_month']:$payment['expire_month'];
+        if (isset($payment['expire_month'])) {
+            $payment['expire_month'] = $payment['expire_month'] <= 9 ? '0' . $payment['expire_month'] : $payment['expire_month'];
             $payment['expire_date'] = $payment['expire_month'] . "/" . $payment['expire_year'];
-        }else{
+        } else {
             $payment['expire_date'] = null;
         }
         $this->data['paymill_prefilled'] = $payment;
@@ -141,8 +142,12 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
     public function confirm()
     {
         // read transaction token from session
-        $paymillToken = $this->request->post['paymillToken'];
-        $fastcheckout = $this->request->post['paymillFastcheckout'];
+        if (isset($this->request->post['paymillToken'])) {
+            $paymillToken = $this->request->post['paymillToken'];
+        }
+        if (isset($this->request->post['paymillFastcheckout'])) {
+            $fastcheckout = $this->request->post['paymillFastcheckout'];
+        }
 
         $this->_logId = time();
 
@@ -285,6 +290,56 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         );
 
         $this->response->setOutput($this->render());
+    }
+
+    /**
+     * Listens
+     *
+     */
+    public function webHookEndpoint()
+    {
+        global $config;
+        $this->_logId = time();
+        $request = json_decode(file_get_contents('php://input'), true);
+        $this->log('WebHookValidation', var_export($this->validateNotification($request), true));
+        $this->log('WebHookBody', var_export($request, true));
+
+        if ($this->validateNotification($request)) {
+            $order_new_status = '11'; //status refunded according to vanilla-installation
+            $order_id = $this->getOrderIdFromNotification($request['event']['event_resource']['transaction']['description']);
+            $this->log('WebHook UpdateOrderId', var_export($order_id, true));
+            $this->load->model('checkout/order');
+            $this->model_checkout_order->update($order_id, $order_new_status);
+        }
+    }
+
+    private function validateNotification($notification)
+    {
+        if (isset($notification) && !empty($notification)) {
+            // Check eventtype
+            if (isset($notification['event']['event_type'])) {
+                if ($notification['event']['event_type'] == 'refunded.executed') {
+                    if(isset($notification['event']['event_resource']['transaction']['id'])){
+                        $id = $notification['event']['event_resource']['transaction']['id'];
+                    }
+                }
+                $privateKey = trim($this->config->get($this->getPaymentName() . '_privatekey'));
+                $transactionObject = new Services_Paymill_Transactions($privateKey, 'https://api.paymill.com/v2/');
+                $result = $transactionObject->getOne($id);
+                return $result['id'] === $id;
+            }
+        }
+        return false;
+    }
+
+    private function getOrderIdFromNotification($transactionDescription)
+    {
+        $regexPattern = '/OrderID:(\d+)/ix';
+        $matches = array();
+        if (preg_match($regexPattern, $transactionDescription, $matches)) {
+            return $matches[1];
+        }
+        return false;
     }
 
 }

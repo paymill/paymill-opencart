@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(dirname(dirname(__FILE__))) . '/metadata.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/Webhooks.php';
 
 /**
  * paymill
@@ -39,6 +40,7 @@ abstract class ControllerPaymentPaymill extends Controller
             $newConfig[$this->getPaymentName() . '_sepa'] = $this->request->post['paymill_sepa'];
 
             $this->model_setting_setting->editSetting($this->getPaymentName(), $newConfig);
+            $this->addPaymillWebhook($newConfig[$this->getPaymentName() . '_privatekey']);
             $this->session->data['success'] = $this->language->get('text_success');
             $this->redirect($this->url->link('extension/payment', '&token=' . $this->session->data['token']));
         }
@@ -176,6 +178,17 @@ abstract class ControllerPaymentPaymill extends Controller
             . "`date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,"
             . "PRIMARY KEY (`id`)"
             . ") AUTO_INCREMENT=1");
+    }
+
+    protected function addPaymillWebhook($privateKey)
+    {
+        $webhookObject = new Services_Paymill_Webhooks($privateKey,'https://api.paymill.com/v2/');
+        $url = $this->url->link('payment/' . $this->getPaymentName() . '/webHookEndpoint');
+        $webhookUrl = str_replace('/admin', '', $url);
+        $webhookObject->create(array(
+            "url" => $webhookUrl,
+            "event_types" => array('refund.succeeded')
+        ));
     }
 
     public function uninstall()
