@@ -1,5 +1,6 @@
 ## 1.2.0
  * Added Feature: SEPA
+ * Added Feature: Webhooks
 
 ## 1.1.0
  * Added Feature: Show CC-Brand in CC-Number field
