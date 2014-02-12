@@ -92,6 +92,7 @@
                             </select>
                         </td>
                     </tr>
+                    <?php if($paymill_payment === 'paymilldirectdebit'){ ?>
                     <tr>
                         <td><?php echo $entry_sepa; ?></td>
                         <td>
@@ -101,6 +102,7 @@
                             </select>
                         </td>
                     </tr>
+                    <?php } ?>
                 </table>
             </form>
         </div>
