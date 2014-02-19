@@ -102,6 +102,8 @@
                             </select>
                         </td>
                     </tr>
+                    <?php } else { ?>
+                        <input type="hidden" name="paymill_sepa" value="0">
                     <?php } ?>
                 </table>
             </form>

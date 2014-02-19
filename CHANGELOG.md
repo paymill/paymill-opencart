@@ -1,3 +1,6 @@
+## 1.2.1
+ * Fixed a bug which cause the saving of the configuration
+
 ## 1.2.0
  * Added Feature: SEPA
  * Added Feature: Webhooks

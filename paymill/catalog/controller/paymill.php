@@ -319,14 +319,15 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             // Check eventtype
             if (isset($notification['event']['event_type'])) {
                 if ($notification['event']['event_type'] == 'refunded.executed') {
-                    if(isset($notification['event']['event_resource']['transaction']['id'])){
+                    $id = null;
+                    if (isset($notification['event']['event_resource']['transaction']['id'])) {
                         $id = $notification['event']['event_resource']['transaction']['id'];
                     }
+                    $privateKey = trim($this->config->get($this->getPaymentName() . '_privatekey'));
+                    $transactionObject = new Services_Paymill_Transactions($privateKey, 'https://api.paymill.com/v2/');
+                    $result = $transactionObject->getOne($id);
+                    return $result['id'] === $id;
                 }
-                $privateKey = trim($this->config->get($this->getPaymentName() . '_privatekey'));
-                $transactionObject = new Services_Paymill_Transactions($privateKey, 'https://api.paymill.com/v2/');
-                $result = $transactionObject->getOne($id);
-                return $result['id'] === $id;
             }
         }
         return false;
