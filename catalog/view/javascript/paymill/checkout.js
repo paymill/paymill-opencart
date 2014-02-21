@@ -96,7 +96,7 @@ $(document).ready(function() {
 
 
 function getFormData(array, ignoreEmptyValues) {
-    $('#paymill_form :input').not(':[type=hidden]').each(function() {
+    $('#paymill_form :input').not('[type=hidden]').each(function() {
         if ($(this).val() === "" && ignoreEmptyValues) {
             return;
         }

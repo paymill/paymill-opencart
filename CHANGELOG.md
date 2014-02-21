@@ -1,3 +1,6 @@
+## 1.2.2
+ * Fixed a bug which cause the javascript to crash for JQuery version greater than 1.8.2
+
 ## 1.2.1
  * Fixed a bug which cause the saving of the configuration
 
