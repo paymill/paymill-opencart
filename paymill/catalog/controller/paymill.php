@@ -215,7 +215,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 $this->log("Finish order.", '');
                 $this->_saveUserData($this->customer->getId(), $paymentProcessor->getClientId(), $paymentProcessor->getPaymentId());
                 $this->model_checkout_order->confirm(
-                    $this->session->data['order_id'], $this->config->get('config_complete_status_id'), '', true
+                    $this->session->data['order_id'], $this->config->get('config_order_status_id'), '', true
                 );
                 $this->redirect($this->url->link('checkout/success'));
             } else {
