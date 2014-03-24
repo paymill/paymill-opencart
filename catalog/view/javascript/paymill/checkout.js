@@ -141,7 +141,8 @@ function validate() {
                 message = PAYMILL_TRANSLATION.paymill_bic;
                 result = false;
             }
-            if ("" === $('#paymill_iban').val()) {
+            var iban = new Iban();
+            if (!iban.validate($('#paymill_iban').val())) {
                 field.push($('#paymill_iban'));
                 message = PAYMILL_TRANSLATION.paymill_iban;
                 result = false;
