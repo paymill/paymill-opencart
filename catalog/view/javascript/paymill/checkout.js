@@ -6,14 +6,16 @@ var prefilled = new Array();
 $(document).ready(function() {
     prefilled = getFormData(prefilled, true);
     $('#paymill_card_number').keyup(function() {
-        var brand = detectCreditcardBranding($('#paymill_card_number').val());
-        brand = brand.toLowerCase();
         $("#paymill_card_number")[0].className = $("#paymill_card_number")[0].className.replace(/paymill-card-number-.*/g, '');
+        var cardnumber = $('#paymill_card_number').val();
+        var detector = new BrandDetection();
+        var brand = detector.detect(cardnumber);
         if (brand !== 'unknown') {
-            if (brand === 'american express') {
-                brand = 'amex';
-            }
             $('#paymill_card_number').addClass("paymill-card-number-" + brand);
+            if (!detector.validate(cardnumber)) {
+                console.log();
+                $('#paymill_card_number').addClass("paymill-card-number-grayscale");
+            }
         }
     });
 
@@ -184,10 +186,10 @@ function PaymillResponseHandler(error, result) {
     if (error) {
         toggleLoading('hide');
         $("#paymill_submit").removeAttr('disabled');
-        if(PAYMILL_TRANSLATION.bridge.hasOwnProperty(error.apierror)){
+        if (PAYMILL_TRANSLATION.bridge.hasOwnProperty(error.apierror)) {
             alert("API returned error:" + PAYMILL_TRANSLATION.bridge[error.apierror]);
             debug("API returned error:" + PAYMILL_TRANSLATION.bridge[error.apierror]);
-        }else{
+        } else {
             alert("API returned error(raw):" + error.apierror);
         }
         debug("API returned error:" + error.apierror);
