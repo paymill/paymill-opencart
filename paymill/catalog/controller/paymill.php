@@ -166,7 +166,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $paymentProcessor = new Services_Paymill_PaymentProcessor();
             $paymentProcessor->setToken($paymillToken);
             $paymentProcessor->setAmount((int) $amount);
-            $paymentProcessor->setPreAuthAmount((int) ($this->session->data['paymill_authorized_amount']));
+            $paymentProcessor->setPreAuthAmount((int) ($this->session->data['paymill_authorized_amount'] * 100));
             $paymentProcessor->setPrivateKey($privateKey);
             $paymentProcessor->setApiUrl('https://api.paymill.com/v2/');
             $paymentProcessor->setCurrency($this->order_info['currency_code']);
