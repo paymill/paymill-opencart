@@ -216,7 +216,8 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 );
                 $this->redirect($this->url->link('checkout/success'));
             } else {
-                $this->session->data['error_message'] = 'An error occured while processing your payment: ' . $this->_response_codes[$paymentProcessor->getErrorCode()];
+                $responseCode = array_key_exists($paymentProcessor->getErrorCode(), $this->_response_codes) ? $this->_response_codes[$paymentProcessor->getErrorCode()] : 'unknown error';
+                $this->session->data['error_message'] = 'An error occured while processing your payment: ' . $responseCode;
                 $this->redirect($this->url->link('payment/' . $this->getPaymentName() . '/error'));
             }
         }
