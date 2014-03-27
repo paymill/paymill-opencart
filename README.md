@@ -8,7 +8,7 @@ PAYMILL extension is compatible with: 1.5.4, 1.5.4.1, 1.5.5.1, 1.5.6 (tested for
 * Payment means: Credit Card (Visa, Visa Electron, Mastercard, Maestro, Diners, Discover, JCB, AMEX, China Union Pay), Direct Debit (ELV)
 * Optional fast checkout configuration allowing your customers not to enter their payment detail over and over during checkout
 * Improved payment form with visual feedback for your customers
-* Supported Languages: German, English
+* Supported Languages: German, English, Portuguese, Italian, French, Spanish
 * Backend Log with custom View accessible from your shop backend
 
 ## Installation from this git repository
