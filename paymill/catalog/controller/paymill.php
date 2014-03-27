@@ -316,7 +316,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         if (isset($notification) && !empty($notification)) {
             // Check eventtype
             if (isset($notification['event']['event_type'])) {
-                if ($notification['event']['event_type'] == 'refunded.executed') {
+                if ($notification['event']['event_type'] == 'refunded.succeeded') {
                     $id = null;
                     if (isset($notification['event']['event_resource']['transaction']['id'])) {
                         $id = $notification['event']['event_resource']['transaction']['id'];
