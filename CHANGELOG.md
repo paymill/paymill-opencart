@@ -1,3 +1,9 @@
+## 1.3.0
+* added iban validation
+* added creditcard predetection and improved validation
+* extented language support
+* fixed minor bugs
+
 ## 1.2.2
  * Fixed a bug which cause the javascript to crash for JQuery version greater than 1.8.2
 
