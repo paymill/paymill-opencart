@@ -53,7 +53,7 @@ echo '</script>';
             <div class='paymill_icons'>
                 <?php
                 if($paymill_icon){
-                    echo '<p style="margin-bottom:0px;">Folgende Kreditkarten werden von uns unterstüzt:</p>';
+                    echo "<p style='margin-bottom:0px;'>$paymill_icon_text:</p>";
                     if($paymill_icon_visa){ echo "<img src=\"$paymill_image_folder/32x20_visa.png\">"; }
                     if($paymill_icon_master){ echo "<img src=\"$paymill_image_folder/32x20_mastercard.png\">"; }
                     if($paymill_icon_amex){ echo "<img src=\"$paymill_image_folder/32x20_amex.png\">"; }
