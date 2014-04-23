@@ -83,7 +83,6 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_publickey'] = trim($this->config->get($this->getPaymentName() . '_publickey'));
         $this->data['paymill_debugging'] = $this->config->get($this->getPaymentName() . '_debugging');
         $this->data['paymill_buttonSolution'] = $this->config->get($this->getPaymentName() . '_buttonSolution');
-        $this->data['paymill_sepa'] = $this->config->get($this->getPaymentName() . '_sepa');
         $this->data['button_confirm'] = $this->language->get('button_confirm');
 
         $this->language->load('payment/' . $this->getPaymentName());

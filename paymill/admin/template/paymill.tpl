@@ -93,15 +93,6 @@
                         </td>
                     </tr>
                     <?php if($paymill_payment === 'paymilldirectdebit'){ ?>
-                    <tr>
-                        <td><?php echo $entry_sepa; ?></td>
-                        <td>
-                            <select name="paymill_sepa">
-                                <option value="1" <?php if ($paymill_sepa) { echo 'selected="selected"';}?>> <?php echo $text_enabled; ?></option>
-                                <option value="0" <?php if (!$paymill_sepa) { echo 'selected="selected"';}?>> <?php echo $text_disabled; ?></option>
-                            </select>
-                        </td>
-                    </tr>
                     <input type="hidden" value="0" name="icon_visa">
                     <input type="hidden" value="0" name="icon_master">
                     <input type="hidden" value="0" name="icon_amex">
@@ -114,7 +105,6 @@
                     <input type="hidden" value="0" name="icon_carta_si">
                     <input type="hidden" value="0" name="icon_carte_bleue">
                     <?php } else { ?>
-                    <input type="hidden" name="paymill_sepa" value="0">
                     <tr>
                         <td><?php echo $entry_creditcardicons; ?></td>
                         <td>

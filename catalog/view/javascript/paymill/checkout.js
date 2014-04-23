@@ -57,7 +57,7 @@ $(document).ready(function() {
                             currency: PAYMILL_CURRENCY
                         };
                     } else if (PAYMILL_PAYMENT === "paymilldirectdebit") {
-                        if (PAYMILL_SEPA === "1") {
+                        if (isSepa()) {
                             params = {
                                 iban: $('#paymill_iban').val(),
                                 bic: $('#paymill_bic').val(),
@@ -65,12 +65,14 @@ $(document).ready(function() {
                             };
                         } else {
                             params = {
-                                number: $('#paymill_accountnumber').val(),
-                                bank: $('#paymill_banknumber').val(),
+                                number: $('#paymill_iban').val(),
+                                bank: $('#paymill_bic').val(),
                                 accountholder: $('#paymill_accountholder').val()
                             };
                         }
                     }
+                    debug("Params, see below");
+                    console.log(params);
                     paymill.createToken(params, PaymillResponseHandler);
                 } catch (e) {
                     alert("Ein Fehler ist aufgetreten: " + e);
@@ -81,7 +83,7 @@ $(document).ready(function() {
         return false;
     });
 
-    if (PAYMILL_SEPA === "1") {
+    if (PAYMILL_PAYMENT === "paymilldirectdebit") {
         $('#paymill_iban').keyup(function() {
             var iban = $('#paymill_iban').val();
             if (!iban.match(/^DE/)) {
@@ -89,10 +91,11 @@ $(document).ready(function() {
                 if (iban.match(/^.{2}(.*)/)) {
                     newVal += iban.match(/^.{2}(.*)/)[1];
                 }
-                $('#paymill_iban').val(newVal);
+                if (isSepa()) {
+                    $('#paymill_iban').val(newVal);
+                }
             }
         });
-        $('#paymill_iban').trigger('keyup');
     }
 });
 
@@ -137,34 +140,34 @@ function validate() {
             result = false;
         }
     } else if (PAYMILL_PAYMENT === "paymilldirectdebit") {
-        if (PAYMILL_SEPA === "1") {
-            if ("" === $('#paymill_bic').val()) {
-                field.push($('#paymill_bic'));
-                message = PAYMILL_TRANSLATION.paymill_bic;
-                result = false;
-            }
+        if (isSepa()) {
             var iban = new Iban();
             if (!iban.validate($('#paymill_iban').val())) {
                 field.push($('#paymill_iban'));
                 message = PAYMILL_TRANSLATION.paymill_iban;
                 result = false;
             }
-        } else {
-            if (!paymill.validateHolder($('#paymill_accountholder').val())) {
-                field.push($('#paymill_accountholder'));
-                message = PAYMILL_TRANSLATION.paymill_accountholder;
+            if ($('#paymill_bic').val().length !== 9 && $('#paymill_bic').val().length !== 11) {
+                field.push($('#paymill_bic'));
+                message = PAYMILL_TRANSLATION.paymill_bic;
                 result = false;
             }
-            if (!paymill.validateBankCode($('#paymill_banknumber').val())) {
-                field.push($('#paymill_banknumber'));
+        } else {
+            if (!paymill.validateBankCode($('#paymill_bic').val())) {
+                field.push($('#paymill_bic'));
                 message = PAYMILL_TRANSLATION.paymill_banknumber;
                 result = false;
             }
-            if (!paymill.validateAccountNumber($('#paymill_accountnumber').val())) {
-                field.push($('#paymill_accountnumber'));
+            if (!paymill.validateAccountNumber($('#paymill_iban').val())) {
+                field.push($('#paymill_iban'));
                 message = PAYMILL_TRANSLATION.paymill_accountnumber;
                 result = false;
             }
+        }
+        if (!paymill.validateHolder($('#paymill_accountholder').val())) {
+            field.push($('#paymill_accountholder'));
+            message = PAYMILL_TRANSLATION.paymill_accountholder;
+            result = false;
         }
     }
     if (!result) {
@@ -179,6 +182,11 @@ function validate() {
         debug("Validations successful");
     }
     return result;
+}
+
+function isSepa() {
+    var reg = new RegExp(/^\D{2}/);
+    return reg.test($('#paymill_iban').val());
 }
 
 function PaymillResponseHandler(error, result) {
