@@ -1,6 +1,6 @@
 #paymill_form {
     float: right;
-    width: 365px;
+    width: 383px;
 }
 
 #paymill_form input[type="text"] {
@@ -34,17 +34,17 @@
 
 #paymill_form .field-left {
     width: 180px;
-    left: 0px;
+    left: -3px;
 }
 
 #paymill_form .field-right {
     left: 240px;
-    width: 100px;
+    width: 125px;
 }
 
 #paymill_form .field-full {
-    width: 340px;
-    left: 0px;
+    width: 365px;
+    left: -3px;
 }
 
 

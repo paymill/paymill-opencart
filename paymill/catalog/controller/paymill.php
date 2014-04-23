@@ -112,7 +112,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_icon_dankort'] = $this->config->get($this->getPaymentName() . '_icon_dankort');
         $this->data['paymill_icon_carta_si'] = $this->config->get($this->getPaymentName() . '_icon_carta_si');
         $this->data['paymill_icon_carte_bleue'] = $this->config->get($this->getPaymentName() . '_icon_carte_bleue');
-
+        $this->data['paymill_icon'] = $this->showCreditcardIcons();
 
         $this->session->data['paymill_authorized_amount'] = $amount;
         $table = $this->getDatabaseName();
@@ -147,6 +147,23 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         }
 
         $this->render();
+    }
+
+    private function showCreditcardIcons()
+    {
+        $icons = array();
+        $icons[] = $this->config->get($this->getPaymentName() . '_icon_visa');
+        $icons[] = $this->config->get($this->getPaymentName() . '_icon_master');
+        $icons[] = $this->config->get($this->getPaymentName() . '_icon_amex');
+        $icons[] = $this->config->get($this->getPaymentName() . '_icon_jcb');
+        $icons[] = $this->config->get($this->getPaymentName() . '_icon_maestro');
+        $icons[] = $this->config->get($this->getPaymentName() . '_icon_diners_club');
+        $icons[] = $this->config->get($this->getPaymentName() . '_icon_discover');
+        $icons[] = $this->config->get($this->getPaymentName() . '_icon_china_unionpay');
+        $icons[] = $this->config->get($this->getPaymentName() . '_icon_dankort');
+        $icons[] = $this->config->get($this->getPaymentName() . '_icon_carta_si');
+        $icons[] = $this->config->get($this->getPaymentName() . '_icon_carte_bleue');
+        return in_array('1', $icons);
     }
 
     public function confirm()
