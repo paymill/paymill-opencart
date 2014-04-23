@@ -50,6 +50,24 @@ echo '</script>';
                 <input id="paymill_card_cvc" type="text" class="field-right" value="<?php echo isset($paymill_prefilled['id'])?'***':'' ?>"/>
             </fieldset>
             <p class="description"><?php echo $paymill_description;?></p>
+            <div class='paymill_icons'>
+                <?php
+                if($paymill_icon){
+                    echo "<p style='margin-bottom:0px;'>$paymill_icon_text:</p>";
+                    if($paymill_icon_visa){ echo "<img src=\"$paymill_image_folder/32x20_visa.png\">"; }
+                    if($paymill_icon_master){ echo "<img src=\"$paymill_image_folder/32x20_mastercard.png\">"; }
+                    if($paymill_icon_amex){ echo "<img src=\"$paymill_image_folder/32x20_amex.png\">"; }
+                    if($paymill_icon_jcb){ echo "<img src=\"$paymill_image_folder/32x20_jcb.png\">"; }
+                    if($paymill_icon_maestro){ echo "<img src=\"$paymill_image_folder/32x20_maestro.png\">"; }
+                    if($paymill_icon_diners_club){ echo "<img src=\"$paymill_image_folder/32x20_dinersclub.png\">"; }
+                    if($paymill_icon_discover){ echo "<img src=\"$paymill_image_folder/32x20_discover.png\">"; }
+                    if($paymill_icon_china_unionpay){ echo "<img src=\"$paymill_image_folder/32x20_unionpay.png\">"; }
+                    if($paymill_icon_dankort){ echo "<img src=\"$paymill_image_folder/32x20_dankort.png\">"; }
+                    if($paymill_icon_carta_si){ echo "<img src=\"$paymill_image_folder/32x20_carta-si.png\">"; }
+                    if($paymill_icon_carte_bleue){ echo "<img src=\"$paymill_image_folder/32x20_carte-bleue.png\">"; }
+                }
+                ?>
+            </div>
             <?php }elseif($paymill_activepayment === 'paymilldirectdebit'){ ?>
             <?php if($paymill_sepa){ ?>
             <fieldset>
