@@ -101,6 +101,18 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_paymilllabel_elv'] = $this->language->get('paymill_paymilllabel_elv');
         $this->data['paymill_error'] = isset($this->session->data['error_message']) ? $this->session->data['error_message'] : null;
         $this->data['paymill_javascript_error'] = $this->language->get('error_javascript');
+        $this->data['paymill_icon_visa'] = $this->config->get($this->getPaymentName() . '_icon_visa');
+        $this->data['paymill_icon_master'] = $this->config->get($this->getPaymentName() . '_icon_master');
+        $this->data['paymill_icon_amex'] = $this->config->get($this->getPaymentName() . '_icon_amex');
+        $this->data['paymill_icon_jcb'] = $this->config->get($this->getPaymentName() . '_icon_jcb');
+        $this->data['paymill_icon_maestro'] = $this->config->get($this->getPaymentName() . '_icon_maestro');
+        $this->data['paymill_icon_diners_club'] = $this->config->get($this->getPaymentName() . '_icon_diners_club');
+        $this->data['paymill_icon_discover'] = $this->config->get($this->getPaymentName() . '_icon_discover');
+        $this->data['paymill_icon_china_unionpay'] = $this->config->get($this->getPaymentName() . '_icon_china_unionpay');
+        $this->data['paymill_icon_dankort'] = $this->config->get($this->getPaymentName() . '_icon_dankort');
+        $this->data['paymill_icon_carta_si'] = $this->config->get($this->getPaymentName() . '_icon_carta_si');
+        $this->data['paymill_icon_carte_bleue'] = $this->config->get($this->getPaymentName() . '_icon_carte_bleue');
+
 
         $this->session->data['paymill_authorized_amount'] = $amount;
         $table = $this->getDatabaseName();
