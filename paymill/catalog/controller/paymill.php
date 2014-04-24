@@ -242,9 +242,11 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             if ($result === true) {
                 $this->log("Finish order.", '');
                 $this->_saveUserData($this->customer->getId(), $paymentProcessor->getClientId(), $paymentProcessor->getPaymentId());
+                $chargeDate = (string)date("d.m.Y");
                 $this->model_checkout_order->confirm(
-                    $this->session->data['order_id'], $this->config->get('config_order_status_id'), '', true
+                    $this->session->data['order_id'], $this->config->get('config_order_status_id'), $chargeDate, true
                 );
+                $this->_updateOrderComment($this->session->data['order_id'], $chargeDate);
                 $this->redirect($this->url->link('checkout/success'));
             } else {
                 $responseCode = array_key_exists($paymentProcessor->getErrorCode(), $this->_response_codes) ? $this->_response_codes[$paymentProcessor->getErrorCode()] : 'unknown error';
@@ -279,6 +281,15 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         } catch (Exception $exception) {
             $this->log("Error while saving Userdata: " . $exception->getMessage());
         }
+    }
+
+    /**
+     * adds payday timestamp to the order comment
+     */
+    private function _updateOrderComment($orderId, $comment)
+    {
+        $result = $this->db->query("SELECT `comment` FROM `" . DB_PREFIX . "order` WHERE `order_id`=" . mysql_escape_string($orderId));
+        $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `comment`='" . mysql_escape_string($result->row['comment']) . "\n" . $comment . "' WHERE `order_id`=" . mysql_escape_string($orderId));
     }
 
     /**
