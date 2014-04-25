@@ -104,6 +104,10 @@ function sepaCallback(success)
             accountholder: $('#paymill_accountholder').val()
         };
         paymill.createToken(params, PaymillResponseHandler);
+    } else {
+        $("#paymill_submit").removeAttr('disabled');
+        $(".paymill_error").html(PAYMILL_TRANSLATION.paymill_invalid_mandate_checkbox);
+        $(".paymill_error").show(500);
     }
 }
 

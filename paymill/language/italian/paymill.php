@@ -45,6 +45,7 @@ $_["error_javascript"] = array(
 	"paymill_banknumber" => "Inserire un codice di addebito bancario diretto valido.",
 	"paymill_iban" => "Inserire un numero iban valido",
 	"paymill_bic" => "Inserire un codice bic valido.",
+    "paymill_invalid_mandate_checkbox" => "invalid_mandate_checkbox",
 	"bridge" => array(
 		"internal_server_error" => "The communication with the psp failed.",
 		"invalid_public_key" => "The public key is invalid.",
