@@ -242,7 +242,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             if ($result === true) {
                 $this->log("Finish order.", '');
                 $this->_saveUserData($this->customer->getId(), $paymentProcessor->getClientId(), $paymentProcessor->getPaymentId());
-                $chargeDate = (string)date("d.m.Y");
+                $chargeDate = $this->getPaymentName() == 'paymilldirectdebit' ? (string)date("d.m.Y"):'';
                 $this->model_checkout_order->confirm(
                     $this->session->data['order_id'], $this->config->get('config_order_status_id'), $chargeDate, true
                 );

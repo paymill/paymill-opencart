@@ -18,9 +18,10 @@ echo 'var PAYMILL_PUBLIC_KEY  = "' . $paymill_publickey . '"; '
 echo '</script>';
 ?>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
-<script type="text/javascript" src="<?php echo $paymill_js; ?>/checkout.js"></script>
+<script type="text/javascript" src="<?php echo $paymill_js; ?>/Sepa.js"></script>
 <script type="text/javascript" src="<?php echo $paymill_js; ?>/Iban.js"></script>
 <script type="text/javascript" src="<?php echo $paymill_js; ?>/BrandDetection.js"></script>
+<script type="text/javascript" src="<?php echo $paymill_js; ?>/checkout.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo $paymill_css; ?>" />
 
 <div class="right">
