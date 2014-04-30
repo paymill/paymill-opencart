@@ -189,7 +189,8 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $this->load->model('checkout/order');
             $this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-            $amount = number_format($this->order_info['total'], 2, '.', '') * 100;
+            $amountRaw = $this->currency->format_raw($this->order_info['total'], $this->order_info['currency_code'], false, false);
+            $amount = number_format($amountRaw, 2, '.', '') * 100;
 
             $source = $this->getVersion() . "_opencart_" . VERSION;
             $privateKey = trim($this->config->get($this->getPaymentName() . '_privatekey'));
@@ -197,7 +198,6 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $paymentProcessor = new Services_Paymill_PaymentProcessor();
             $paymentProcessor->setToken($paymillToken);
             $paymentProcessor->setAmount((int) $amount);
-            $paymentProcessor->setPreAuthAmount((int) ($this->session->data['paymill_authorized_amount'] * 100));
             $paymentProcessor->setPrivateKey($privateKey);
             $paymentProcessor->setApiUrl('https://api.paymill.com/v2/');
             $paymentProcessor->setCurrency($this->order_info['currency_code']);
