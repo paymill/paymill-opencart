@@ -3,8 +3,8 @@ function submitForm(button) {
     $("#paymillForm").submit();
 }
 
-function ChangePage(page) {
-    $("input[name='page']").val(page);
+function ChangePage() {
+    $("#paymillForm").append("<input type='hidden' name='page' value='" +  $("#paymillGoToPage").val() + "'/>");
     submitForm("search");
 }
 

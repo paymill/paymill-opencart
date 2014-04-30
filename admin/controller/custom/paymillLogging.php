@@ -13,7 +13,7 @@ class ControllercustompaymillLogging extends Controller
     private function getPost($name, $default = null)
     {
         $value = $default;
-        if(isset($this->request->post[$name])){
+        if (isset($this->request->post[$name])) {
             $value = $this->request->post[$name];
         }
         return $value;
@@ -32,22 +32,28 @@ class ControllercustompaymillLogging extends Controller
         //Get Post Vars
         $connectedSearch = $this->getPost("connectedSearch", "off");
         $searchValue = $this->getPost("searchValue", "");
-        $page = (int)$this->getPost("page", 0);
+        $actualPage = (int) $this->getPost("page", 0);
         $selectedIds = $this->getPost("selected");
 
-        if($this->getPost("button", "search") === "delete" && is_array($selectedIds)){
+        if($actualPage < 0){
+            $actualPage = 0;
+        }
+
+        if ($this->getPost("button", "search") === "delete" && is_array($selectedIds)) {
             $this->model_custom_paymillLogging->deleteEntries($selectedIds);
         }
 
 
         $this->model_custom_paymillLogging->setSearchValue($searchValue);
         $this->model_custom_paymillLogging->setConnectedSearch($connectedSearch);
-        $this->data['paymillMaxPages'] = ceil($this->model_custom_paymillLogging->getTotal() / $this->model_custom_paymillLogging->getPageSize());
-        $this->data['paymillEntries'] = $this->model_custom_paymillLogging->getEntries($page);
+        $this->data['paymillEntries'] = $this->model_custom_paymillLogging->getEntries($actualPage);
         $this->data['paymillInputSearch'] = $searchValue;
         $this->data['paymillCheckboxConnectedSearch'] = $connectedSearch;
-        $this->data['paymillPage'] = $page;
 
+        $maxPages = (int)floor($this->model_custom_paymillLogging->getTotal() / $this->model_custom_paymillLogging->getPageSize());
+
+        $this->data['paymillPage'] = $actualPage;
+        $this->data['paymillPageMax'] = $maxPages;
 
         $this->baseUrl = preg_replace("/\/index\.php/", "", $this->request->server['SCRIPT_NAME']);
         $this->data['breadcrumbs'] = $this->_getBreadcrumbs();
@@ -76,7 +82,8 @@ class ControllercustompaymillLogging extends Controller
         return $breadcrumbs;
     }
 
-    private function _loadTranslation(){
+    private function _loadTranslation()
+    {
         $this->document->setTitle($this->language->get('headingTitle'));
         $this->data['button_delete'] = $this->language->get('button_delete');
         $this->data['button_search'] = $this->language->get('button_search');
