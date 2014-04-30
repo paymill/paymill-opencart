@@ -71,9 +71,19 @@ echo '</script>';
             <?php }elseif($paymill_activepayment === 'paymilldirectdebit'){ ?>
             <fieldset>
                 <label for="paymill_iban" class="field-left"><?php echo $paymill_accountnumber . " / " . $paymill_iban;?>*</label>
-                <input id="paymill_iban" type="text" size="20" class="field-left" value="<?php echo isset($paymill_prefilled['iban'])?$paymill_prefilled['iban']:isset($paymill_prefilled['account'])?$paymill_prefilled['account']:''; ?>" />
+                <input id="paymill_iban" type="text" size="20" class="field-left" value="<?php
+                    if(isset($paymill_prefilled['iban'])){
+                        echo $paymill_prefilled['iban'];
+                    }elseif(isset($paymill_prefilled['account'])){
+                        echo $paymill_prefilled['account'];
+                    }?>" />
                 <label for="paymill_bic" class="field-right"><?php echo $paymill_banknumber . " / " .$paymill_bic;?>*</label>
-                <input id="paymill_bic" type="text" size="20" class="field-right" value="<?php echo isset($paymill_prefilled['bic'])?$paymill_prefilled['bic']:isset($paymill_prefilled['code'])?$paymill_prefilled['code']:''; ?>" />
+                <input id="paymill_bic" type="text" size="20" class="field-right" value="<?php
+                    if(isset($paymill_prefilled['bic'])){
+                        echo $paymill_prefilled['bic'];
+                    }elseif(isset($paymill_prefilled['code'])){
+                        echo $paymill_prefilled['code'];
+                    }?>" />
             </fieldset>
             <fieldset>
                 <label for="paymill_accountholder" class="field-full"><?php echo $paymill_accountholder;?>*</label>
