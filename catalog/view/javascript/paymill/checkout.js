@@ -5,7 +5,6 @@
 var prefilled = new Array();
 $(document).ready(function() {
     prefilled = getFormData(prefilled, true);
-    var SepaObj = new Sepa('dummySEPA');
     $('#paymill_card_number').keyup(function() {
         $("#paymill_card_number")[0].className = $("#paymill_card_number")[0].className.replace(/paymill-card-number-.*/g, '');
         var cardnumber = $('#paymill_card_number').val();
@@ -44,33 +43,39 @@ $(document).ready(function() {
             PaymillResponseHandler(null, result);
         } else {
             if (validate()) {
-                if (isSepa() && PAYMILL_PAYMENT === "paymilldirectdebit") {
-                    SepaObj.popUp('sepaCallback');
-                } else {
-                    $("#paymill_form").append("<input type='hidden' name='paymillFastcheckout' value='" + false + "'/>");
-                    try {
-                        var params;
-                        if (PAYMILL_PAYMENT === "paymillcreditcard") {
+                $("#paymill_form").append("<input type='hidden' name='paymillFastcheckout' value='" + false + "'/>");
+                try {
+                    var params;
+                    if (PAYMILL_PAYMENT === "paymillcreditcard") {
+                        params = {
+                            number: $('#paymill_card_number').val(),
+                            cardholder: $('#paymill_card_holder').val(),
+                            exp_month: $("#paymill_card_expiry_date").val().split("/")[0],
+                            exp_year: $("#paymill_card_expiry_date").val().split("/")[1],
+                            cvc: $('#paymill_card_cvc').val(),
+                            amount_int: PAYMILL_AMOUNT,
+                            currency: PAYMILL_CURRENCY
+                        };
+                    } else if (PAYMILL_PAYMENT === "paymilldirectdebit") {
+                        if (isSepa()) {
                             params = {
-                                number: $('#paymill_card_number').val(),
-                                cardholder: $('#paymill_card_holder').val(),
-                                exp_month: $("#paymill_card_expiry_date").val().split("/")[0],
-                                exp_year: $("#paymill_card_expiry_date").val().split("/")[1],
-                                cvc: $('#paymill_card_cvc').val(),
-                                amount_int: PAYMILL_AMOUNT,
-                                currency: PAYMILL_CURRENCY
+                                iban: $('#paymill_iban').val(),
+                                bic: $('#paymill_bic').val(),
+                                accountholder: $('#paymill_accountholder').val()
                             };
-                        } else if (PAYMILL_PAYMENT === "paymilldirectdebit") {
+                        } else {
                             params = {
                                 number: $('#paymill_iban').val(),
                                 bank: $('#paymill_bic').val(),
                                 accountholder: $('#paymill_accountholder').val()
                             };
                         }
-                        paymill.createToken(params, PaymillResponseHandler);
-                    } catch (e) {
-                        alert("Ein Fehler ist aufgetreten: " + e);
                     }
+                    debug("Params, see below");
+                    console.log(params);
+                    paymill.createToken(params, PaymillResponseHandler);
+                } catch (e) {
+                    alert("Ein Fehler ist aufgetreten: " + e);
                 }
             }
         }
@@ -93,22 +98,6 @@ $(document).ready(function() {
     }
 });
 
-function sepaCallback(success)
-{
-    if (success) {
-        $("#paymill_form").append("<input type='hidden' name='paymillFastcheckout' value='" + false + "'/>");
-        var params = {
-            iban: $('#paymill_iban').val(),
-            bic: $('#paymill_bic').val(),
-            accountholder: $('#paymill_accountholder').val()
-        };
-        paymill.createToken(params, PaymillResponseHandler);
-    } else {
-        $("#paymill_submit").removeAttr('disabled');
-        $(".paymill_error").html(PAYMILL_TRANSLATION.paymill_invalid_mandate_checkbox);
-        $(".paymill_error").show(500);
-    }
-}
 
 function getFormData(array, ignoreEmptyValues) {
     $('#paymill_form :input').not('[type=hidden]').each(function() {
