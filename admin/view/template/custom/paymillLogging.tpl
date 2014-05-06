@@ -24,9 +24,6 @@
                     <input type="checkbox" name="connectedSearch" <?php if($paymillCheckboxConnectedSearch == "on"){ echo "checked"; }?> > <?php echo $paymillCheckboxConnectedSearch; ?>
                     <input type='number' id='paymillGoToPage' min='0' max='<?php echo $paymillPageMax;?>' value='<?php echo $paymillPage;?>'> / <?php echo $paymillPageMax;?>
                     <a onclick="ChangePage();" class="button">
-                        <span><?php echo "Refresh"; ?></span>
-                    </a>
-                    <a onclick="submitForm('search');" class="button">
                         <span><?php echo $button_search; ?></span>
                     </a>
                     <a onclick="submitForm('delete');" class="button">

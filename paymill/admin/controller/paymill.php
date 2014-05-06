@@ -38,7 +38,6 @@ abstract class ControllerPaymentPaymill extends Controller
             $newConfig[$this->getPaymentName() . '_logging'] = $this->request->post['paymill_logging'];
             $newConfig[$this->getPaymentName() . '_debugging'] = $this->request->post['paymill_debugging'];
             $newConfig[$this->getPaymentName() . '_buttonSolution'] = $this->request->post['paymill_buttonSolution'];
-            $newConfig[$this->getPaymentName() . '_creditcardicons'] = $this->request->post['paymill_creditcardicons'];
             $newConfig[$this->getPaymentName() . '_icon_visa'] = $this->request->post['icon_visa'];
             $newConfig[$this->getPaymentName() . '_icon_master'] = $this->request->post['icon_master'];
             $newConfig[$this->getPaymentName() . '_icon_amex'] = $this->request->post['icon_amex'];
@@ -76,7 +75,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['entry_logging'] = $this->language->get('entry_logging');
         $this->data['entry_debugging'] = $this->language->get('entry_debugging');
         $this->data['entry_buttonSolution'] = $this->language->get('entry_buttonSolution');
-        $this->data['entry_creditcardicons'] = $this->language->get('entry_creditcardicons');
+        $this->data['entry_specific_creditcard'] = $this->language->get('entry_specific_creditcard');
 
         $this->data['button_save'] = $this->language->get('button_save');
         $this->data['button_cancel'] = $this->language->get('button_cancel');

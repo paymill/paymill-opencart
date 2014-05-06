@@ -106,7 +106,7 @@
                     <input type="hidden" value="0" name="icon_carte_bleue">
                     <?php } else { ?>
                     <tr>
-                        <td><?php echo $entry_creditcardicons; ?></td>
+                        <td><?php echo $entry_specific_creditcard; ?></td>
                         <td>
                             <input type="checkbox" value="1" name="icon_visa" <?php if($paymill_icon_visa){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_visa.png">
                             <input type="checkbox" value="1" name="icon_master" <?php if($paymill_icon_master){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_mastercard.png"><br>
