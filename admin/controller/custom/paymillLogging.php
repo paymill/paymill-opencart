@@ -35,8 +35,8 @@ class ControllercustompaymillLogging extends Controller
         $actualPage = (int) $this->getPost("page", 0);
         $selectedIds = $this->getPost("selected");
 
-        if($actualPage < 0){
-            $actualPage = 0;
+        if($actualPage <= 0){
+            $actualPage = 1;
         }
 
         if ($this->getPost("button", "search") === "delete" && is_array($selectedIds)) {
