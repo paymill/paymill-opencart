@@ -76,7 +76,6 @@ $(document).ready(function() {
                     alert("Ein Fehler ist aufgetreten: " + e);
                 }
             }
-            toggleLoading('hide');
         }
         return false;
     });
@@ -168,6 +167,7 @@ function validate() {
         }
     }
     if (!result) {
+        toggleLoading('hide');
         for (var i = 0; i < field.length; i++) {
             field[i].addClass('field-error');
         }
