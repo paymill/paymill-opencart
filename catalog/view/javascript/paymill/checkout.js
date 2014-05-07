@@ -81,21 +81,6 @@ $(document).ready(function() {
         }
         return false;
     });
-
-    if (PAYMILL_PAYMENT === "paymilldirectdebit") {
-        $('#paymill_iban').keyup(function() {
-            var iban = $('#paymill_iban').val();
-            if (!iban.match(/^DE/)) {
-                var newVal = "DE";
-                if (iban.match(/^.{2}(.*)/)) {
-                    newVal += iban.match(/^.{2}(.*)/)[1];
-                }
-                if (isSepa()) {
-                    $('#paymill_iban').val(newVal);
-                }
-            }
-        });
-    }
 });
 
 
