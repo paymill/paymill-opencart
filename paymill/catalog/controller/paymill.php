@@ -189,7 +189,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $this->load->model('checkout/order');
             $this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-            $amountRaw = $this->currency->format_raw($this->order_info['total'], $this->order_info['currency_code'], false, false);
+            $amountRaw = $this->currency->format($this->order_info['total'], $this->order_info['currency_code'], false, false);
             $amount = number_format($amountRaw, 2, '.', '') * 100;
 
             $source = $this->getVersion() . "_opencart_" . VERSION;
