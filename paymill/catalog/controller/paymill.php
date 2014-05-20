@@ -179,7 +179,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         }
 
         $this->_logId = time();
-
+        $this->language->load('payment/' . $this->getPaymentName());
         // check if token present
         if (empty($paymillToken)) {
             $this->log("No paymill token was provided. Redirect to payments page.", '');
@@ -238,15 +238,22 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                 , ($result ? "Success" : "Fail")
             );
 
+            $comment = '';
+            if ($this->getPaymentName() == 'paymilldirectdebit') {
+                $daysUntil = (int) $this->config->get($this->getPaymentName() . '_sepa_date');
+                $comment = $this->language->get('paymill_infotext_sepa') . ": ";
+                $comment .= date("d.m.Y", strtotime("+ $daysUntil DAYS"));
+            }
+
             // finish the order if payment was sucessfully processed
             if ($result === true) {
                 $this->log("Finish order.", '');
                 $this->_saveUserData($this->customer->getId(), $paymentProcessor->getClientId(), $paymentProcessor->getPaymentId());
-                $chargeDate = $this->getPaymentName() == 'paymilldirectdebit' ? (string)date("d.m.Y"):'';
+
                 $this->model_checkout_order->confirm(
-                    $this->session->data['order_id'], $this->config->get('config_order_status_id'), $chargeDate, true
+                    $this->session->data['order_id'], $this->config->get('config_order_status_id'), $comment, true
                 );
-                $this->_updateOrderComment($this->session->data['order_id'], $chargeDate);
+                $this->_updateOrderComment($this->session->data['order_id'], $comment);
                 $this->redirect($this->url->link('checkout/success'));
             } else {
                 $responseCode = array_key_exists($paymentProcessor->getErrorCode(), $this->_response_codes) ? $this->_response_codes[$paymentProcessor->getErrorCode()] : 'unknown error';

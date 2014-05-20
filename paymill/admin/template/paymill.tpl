@@ -93,6 +93,12 @@
                         </td>
                     </tr>
                     <?php if($paymill_payment === 'paymilldirectdebit'){ ?>
+                    <tr>
+                        <td><?php echo $entry_sepa_date; ?></td>
+                        <td>
+                            <input type="text" name="paymill_sepa_date" value="<?php echo $paymill_sepa_date; ?>" size="1" />
+                        </td>
+                    </tr>
                     <input type="hidden" value="0" name="icon_visa">
                     <input type="hidden" value="0" name="icon_master">
                     <input type="hidden" value="0" name="icon_amex">
@@ -121,6 +127,7 @@
                             <input type="checkbox" value="1" name="icon_carte_bleue" <?php if($paymill_icon_carte_bleue){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_carte-bleue.png">
                         </td>
                     </tr>
+                    <input type="hidden" value="0" name="paymill_sepa_date">
                     <?php } ?>
                 </table>
             </form>
