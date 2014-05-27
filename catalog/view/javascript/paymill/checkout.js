@@ -10,10 +10,9 @@ $(document).ready(function() {
         var cardnumber = $('#paymill_card_number').val();
         var detector = new BrandDetection();
         var brand = detector.detect(cardnumber);
-        if (brand !== 'unknown') {
+        if (brand !== 'unknown'  && $.inArray(brand, PAYMILL_BRAND) !== -1) {
             $('#paymill_card_number').addClass("paymill-card-number-" + brand);
             if (!detector.validate(cardnumber)) {
-                console.log();
                 $('#paymill_card_number').addClass("paymill-card-number-grayscale");
             }
         }

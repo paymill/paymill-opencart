@@ -14,7 +14,8 @@ echo 'var PAYMILL_PUBLIC_KEY  = "' . $paymill_publickey . '"; '
 . 'var PAYMILL_PAYMENT  = "' . $paymill_activepayment . '"; '
 . 'var PAYMILL_DEBUG  = "' . $paymill_debugging . '"; '
 . 'var PAYMILL_IMAGE  = "' . $paymill_image_folder . '"; '
-. 'var PAYMILL_TRANSLATION = ' . json_encode($paymill_javascript_error) . '; ';
+. 'var PAYMILL_TRANSLATION = ' . json_encode($paymill_javascript_error) . ';'
+. 'var PAYMILL_BRAND = ' . json_encode($paymill_icon) . '; ';
 echo '</script>';
 ?>
 <script type="text/javascript" src="https://bridge.paymill.com/"></script>
@@ -51,8 +52,6 @@ echo '</script>';
             <p class="description"><?php echo $paymill_description;?></p>
             <div class='paymill_icons'>
                 <?php
-                if($paymill_icon){
-                echo "<p style='margin-bottom:0px;'>$paymill_icon_text:</p>";
                 if($paymill_icon_visa){ echo "<img src=\"$paymill_image_folder/32x20_visa.png\">"; }
                 if($paymill_icon_master){ echo "<img src=\"$paymill_image_folder/32x20_mastercard.png\">"; }
                 if($paymill_icon_amex){ echo "<img src=\"$paymill_image_folder/32x20_amex.png\">"; }
@@ -64,7 +63,6 @@ echo '</script>';
                 if($paymill_icon_dankort){ echo "<img src=\"$paymill_image_folder/32x20_dankort.png\">"; }
                 if($paymill_icon_carta_si){ echo "<img src=\"$paymill_image_folder/32x20_carta-si.png\">"; }
                 if($paymill_icon_carte_bleue){ echo "<img src=\"$paymill_image_folder/32x20_carte-bleue.png\">"; }
-                }
                 ?>
             </div>
             <?php }elseif($paymill_activepayment === 'paymilldirectdebit'){ ?>

@@ -153,19 +153,22 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
 
     private function showCreditcardIcons()
     {
-        $icons = array();
-        $icons[] = $this->config->get($this->getPaymentName() . '_icon_visa');
-        $icons[] = $this->config->get($this->getPaymentName() . '_icon_master');
-        $icons[] = $this->config->get($this->getPaymentName() . '_icon_amex');
-        $icons[] = $this->config->get($this->getPaymentName() . '_icon_jcb');
-        $icons[] = $this->config->get($this->getPaymentName() . '_icon_maestro');
-        $icons[] = $this->config->get($this->getPaymentName() . '_icon_diners_club');
-        $icons[] = $this->config->get($this->getPaymentName() . '_icon_discover');
-        $icons[] = $this->config->get($this->getPaymentName() . '_icon_china_unionpay');
-        $icons[] = $this->config->get($this->getPaymentName() . '_icon_dankort');
-        $icons[] = $this->config->get($this->getPaymentName() . '_icon_carta_si');
-        $icons[] = $this->config->get($this->getPaymentName() . '_icon_carte_bleue');
-        return in_array('1', $icons);
+        $shouldBe = array("amex", "carta-si", "carte-bleue", "dankort", "diners-club", "discover", "jcb", "maestro", "mastercard", "china-unionpay", "visa");
+        $result = array();
+        $result[] = $this->config->get($this->getPaymentName() . '_icon_amex') ? 'amex' : '';
+        $result[] = $this->config->get($this->getPaymentName() . '_icon_carta_si') ? 'carta-si' : '';
+        $result[] = $this->config->get($this->getPaymentName() . '_icon_carte_bleue') ? 'carte-bleue' : '';
+        $result[] = $this->config->get($this->getPaymentName() . '_icon_dankort') ? 'dankort' : '';
+        $result[] = $this->config->get($this->getPaymentName() . '_icon_diners_club') ? 'diners-club' : '';
+        $result[] = $this->config->get($this->getPaymentName() . '_icon_discover') ? 'discover' : '';
+        $result[] = $this->config->get($this->getPaymentName() . '_icon_jcb') ? 'jcb' : '';
+        $result[] = $this->config->get($this->getPaymentName() . '_icon_maestro') ? 'maestro' : '';
+        $result[] = $this->config->get($this->getPaymentName() . '_icon_master') ? 'mastercard' : '';
+        $result[] = $this->config->get($this->getPaymentName() . '_icon_china_unionpay') ? 'china-unionpay' : '';
+        $result[] = $this->config->get($this->getPaymentName() . '_icon_visa') ? 'visa' : '';
+
+        $arrayLength = count(array_diff($shouldBe, $result));
+        return ($arrayLength === 0 || $arrayLength === 11) ? $shouldBe : $result;
     }
 
     public function confirm()
