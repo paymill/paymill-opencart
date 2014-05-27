@@ -1,8 +1,16 @@
+## 1.4.0
+ * united SEPA and regular ELV forms
+ * added backend option to show credit card logos in frontend
+ * added prenotification in order mail for direct debit
+
+## 1.3.1
+ * Fixed a Bug which causes double transactions
+
 ## 1.3.0
-* added iban validation
-* added creditcard predetection and improved validation
-* extented language support
-* fixed minor bugs
+ * added iban validation
+ * added creditcard predetection and improved validation
+ * extented language support
+ * fixed minor bugs
 
 ## 1.2.2
  * Fixed a bug which cause the javascript to crash for JQuery version greater than 1.8.2
