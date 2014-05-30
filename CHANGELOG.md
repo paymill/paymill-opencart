@@ -1,3 +1,6 @@
+## 1.4.1
+ * fixed img path for some server configs
+
 ## 1.4.0
  * united SEPA and regular ELV forms
  * added backend option to show credit card logos in frontend

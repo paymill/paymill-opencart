@@ -25,7 +25,11 @@ abstract class ControllerPaymentPaymill extends Controller
         global $config;
         $this->language->load('payment/' . $this->getPaymentName());
         $this->document->setTitle($this->language->get('heading_title') . " (" . $this->getVersion() . ")");
-        $this->baseUrl = preg_replace("/admin\/index\.php/", "", $this->request->server['SCRIPT_NAME']); //shoproot
+        if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+            $this->data['base'] = $this->config->get('config_ssl');
+        } else {
+            $this->data['base'] = $this->config->get('config_url');
+        }
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->load->model('setting/setting');
@@ -59,7 +63,7 @@ abstract class ControllerPaymentPaymill extends Controller
 
         $this->data['breadcrumbs'] = $this->getBreadcrumbs();
         $this->data['heading_title'] = $this->language->get('heading_title') . " (" . $this->getVersion() . ")";
-        $this->data['paymill_image_folder'] = $this->baseUrl . '/catalog/view/theme/default/image/payment';
+        $this->data['paymill_image_folder'] = '/catalog/view/theme/default/image/payment';
 
         $this->data['text_enabled'] = $this->language->get('text_enabled');
         $this->data['text_disabled'] = $this->language->get('text_disabled');

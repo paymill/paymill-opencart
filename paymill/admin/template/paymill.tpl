@@ -114,17 +114,17 @@
                     <tr>
                         <td><?php echo $entry_specific_creditcard; ?></td>
                         <td>
-                            <input type="checkbox" value="1" name="icon_visa" <?php if($paymill_icon_visa){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_visa.png">
-                            <input type="checkbox" value="1" name="icon_master" <?php if($paymill_icon_master){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_mastercard.png"><br>
-                            <input type="checkbox" value="1" name="icon_amex" <?php if($paymill_icon_amex){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_amex.png">
-                            <input type="checkbox" value="1" name="icon_jcb" <?php if($paymill_icon_jcb){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_jcb.png"><br>
-                            <input type="checkbox" value="1" name="icon_maestro" <?php if($paymill_icon_maestro){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_maestro.png">
-                            <input type="checkbox" value="1" name="icon_diners_club" <?php if($paymill_icon_diners_club){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_dinersclub.png"><br>
-                            <input type="checkbox" value="1" name="icon_discover" <?php if($paymill_icon_discover){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_discover.png">
-                            <input type="checkbox" value="1" name="icon_china_unionpay" <?php if($paymill_icon_china_unionpay){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_unionpay.png"><br>
-                            <input type="checkbox" value="1" name="icon_dankort" <?php if($paymill_icon_dankort){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_dankort.png">
-                            <input type="checkbox" value="1" name="icon_carta_si" <?php if($paymill_icon_carta_si){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_carta-si.png"><br>
-                            <input type="checkbox" value="1" name="icon_carte_bleue" <?php if($paymill_icon_carte_bleue){ echo 'checked';}?>><img src="<?php echo $paymill_image_folder; ?>/32x20_carte-bleue.png">
+                            <input type="checkbox" value="1" name="icon_visa" <?php if($paymill_icon_visa){ echo 'checked';}?>><img src="<?php echo $base . $paymill_image_folder; ?>/32x20_visa.png">
+                            <input type="checkbox" value="1" name="icon_master" <?php if($paymill_icon_master){ echo 'checked';}?>><img src="<?php echo $base . $paymill_image_folder; ?>/32x20_mastercard.png"><br>
+                            <input type="checkbox" value="1" name="icon_amex" <?php if($paymill_icon_amex){ echo 'checked';}?>><img src="<?php echo $base . $paymill_image_folder; ?>/32x20_amex.png">
+                            <input type="checkbox" value="1" name="icon_jcb" <?php if($paymill_icon_jcb){ echo 'checked';}?>><img src="<?php echo $base . $paymill_image_folder; ?>/32x20_jcb.png"><br>
+                            <input type="checkbox" value="1" name="icon_maestro" <?php if($paymill_icon_maestro){ echo 'checked';}?>><img src="<?php echo $base . $paymill_image_folder; ?>/32x20_maestro.png">
+                            <input type="checkbox" value="1" name="icon_diners_club" <?php if($paymill_icon_diners_club){ echo 'checked';}?>><img src="<?php echo $base . $paymill_image_folder; ?>/32x20_dinersclub.png"><br>
+                            <input type="checkbox" value="1" name="icon_discover" <?php if($paymill_icon_discover){ echo 'checked';}?>><img src="<?php echo $base . $paymill_image_folder; ?>/32x20_discover.png">
+                            <input type="checkbox" value="1" name="icon_china_unionpay" <?php if($paymill_icon_china_unionpay){ echo 'checked';}?>><img src="<?php echo $base . $paymill_image_folder; ?>/32x20_unionpay.png"><br>
+                            <input type="checkbox" value="1" name="icon_dankort" <?php if($paymill_icon_dankort){ echo 'checked';}?>><img src="<?php echo $base . $paymill_image_folder; ?>/32x20_dankort.png">
+                            <input type="checkbox" value="1" name="icon_carta_si" <?php if($paymill_icon_carta_si){ echo 'checked';}?>><img src="<?php echo $base . $paymill_image_folder; ?>/32x20_carta-si.png"><br>
+                            <input type="checkbox" value="1" name="icon_carte_bleue" <?php if($paymill_icon_carte_bleue){ echo 'checked';}?>><img src="<?php echo $base . $paymill_image_folder; ?>/32x20_carte-bleue.png">
                         </td>
                     </tr>
                     <input type="hidden" value="0" name="paymill_sepa_date">
