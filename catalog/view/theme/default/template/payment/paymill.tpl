@@ -39,15 +39,15 @@ echo '</script>';
             <?php if($paymill_activepayment === 'paymillcreditcard'){ ?>
             <fieldset>
                 <label for="paymill_card_number" class="field-left"><?php echo $paymill_cardnumber;?>*</label>
-                <input id="paymill_card_number" type="text" class="field-left" value="<?php echo isset($paymill_prefilled['last4'])? '**********'.$paymill_prefilled['last4']:'';?>"/>
+                <input id="paymill_card_number" type="text" autocomplete="off" class="field-left" value="<?php echo isset($paymill_prefilled['last4'])? '**********'.$paymill_prefilled['last4']:'';?>"/>
                 <label for="paymill_card_expiry_date" class="field-right"><?php echo $paymill_expirydate;?>*</label>
-                <input id="paymill_card_expiry_date" type="text" class="field-right" value="<?php echo isset($paymill_prefilled['expire_date'])? $paymill_prefilled['expire_date']:'MM/YYYY';?>"/>
+                <input id="paymill_card_expiry_date" type="text" autocomplete="off" class="field-right" value="<?php echo isset($paymill_prefilled['expire_date'])? $paymill_prefilled['expire_date']:'MM/YYYY';?>"/>
             </fieldset>
             <fieldset>
                 <label for="paymill_card_holder" class="field-left"><?php echo $paymill_cardholder;?>*</label>
-                <input id="paymill_card_holder" type="text" class="field-left" value="<?php echo isset($paymill_prefilled['card_holder'])?$paymill_prefilled['card_holder']:$paymill_fullname;?>"/>
+                <input id="paymill_card_holder" type="text" autocomplete="off" class="field-left" value="<?php echo isset($paymill_prefilled['card_holder'])?$paymill_prefilled['card_holder']:$paymill_fullname;?>"/>
                 <label for="paymill_card_cvc" class="field-right"><?php echo $paymill_cvc;?>*</label>
-                <input id="paymill_card_cvc" type="text" class="field-right" value="<?php echo isset($paymill_prefilled['id'])?'***':'' ?>"/>
+                <input id="paymill_card_cvc" type="text" autocomplete="off" class="field-right" value="<?php echo isset($paymill_prefilled['id'])?'***':'' ?>"/>
             </fieldset>
             <p class="description"><?php echo $paymill_description;?></p>
             <div class='paymill_icons'>
@@ -68,14 +68,14 @@ echo '</script>';
             <?php }elseif($paymill_activepayment === 'paymilldirectdebit'){ ?>
             <fieldset>
                 <label for="paymill_iban" class="field-left"><?php echo $paymill_accountnumber . " / " . $paymill_iban;?>*</label>
-                <input id="paymill_iban" type="text" size="20" class="field-left" value="<?php
+                <input id="paymill_iban" type="text" size="20" autocomplete="off" class="field-left" value="<?php
                     if(isset($paymill_prefilled['iban'])){
                         echo $paymill_prefilled['iban'];
                     }elseif(isset($paymill_prefilled['account'])){
                         echo $paymill_prefilled['account'];
                     }?>" />
                 <label for="paymill_bic" class="field-right"><?php echo $paymill_banknumber . " / " .$paymill_bic;?>*</label>
-                <input id="paymill_bic" type="text" size="20" class="field-right" value="<?php
+                <input id="paymill_bic" type="text" size="20" autocomplete="off" class="field-right" value="<?php
                     if(isset($paymill_prefilled['bic'])){
                         echo $paymill_prefilled['bic'];
                     }elseif(isset($paymill_prefilled['code'])){
@@ -84,7 +84,7 @@ echo '</script>';
             </fieldset>
             <fieldset>
                 <label for="paymill_accountholder" class="field-full"><?php echo $paymill_accountholder;?>*</label>
-                <input id="paymill_accountholder" type="text" size="20" class="field-full" value="<?php echo isset($paymill_prefilled['holder'])?$paymill_prefilled['holder']:$paymill_fullname; ?>"/>
+                <input id="paymill_accountholder" type="text" size="20" autocomplete="off" class="field-full" value="<?php echo isset($paymill_prefilled['holder'])?$paymill_prefilled['holder']:$paymill_fullname; ?>"/>
             </fieldset>
             <p class="description"><?php echo $paymill_description;?></p>
             <?php } ?>

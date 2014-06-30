@@ -204,7 +204,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $paymentProcessor->setPrivateKey($privateKey);
             $paymentProcessor->setApiUrl('https://api.paymill.com/v2/');
             $paymentProcessor->setCurrency($this->order_info['currency_code']);
-            $paymentProcessor->setDescription("OrderID:" . $this->session->data['order_id'] . " " . $this->order_info['email']);
+            $paymentProcessor->setDescription(substr("OrderID:" . $this->session->data['order_id'] . " " . $this->order_info['email'],0,128));
             $paymentProcessor->setEmail($this->order_info['email']);
             $paymentProcessor->setLogger($this);
             $paymentProcessor->setName($this->order_info['lastname'] . ', ' . $this->order_info['firstname']);
