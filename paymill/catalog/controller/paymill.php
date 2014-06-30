@@ -204,7 +204,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $paymentProcessor->setPrivateKey($privateKey);
             $paymentProcessor->setApiUrl('https://api.paymill.com/v2/');
             $paymentProcessor->setCurrency($this->order_info['currency_code']);
-            $paymentProcessor->setDescription("OrderID:" . $this->order_info['order_id'] . " " . $this->order_info['email']);
+            $paymentProcessor->setDescription("OrderID:" . $this->session->data['order_id'] . " " . $this->order_info['email']);
             $paymentProcessor->setEmail($this->order_info['email']);
             $paymentProcessor->setLogger($this);
             $paymentProcessor->setName($this->order_info['lastname'] . ', ' . $this->order_info['firstname']);
@@ -298,8 +298,8 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
      */
     private function _updateOrderComment($orderId, $comment)
     {
-        $result = $this->db->query("SELECT `comment` FROM `" . DB_PREFIX . "order` WHERE `order_id`=" . mysql_escape_string($orderId));
-        $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `comment`='" . mysql_escape_string($result->row['comment']) . "\n" . $comment . "' WHERE `order_id`=" . mysql_escape_string($orderId));
+        $result = $this->db->query("SELECT `comment` FROM `" . DB_PREFIX . "order` WHERE `order_id`=" . mysql_real_escape_string($orderId));
+        $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `comment`='" . mysql_real_escape_string($result->row['comment']) . "\n" . $comment . "' WHERE `order_id`=" . mysql_real_escape_string($orderId));
     }
 
     /**
