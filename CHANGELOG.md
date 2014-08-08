@@ -1,3 +1,7 @@
+## 1.4.2
+ * added fallback for img-path
+ * checking parameter to avoid warnings
+
 ## 1.4.1
  * fixed img path for some server configs
 
