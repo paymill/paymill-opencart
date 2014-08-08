@@ -36,26 +36,26 @@ abstract class ControllerPaymentPaymill extends Controller
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->load->model('setting/setting');
 
-            $newConfig[$this->getPaymentName() . '_status'] = $this->request->post['paymill_status'];
-            $newConfig[$this->getPaymentName() . '_publickey'] = trim($this->request->post['paymill_publickey']);
-            $newConfig[$this->getPaymentName() . '_privatekey'] = trim($this->request->post['paymill_privatekey']);
-            $newConfig[$this->getPaymentName() . '_sort_order'] = $this->request->post['paymill_sort_order'];
-            $newConfig[$this->getPaymentName() . '_fast_checkout'] = $this->request->post['paymill_fast_checkout'];
-            $newConfig[$this->getPaymentName() . '_logging'] = $this->request->post['paymill_logging'];
-            $newConfig[$this->getPaymentName() . '_debugging'] = $this->request->post['paymill_debugging'];
-            $newConfig[$this->getPaymentName() . '_buttonSolution'] = $this->request->post['paymill_buttonSolution'];
-            $newConfig[$this->getPaymentName() . '_sepa_date'] = $this->request->post['paymill_sepa_date'];
-            $newConfig[$this->getPaymentName() . '_icon_visa'] = $this->request->post['icon_visa'];
-            $newConfig[$this->getPaymentName() . '_icon_master'] = $this->request->post['icon_master'];
-            $newConfig[$this->getPaymentName() . '_icon_amex'] = $this->request->post['icon_amex'];
-            $newConfig[$this->getPaymentName() . '_icon_jcb'] = $this->request->post['icon_jcb'];
-            $newConfig[$this->getPaymentName() . '_icon_maestro'] = $this->request->post['icon_maestro'];
-            $newConfig[$this->getPaymentName() . '_icon_diners_club'] = $this->request->post['icon_diners_club'];
-            $newConfig[$this->getPaymentName() . '_icon_discover'] = $this->request->post['icon_discover'];
-            $newConfig[$this->getPaymentName() . '_icon_china_unionpay'] = $this->request->post['icon_china_unionpay'];
-            $newConfig[$this->getPaymentName() . '_icon_dankort'] = $this->request->post['icon_dankort'];
-            $newConfig[$this->getPaymentName() . '_icon_carta_si'] = $this->request->post['icon_carta_si'];
-            $newConfig[$this->getPaymentName() . '_icon_carte_bleue'] = $this->request->post['icon_carte_bleue'];
+            $newConfig[$this->getPaymentName() . '_status'] = $this->getPostValue('paymill_status', 0);
+            $newConfig[$this->getPaymentName() . '_publickey'] = trim($this->getPostValue('paymill_publickey', ''));
+            $newConfig[$this->getPaymentName() . '_privatekey'] = trim($this->getPostValue('paymill_privatekey', ''));
+            $newConfig[$this->getPaymentName() . '_sort_order'] = $this->getPostValue('paymill_sort_order', 0);
+            $newConfig[$this->getPaymentName() . '_fast_checkout'] = $this->getPostValue('paymill_fast_checkout', false);
+            $newConfig[$this->getPaymentName() . '_logging'] = $this->getPostValue('paymill_logging', false);
+            $newConfig[$this->getPaymentName() . '_debugging'] = $this->getPostValue('paymill_debugging', false);
+            $newConfig[$this->getPaymentName() . '_buttonSolution'] = $this->getPostValue('paymill_buttonSolution', false);
+            $newConfig[$this->getPaymentName() . '_sepa_date'] = $this->getPostValue('paymill_sepa_date');
+            $newConfig[$this->getPaymentName() . '_icon_visa'] = $this->getPostValue('icon_visa');
+            $newConfig[$this->getPaymentName() . '_icon_master'] = $this->getPostValue('icon_master');
+            $newConfig[$this->getPaymentName() . '_icon_amex'] = $this->getPostValue('icon_amex');
+            $newConfig[$this->getPaymentName() . '_icon_jcb'] = $this->getPostValue('icon_jcb');
+            $newConfig[$this->getPaymentName() . '_icon_maestro'] = $this->getPostValue('icon_maestro');
+            $newConfig[$this->getPaymentName() . '_icon_diners_club'] = $this->getPostValue('icon_diners_club');
+            $newConfig[$this->getPaymentName() . '_icon_discover'] = $this->getPostValue('icon_discover');
+            $newConfig[$this->getPaymentName() . '_icon_china_unionpay'] = $this->getPostValue('icon_china_unionpay');
+            $newConfig[$this->getPaymentName() . '_icon_dankort'] = $this->getPostValue('icon_dankort');
+            $newConfig[$this->getPaymentName() . '_icon_carta_si'] = $this->getPostValue('icon_carta_si');
+            $newConfig[$this->getPaymentName() . '_icon_carte_bleue'] = $this->getPostValue('icon_carte_bleue');
 
             $this->model_setting_setting->editSetting($this->getPaymentName(), $newConfig);
             $this->addPaymillWebhook($newConfig[$this->getPaymentName() . '_privatekey']);
@@ -154,6 +154,15 @@ abstract class ControllerPaymentPaymill extends Controller
         } else {
             return $this->config->get($configField);
         }
+    }
+
+    protected function getPostValue($configField)
+    {
+        $result = $this->getConfigValue($configField);
+        if (isset($this->request->post[$configField])) {
+            $result = $this->request->post[$configField];
+        }
+        return $result;
     }
 
     protected function validate()
