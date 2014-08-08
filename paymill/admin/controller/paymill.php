@@ -27,8 +27,10 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->document->setTitle($this->language->get('heading_title') . " (" . $this->getVersion() . ")");
         if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
             $this->data['base'] = $this->config->get('config_ssl');
-        } else {
+        } elseif(!is_null($this->config->get('config_url'))) {
             $this->data['base'] = $this->config->get('config_url');
+        } else{
+            $this->data['base'] = preg_replace("/admin\/index\.php/", "", $this->request->server['SCRIPT_NAME']); //shoproot
         }
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
