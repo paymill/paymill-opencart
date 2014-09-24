@@ -37,3 +37,46 @@ Fast Checkout: Fast checkout can be enabled by selecting the option in the PAYMI
 ## In case of errors
 
 In case of any errors turn on the debug mode and logging in the PAYMILL Settings. Open the javascript console in your browser and check what's being logged during the checkout process. To access the logged information not printed in the console please click the `Logging`-button within your configuration.
+
+## Adding capture / refund
+
+Open the file `admin/view/template/sale/order_info.tpl`.
+Search for the following code
+```php
+<tr>
+    <td><?php echo $text_country; ?></td>
+    <td><?php echo $payment_country; ?></td>
+</tr>
+<tr>
+    <td><?php echo $text_payment_method; ?></td>
+    <td><?php echo $payment_method; ?></td>
+</tr>
+```
+
+Add the folowing code right atfer the previous code
+```php
+<?php
+    require_once(DIR_SYSTEM."../paymill/admin/template/paymentActions.tpl");
+?>
+```
+
+Open the file `admin/controller/sae/order.php`
+Search for the following code
+```php
+public function info() {
+    $this->load->model('sale/order');
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = $this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		$order_info = $this->model_sale_order->getOrder($order_id);
+
+		if ($order_info) {
+```
+and add the following code below it
+```php
+$this->data['paymillURL'] = $this->url->link('custom/paymillOrder', '&token=' . $this->session->data['token'] .'&orderId='.$order_id);
+```

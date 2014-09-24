@@ -37,11 +37,11 @@ class ControllercustompaymillLogging extends Controller
 
         if($actualPage <= 0){
             $actualPage = 1;
-        }
+    }
 
         if ($this->getPost("button", "search") === "delete" && is_array($selectedIds)) {
             $this->model_custom_paymillLogging->deleteEntries($selectedIds);
-        }
+}
 
 
         $this->model_custom_paymillLogging->setSearchValue($searchValue);
