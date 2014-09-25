@@ -173,7 +173,9 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
 
     public function confirm()
     {
-        // read transaction token from session
+        $preauth = (bool)$this->config->get($this->getPaymentName() . '_preauth');
+
+	// read transaction token from session
         if (isset($this->request->post['paymillToken'])) {
             $paymillToken = $this->request->post['paymillToken'];
         }
@@ -233,13 +235,18 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                     }
                 }
             }
-
-            // process the payment
-            $result = $paymentProcessor->processPayment();
+	    $captureNow = !$preauth && $this->getPaymentName() === 'paymillcreditcard';
+	    // process the payment
+            $result = $paymentProcessor->processPayment($captureNow);
 	    $this->log(
                 "Payment processing resulted in: "
                 , ($result ? "Success" : "Fail")
             );
+	    
+	    $preauthId = '';
+	    if(!$captureNow){
+		$preauthId = $paymentProcessor->getPreauthId();
+	    }
 
             $comment = '';
             if ($this->getPaymentName() == 'paymilldirectdebit') {
@@ -257,6 +264,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                     $this->session->data['order_id'], $this->config->get('config_order_status_id'), $comment, true
                 );
                 $this->_updateOrderComment($this->session->data['order_id'], $comment);
+		$this->_saveOrderDetails($this->session->data['order_id'], $preauthId);
                 $this->redirect($this->url->link('checkout/success'));
             } else {
                 $responseCode = array_key_exists($paymentProcessor->getErrorCode(), $this->_response_codes) ? $this->_response_codes[$paymentProcessor->getErrorCode()] : 'unknown error';
@@ -291,6 +299,12 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         } catch (Exception $exception) {
             $this->log("Error while saving Userdata: " . $exception->getMessage());
         }
+    }
+    
+    private function _saveOrderDetails($orderId, $preauthId) {
+	$orderId = $this->db->escape($orderId);
+	$preauthId = $this->db->escape($preauthId);
+	$this->db->query("INSERT INTO `" . DB_PREFIX . "pigmbh_paymill_orders` (`order_id`,`preauth_id`) VALUES ('" . $orderId . "', '" . $preauthId . "')");
     }
 
     /**
