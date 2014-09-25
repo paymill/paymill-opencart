@@ -236,7 +236,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
 
             // process the payment
             $result = $paymentProcessor->processPayment();
-            $this->log(
+	    $this->log(
                 "Payment processing resulted in: "
                 , ($result ? "Success" : "Fail")
             );

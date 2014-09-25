@@ -6,6 +6,7 @@ $_["entry_publickey"] = "Public Key";
 $_["entry_privatekey"] = "Private Key";
 $_["entry_sort_order"] = "Reihenfolge";
 $_["entry_fast_checkout"] = "Fast Checkout erlauben";
+$_["entry_preauth"] = "Betrag reservieren und manuel belasten";
 $_["entry_label"] = "PAYMILL Label im Checkout anzeigen";
 $_["entry_logging"] = "Logging aktivieren";
 $_["entry_debugging"] = "Debugging aktivieren";

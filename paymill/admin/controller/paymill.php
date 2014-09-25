@@ -40,6 +40,7 @@ abstract class ControllerPaymentPaymill extends Controller
             $newConfig[$this->getPaymentName() . '_publickey'] = trim($this->getPostValue('paymill_publickey', ''));
             $newConfig[$this->getPaymentName() . '_privatekey'] = trim($this->getPostValue('paymill_privatekey', ''));
             $newConfig[$this->getPaymentName() . '_sort_order'] = $this->getPostValue('paymill_sort_order', 0);
+            $newConfig[$this->getPaymentName() . '_preauth'] = $this->getPostValue('paymill_preauth', false);
             $newConfig[$this->getPaymentName() . '_fast_checkout'] = $this->getPostValue('paymill_fast_checkout', false);
             $newConfig[$this->getPaymentName() . '_logging'] = $this->getPostValue('paymill_logging', false);
             $newConfig[$this->getPaymentName() . '_debugging'] = $this->getPostValue('paymill_debugging', false);
@@ -79,6 +80,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['entry_privatekey'] = $this->language->get('entry_privatekey');
         $this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
         $this->data['entry_fast_checkout'] = $this->language->get('entry_fast_checkout');
+        $this->data['entry_preauth'] = $this->language->get('entry_preauth');
         $this->data['entry_logging'] = $this->language->get('entry_logging');
         $this->data['entry_debugging'] = $this->language->get('entry_debugging');
         $this->data['entry_buttonSolution'] = $this->language->get('entry_buttonSolution');
@@ -98,6 +100,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_privatekey'] = $this->getConfigValue($this->getPaymentName() . '_privatekey');
         $this->data['paymill_sort_order'] = $this->getConfigValue($this->getPaymentName() . '_sort_order');
         $this->data['paymill_fast_checkout'] = $this->getConfigValue($this->getPaymentName() . '_fast_checkout');
+        $this->data['paymill_preauth'] = $this->getConfigValue($this->getPaymentName() . '_preauth');
         $this->data['paymill_logging'] = $this->getConfigValue($this->getPaymentName() . '_logging');
         $this->data['paymill_debugging'] = $this->getConfigValue($this->getPaymentName() . '_debugging');
         $this->data['paymill_buttonSolution'] = $this->getConfigValue($this->getPaymentName() . '_buttonSolution');
@@ -202,6 +205,7 @@ abstract class ControllerPaymentPaymill extends Controller
         $config[$this->getPaymentName() . '_privatekey'] = '';
         $config[$this->getPaymentName() . '_sort_order'] = '1';
         $config[$this->getPaymentName() . '_fast_checkout'] = '0';
+        $config[$this->getPaymentName() . '_preauth'] = '0';
         $config[$this->getPaymentName() . '_different_amount'] = '0.00';
         $config[$this->getPaymentName() . '_logging'] = '1';
         $config[$this->getPaymentName() . '_debugging'] = '1';

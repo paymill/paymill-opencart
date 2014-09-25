@@ -110,7 +110,17 @@
                     <input type="hidden" value="0" name="icon_dankort">
                     <input type="hidden" value="0" name="icon_carta_si">
                     <input type="hidden" value="0" name="icon_carte_bleue">
+                    <input type="hidden" value="0" name="paymill_preauth">
                     <?php } else { ?>
+                    <tr>
+                        <td><?php echo $entry_preauth; ?></td>
+                        <td>
+                            <select name="paymill_preauth">
+                                <option value="1" <?php if ($paymill_preauth) { echo 'selected="selected"';}?>> <?php echo $text_enabled; ?></option>
+                                <option value="0" <?php if (!$paymill_preauth) { echo 'selected="selected"';}?>> <?php echo $text_disabled; ?></option>
+                            </select>
+                        </td>
+                    </tr>
                     <tr>
                         <td><?php echo $entry_specific_creditcard; ?></td>
                         <td>
