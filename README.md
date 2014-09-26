@@ -78,5 +78,6 @@ public function info() {
 ```
 and add the following code below it
 ```php
-$this->data['paymillURL'] = $this->url->link('custom/paymillOrder', '&token=' . $this->session->data['token'] .'&orderId='.$order_id);
+    $this->data['paymillshow'] = preg_match('/^paymill.*$/', $order_info['payment_code']);
+    $this->data['paymillURL'] = $this->url->link('custom/paymillOrder', '&token=' . $this->session->data['token'] .'&orderId='.$order_id);
 ```

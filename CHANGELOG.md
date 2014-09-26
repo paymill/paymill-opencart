@@ -1,3 +1,7 @@
+## 1.5.0
+ * added Preauth / Capture
+ * added Refund
+
 ## 1.4.2
  * added fallback for img-path
  * checking parameter to avoid warnings
