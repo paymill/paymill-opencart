@@ -37,6 +37,25 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
 
     private $logId;
 
+    protected function _getBreadcrumbs()
+    {
+        $orderId = $this->getPost('orderId');
+        $orderIdUrl = is_null($orderId)?'':'&order_id='.$orderId;
+        $breadcrumbs = array();
+        $breadcrumbs[] = array(
+            'href' => $this->url->link('common/home', '&token=' . $this->session->data['token']),
+            'text' => $this->language->get('text_home'),
+            'separator' => FALSE
+        );
+
+        $breadcrumbs[] = array(
+            'href' => $this->url->link('sale/order/info', '&token=' . $this->session->data['token'].$orderIdUrl),
+            'text' => $this->language->get('heading_title'),
+            'separator' => ' :: '
+        );
+        return $breadcrumbs;
+    }
+
     public function init(){
         $this->logId = time();
         $key = $this->config->get('paymillcreditcard_privatekey');
@@ -75,6 +94,7 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
         $orderId = $this->getPost('orderId', 0);
 
         $order_info = $this->model_sale_order->getOrder($orderId);
+        $this->data['breadcrumbs'] = $this->_getBreadcrumbs();
         $this->data['data_orderId'] = '-';
         $this->data['data_storename'] = '-';
         $this->data['data_customer_firstname'] = '-';

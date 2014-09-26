@@ -47,7 +47,9 @@
 
 <div id="content">
     <div class="breadcrumb" align="left">
-
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+        <?php } ?>
     </div>
         <input type='hidden' name='page' value='<?php echo $paymillPage; ?>'/>
         <div class="box">
