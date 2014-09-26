@@ -1,7 +1,26 @@
 <?php echo $header; ?>
 
-<link rel="stylesheet" type="text/css" href="<?php echo $paymillCSS; ?>" />
-<script type="text/javascript" src="<?php echo $paymillJS; ?>"></script>
+<script type="text/javascript" >
+    $('document').ready(function(){
+        $('#paymill_capture').click(function(){
+            $.ajax({
+                url: "<?php echo $url_capture;?>",
+                success: function(result){
+                    console.log(result);
+                }
+            });
+        });
+        $('#paymill_refund').click(function(){
+            $.ajax({
+                url: "<?php echo $url_refund;?>",
+                success: function(result){
+                    console.log(result);
+                }
+            });
+        });
+    });
+</script>
+
 <div id="content">
     <div class="breadcrumb" align="left">
 
@@ -13,11 +32,12 @@
             <div class="heading">
                 <h1>
                     <img src="view/image/payment.png" alt="payment icon"/>
-                    Order <?php echo $data_orderId; ?>
+                    Order #<?php echo $data_orderId; ?>
                 </h1>
 
                 <div class="buttons">
-                    <input type='number' id='orderNumber' >
+                    <a id="paymill_capture" class="button">Capture</a>
+                    <a id="paymill_refund" class="button">Refund</a>
                 </div>
             </div>
             <div class="content">
