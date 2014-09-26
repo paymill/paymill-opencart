@@ -235,18 +235,22 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                     }
                 }
             }
-	    $captureNow = !$preauth && $this->getPaymentName() === 'paymillcreditcard';
-	    // process the payment
-            $result = $paymentProcessor->processPayment($captureNow);
-	    $this->log(
+            $captureNow = !$preauth && $this->getPaymentName() === 'paymillcreditcard';
+            // process the payment
+                $result = $paymentProcessor->processPayment($captureNow);
+            $this->log(
                 "Payment processing resulted in: "
                 , ($result ? "Success" : "Fail")
             );
-	    
-	    $preauthId = '';
-	    if(!$captureNow){
-		$preauthId = $paymentProcessor->getPreauthId();
-	    }
+
+
+            if(!$captureNow){
+                $preauthId = $paymentProcessor->getPreauthId();
+                $transId = '';
+            }else{
+                $preauthId = '';
+                $transId = $paymentProcessor->getTransactionId();
+            }
 
             $comment = '';
             if ($this->getPaymentName() == 'paymilldirectdebit') {
@@ -264,7 +268,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                     $this->session->data['order_id'], $this->config->get('config_order_status_id'), $comment, true
                 );
                 $this->_updateOrderComment($this->session->data['order_id'], $comment);
-		$this->_saveOrderDetails($this->session->data['order_id'], $preauthId);
+                $this->_saveOrderDetails($this->session->data['order_id'], $transId, $preauthId);
                 $this->redirect($this->url->link('checkout/success'));
             } else {
                 $responseCode = array_key_exists($paymentProcessor->getErrorCode(), $this->_response_codes) ? $this->_response_codes[$paymentProcessor->getErrorCode()] : 'unknown error';
@@ -300,11 +304,11 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $this->log("Error while saving Userdata: " . $exception->getMessage());
         }
     }
-    
-    private function _saveOrderDetails($orderId, $preauthId) {
-	$orderId = $this->db->escape($orderId);
-	$preauthId = $this->db->escape($preauthId);
-	$this->db->query("INSERT INTO `" . DB_PREFIX . "pigmbh_paymill_orders` (`order_id`,`preauth_id`) VALUES ('" . $orderId . "', '" . $preauthId . "')");
+
+    private function _saveOrderDetails($orderId, $transId, $preauthId) {
+        $orderId = $this->db->escape($orderId);
+        $preauthId = $this->db->escape($preauthId);
+        $this->db->query("INSERT INTO `" . DB_PREFIX . "pigmbh_paymill_orders` (`order_id`,`transaction_id`,`preauth_id`) VALUES ('" . $orderId . "', '" . $transId . "','".$preauthId."')");
     }
 
     /**

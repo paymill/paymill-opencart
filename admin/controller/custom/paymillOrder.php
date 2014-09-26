@@ -3,6 +3,7 @@
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/paymill/lib/Services/Paymill/LoggingInterface.php';
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/paymill/lib/Services/Paymill/Preauthorizations.php';
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/paymill/lib/Services/Paymill/Transactions.php';
+require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/paymill/lib/Services/Paymill/Refunds.php';
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/paymill/lib/Services/Paymill/PaymentProcessor.php';
 require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/paymill/metadata.php';
 
@@ -25,6 +26,11 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
     private $paymillTransaction;
 
     /**
+     * @var Services_Paymill_Refunds
+     */
+    private $paymillRefund;
+
+    /**
      * @var string
      */
     private $apiEndpoint = 'https://api.paymill.com/v2/';
@@ -37,6 +43,7 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
         $this->paymillProcessor = new Services_Paymill_PaymentProcessor($key, $this->apiEndpoint);
         $this->paymillPreauth = new Services_Paymill_Preauthorizations($key, $this->apiEndpoint);
         $this->paymillTransaction = new Services_Paymill_Transactions($key, $this->apiEndpoint);
+        $this->paymillRefund = new Services_Paymill_Refunds($key, $this->apiEndpoint);
 
         $metadata = new metadata();
         $source = $metadata->getVersion() . "_opencart_" . VERSION;
@@ -100,29 +107,69 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
     }
 
     private function proceedCapture($preauth_id){
+        $result = false;
         $this->init();
+        $orderId = $this->getPost('orderId', 0);
         $preauth = $this->paymillPreauth->getOne($preauth_id);
-        $this->paymillProcessor->setAmount($preauth['amount']);
-        $this->paymillProcessor->setCurrency($preauth['currency']);
-        $this->paymillProcessor->setPreauthId($preauth_id);
-        $this->paymillProcessor->setDescription('Capture '. $preauth_id);
-        try{
-            $result = $this->paymillProcessor->capture();
-            $this->log('Capture successfull', $this->paymillProcessor->getTransactionId());
-        } catch (Exception $ex) {
-            $result = false;
+        if(is_array($preauth)){
+            $this->paymillProcessor->setAmount($preauth['amount']);
+            $this->paymillProcessor->setCurrency($preauth['currency']);
+            $this->paymillProcessor->setPreauthId($preauth_id);
+            $this->paymillProcessor->setDescription('Capture '. $preauth_id);
+            try{
+                $result = $this->paymillProcessor->capture();
+                $this->log('Capture successfully', $this->paymillProcessor->getTransactionId());
+                $this->saveTransactionId($orderId, $this->paymillProcessor->getTransactionId());
+            } catch (Exception $ex) {
+                $result = false;
+            }
         }
+
         return $result;
     }
 
     public function refund(){
+        $result = false;
         $orderId = $this->getPost('orderId', 0);
         $details = $this->getOrderDetails($orderId);
+        if(!is_null($details) && array_key_exists('transaction_id', $details)){
+            $result = $this->proceedRefund($details['transaction_id']);
+        }
+        echo $result ? 'OK' : 'NOK';
+    }
+
+    private function proceedRefund($transactionId){
+        $result = false;
+        $this->init();
+        $transaction = $this->paymillTransaction->getOne($transactionId);
+        $this->log('Transaction used for Refund', var_export($transaction, true));
+        if(is_array($transaction)){
+            try{
+                $result = $this->paymillRefund->create(array(
+                    'transactionId' => $transactionId,
+                    'params' => array(
+                        'amount' => $transaction['origin_amount']
+                    )
+                ));
+                $this->log('Refund successfully', $transaction['id']);
+            } catch (Exception $ex) {
+                $result = false;
+            }
+        }
+        return $result;
     }
 
     private function getOrderDetails($orderId){
         $where = 'WHERE order_id ='. $this->db->escape($orderId);
         $result = $this->db->query('SELECT * FROM `' . DB_PREFIX . 'pigmbh_paymill_orders` ' . $where);
+        if($result->num_rows === 1){
+            return $result->row;
+        }
+    }
+
+    private function saveTransactionId($orderId, $id){
+        $where = 'WHERE order_id ='. $this->db->escape($orderId);
+        $result = $this->db->query('UPDATE `'.DB_PREFIX.'pigmbh_paymill_orders` SET (`transaction_id` ='.$this->db->escape($id).') ' . $where);
         if($result->num_rows === 1){
             return $result->row;
         }

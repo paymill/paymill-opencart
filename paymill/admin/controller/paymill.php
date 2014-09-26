@@ -238,10 +238,9 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "pigmbh_paymill_orders` ("
             . "`order_id` int(11) NOT NULL,"
             . "`preauth_id` varchar(100) NOT NULL,"
-            . "`preauth` int(1) NOT NULL DEFAULT 0,"
+            . "`transaction_id` varchar(100) NOT NULL,"
             . "`refund_amount` DECIMAL(2) NOT NULL DEFAULT 0,"
-	    . "`refund` int(1) NOT NULL DEFAULT 0,"
-            . "PRIMARY KEY (`order_id`)"
+	        . "PRIMARY KEY (`order_id`)"
             . ")");
 
     }
