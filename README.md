@@ -60,7 +60,7 @@ Add the folowing code right atfer the previous code
 ?>
 ```
 
-Open the file `admin/controller/sae/order.php`
+Open the file `admin/controller/sale/order.php`
 Search for the following code
 ```php
 public function info() {
