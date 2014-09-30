@@ -6,9 +6,9 @@
             $.ajax({
                 url: "<?php echo $url_capture;?>",
                 success: function(result){
-                    $( "#dialog-message" ).append("<?php echo $text_capture_failure; ?>");
+                    $( "#dialog-message" ).html("<?php echo $text_capture_failure; ?>");
                     if(result === 'OK'){
-                        $( "#dialog-message" ).append("<?php echo $text_capture_success; ?>");
+                        $( "#dialog-message" ).html("<?php echo $text_capture_success; ?>");
                     }
                     $( "#dialog-message" ).dialog({
                         title:'Capture',
@@ -26,9 +26,9 @@
             $.ajax({
                 url: "<?php echo $url_refund;?>",
                 success: function(result){
-                    $( "#dialog-message" ).append("<?php echo $text_refund_failure; ?>");
+                    $( "#dialog-message" ).html("<?php echo $text_refund_failure; ?>");
                     if(result === 'OK'){
-                        $( "#dialog-message" ).append("<?php echo $text_refund_success; ?>");
+                        $( "#dialog-message" ).html("<?php echo $text_refund_success; ?>");
                     }
                     $( "#dialog-message" ).dialog({
                         title:'Refund',
