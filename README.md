@@ -25,6 +25,12 @@ To install the extension merge the content of the folder `paymill-opencart-maste
 Go to Extentions > Payments and `install` your favorite payment method.
 Afterwards you can click `edit` to enter your configuration.
 
+Be sure to set the permission for the following pages:
+* `custom/paymillLogging` -> shows you all log entries
+* `custom/paymillOrder` -> offers additional payment actions ( capture & refund )
+* `payment/paymillcreditcard` -> configuration page for creditcard
+* `payment/paymilldirectdebit` -> configuration page for directdebit
+
 ## Notes about the payment process
 
 The payment is processed when an order is placed in the shop frontend.
