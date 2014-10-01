@@ -182,6 +182,9 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         if (isset($this->request->post['paymillFastcheckout'])) {
             $fastcheckout = $this->request->post['paymillFastcheckout'];
         }
+        if (isset($this->request->post['paymillName'])) {
+            $name = $this->request->post['paymillName'];
+        }
 
         $this->_logId = time();
         $this->language->load('payment/' . $this->getPaymentName());
@@ -209,7 +212,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $paymentProcessor->setDescription(substr("OrderID:" . $this->session->data['order_id'] . " " . $this->order_info['email'],0,128));
             $paymentProcessor->setEmail($this->order_info['email']);
             $paymentProcessor->setLogger($this);
-            $paymentProcessor->setName($this->order_info['lastname'] . ', ' . $this->order_info['firstname']);
+            $paymentProcessor->setName($name);
             $paymentProcessor->setSource($source);
 
             if ($this->customer->getId() != null) {
@@ -235,7 +238,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
                     }
                 }
             }
-            $captureNow = !$preauth && $this->getPaymentName() === 'paymillcreditcard';
+            $captureNow = !$preauth;
             // process the payment
                 $result = $paymentProcessor->processPayment($captureNow);
             $this->log(
