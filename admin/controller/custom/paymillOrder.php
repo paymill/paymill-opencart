@@ -217,8 +217,6 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
     private function saveTransactionId($orderId, $id){
         $where = 'WHERE `order_id` = '. $this->db->escape($orderId);
         $result = $this->db->query('UPDATE `'.DB_PREFIX.'pigmbh_paymill_orders` SET `transaction_id` = "'.$this->db->escape($id).'" ' . $where);
-        var_dump('UPDATE `'.DB_PREFIX.'pigmbh_paymill_orders` SET (`transaction_id` = "'.$this->db->escape($id).'") ' . $where);
-        exit;
         if($result->num_rows === 1){
             return $result->row;
         }
