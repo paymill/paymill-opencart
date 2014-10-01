@@ -44,7 +44,7 @@ class ModelCustompaymillLogging extends Model
         $limit = '';
         // no Limit for connected Search.
         if (!$this->_connectedSearch) {
-            $start = $page * $this->_pageSize;
+            $start = ($page - 1) * $this->_pageSize;
             $limit = ' LIMIT ' . $start . ',' . $this->_pageSize;
         }
         $orderBy = " ORDER BY `date` DESC, `id` ASC";

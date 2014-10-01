@@ -163,6 +163,7 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
             $this->paymillProcessor->setDescription('Capture '. $preauth_id);
             try{
                 $result = $this->paymillProcessor->capture();
+                $this->log('Capture resulted in', var_export($result,true));
                 $this->log('Capture successfully', $this->paymillProcessor->getTransactionId());
                 $this->saveTransactionId($orderId, $this->paymillProcessor->getTransactionId());
             } catch (Exception $ex) {
@@ -196,6 +197,7 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
                         'amount' => $transaction['origin_amount']
                     )
                 ));
+                $this->log('Refund resulted in', var_export($result,true));
                 $this->log('Refund successfully', $transaction['id']);
             } catch (Exception $ex) {
                 $result = false;
@@ -213,8 +215,10 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
     }
 
     private function saveTransactionId($orderId, $id){
-        $where = 'WHERE order_id ='. $this->db->escape($orderId);
-        $result = $this->db->query('UPDATE `'.DB_PREFIX.'pigmbh_paymill_orders` SET (`transaction_id` ='.$this->db->escape($id).') ' . $where);
+        $where = 'WHERE `order_id` = '. $this->db->escape($orderId);
+        $result = $this->db->query('UPDATE `'.DB_PREFIX.'pigmbh_paymill_orders` SET `transaction_id` = "'.$this->db->escape($id).'" ' . $where);
+        var_dump('UPDATE `'.DB_PREFIX.'pigmbh_paymill_orders` SET (`transaction_id` = "'.$this->db->escape($id).'") ' . $where);
+        exit;
         if($result->num_rows === 1){
             return $result->row;
         }
