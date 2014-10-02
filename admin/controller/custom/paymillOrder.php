@@ -167,7 +167,7 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
                 $this->log('Capture resulted in', var_export($result,true));
                 $this->log('Capture successfully', $this->paymillProcessor->getTransactionId());
                 $this->saveTransactionId($orderId, $this->paymillProcessor->getTransactionId());
-                $orderStatusId = $this->db->query('SELECT `order_status_id` FROM `order_status` WHERE `name`= "Complete"')->row['order_status_id'];
+                $orderStatusId = $this->db->query('SELECT `' . DB_PREFIX . 'order_status_id` FROM `order_status` WHERE `name`= "Complete"')->row['order_status_id'];
                 $this->model_sale_order->addOrderHistory($orderId, array(
                     'order_status_id' => $orderStatusId,
                     'notify' => false,
