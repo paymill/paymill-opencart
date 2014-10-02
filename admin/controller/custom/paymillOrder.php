@@ -154,6 +154,7 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
     private function proceedCapture($preauth_id){
         $result = false;
         $this->init();
+        $this->load->model('sale/order');
         $orderId = $this->getPost('orderId', 0);
         $preauth = $this->paymillPreauth->getOne($preauth_id);
         if(is_array($preauth)){
@@ -166,6 +167,12 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
                 $this->log('Capture resulted in', var_export($result,true));
                 $this->log('Capture successfully', $this->paymillProcessor->getTransactionId());
                 $this->saveTransactionId($orderId, $this->paymillProcessor->getTransactionId());
+                $orderStatusId = $this->db->query('SELECT `order_status_id` FROM `order_status` WHERE `name`= "Complete"')->row['order_status_id'];
+                $this->model_sale_order->addOrderHistory($orderId, array(
+                    'order_status_id' => $orderStatusId,
+                    'notify' => false,
+                    'comment' => ''
+                ));
             } catch (Exception $ex) {
                 $result = false;
             }
@@ -187,6 +194,8 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
     private function proceedRefund($transactionId){
         $result = false;
         $this->init();
+        $this->load->model('sale/order');
+        $orderId = $this->getPost('orderId', 0);
         $transaction = $this->paymillTransaction->getOne($transactionId);
         $this->log('Transaction used for Refund', var_export($transaction, true));
         if(is_array($transaction)){
@@ -199,6 +208,12 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
                 ));
                 $this->log('Refund resulted in', var_export($result,true));
                 $this->log('Refund successfully', $transaction['id']);
+                $orderStatusId = $this->db->query('SELECT `order_status_id` FROM `order_status` WHERE `name`= "Refunded"')->row['order_status_id'];
+                $this->model_sale_order->addOrderHistory($orderId, array(
+                    'order_status_id' => $orderStatusId,
+                    'notify' => true,
+                    'comment' => ''
+                ));
             } catch (Exception $ex) {
                 $result = false;
             }

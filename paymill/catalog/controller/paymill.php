@@ -116,7 +116,6 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->data['paymill_icon'] = $this->showCreditcardIcons();
 
 
-        $this->session->data['paymill_authorized_amount'] = $amount;
         $table = $this->getDatabaseName();
 
         $payment = null;
