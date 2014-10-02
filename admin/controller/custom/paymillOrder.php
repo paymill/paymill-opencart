@@ -208,7 +208,7 @@ class ControllercustompaymillOrder extends Controller implements Services_Paymil
                 ));
                 $this->log('Refund resulted in', var_export($result,true));
                 $this->log('Refund successfully', $transaction['id']);
-                $orderStatusId = $this->db->query('SELECT `order_status_id` FROM `order_status` WHERE `name`= "Refunded"')->row['order_status_id'];
+                $orderStatusId = $this->db->query('SELECT `' . DB_PREFIX . 'order_status_id` FROM `order_status` WHERE `name`= "Refunded"')->row['order_status_id'];
                 $this->model_sale_order->addOrderHistory($orderId, array(
                     'order_status_id' => $orderStatusId,
                     'notify' => true,
