@@ -73,7 +73,8 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->baseUrl = preg_replace("/\/index\.php/", "", $this->request->server['SCRIPT_NAME']);
         $this->load->model('checkout/order');
         $this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
-        $amount = number_format($this->order_info['total'], 2, '.', '');
+        $amount = $this->currency->format($this->order_info['total'], $this->order_info['currency_code'], false, false);
+	
         $this->data['paymill_amount'] = $amount;
         $this->data['paymill_currency'] = $this->order_info['currency_code'];
         $this->data['paymill_fullname'] = $this->order_info['firstname'] . ' ' . $this->order_info['lastname'];
