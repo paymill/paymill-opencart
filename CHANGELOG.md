@@ -1,3 +1,6 @@
+## 1.5.1
+ * fixed 3dsecure checkout for different currencies
+
 ## 1.5.0
  * added Preauth / Capture
  * added Refund
