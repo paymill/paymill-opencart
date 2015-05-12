@@ -53,6 +53,21 @@
                         </td>
                     </tr>
                     <tr>
+                        <td><?php echo $entry_pci; ?></td>
+                        <td>
+                            <select name="paymill_pci">
+                                <option value="1" <?php if ($paymill_pci) { echo 'selected="selected"';}?>>SAQ A-EP</option>
+                                <option value="0" <?php if (!$paymill_pci) { echo 'selected="selected"';}?>>SAQ A</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $entry_stylesheet; ?></td>
+                        <td>
+                            <input type="text" name="paymill_stylesheet" value="<?php echo $paymill_stylesheet; ?>" />
+                        </td>
+                    </tr>
+                    <tr>
                         <td><?php echo $entry_sort_order; ?></td>
                         <td><input type="text" name="paymill_sort_order" value="<?php echo $paymill_sort_order; ?>" size="1" /></td>
                     </tr>
