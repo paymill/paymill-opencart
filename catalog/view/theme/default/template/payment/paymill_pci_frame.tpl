@@ -7,47 +7,21 @@
     . 'var PAYMILL_DEBUG  = "' . $paymill_debugging . '"; '
     . 'var PAYMILL_IMAGE  = "' . $paymill_image_folder . '"; '
     . 'var PAYMILL_TRANSLATION = ' . json_encode($paymill_javascript_error) . ';'
+    . 'var PAYMILL_FASTCHECKOUT_DATA = ' . json_encode($paymill_prefilled) . ';'
+    . 'var PAYMILL_FASTCHECKOUT_ENABLED = "' . $paymill_load_frame_fastcheckout . '";'
     . 'var PAYMILL_BRAND = ' . json_encode($paymill_icon) . '; ';
     echo '</script>';
 ?>
-<script type="text/javascript" src="https://bridge.paymill.com/dss3"></script>
-<script type="text/javascript" src="<?php echo $paymill_js; ?>/checkout.js"></script>
-<script type = "text/javascript" >
-    function PaymillFrameResponseHandler(error, result)
-    {
-        if (error) {
-            debug("iFrame load failed with " + error.apierror + error.message);
-        } else {
-            debug("iFrame successfully loaded");
-        }
-    }
 
-    function paymillEmbedFrame()
-    {
-        PAYMILL_FASTCHECKOUT_CC_CHANGED = true;
-        paymill.embedFrame('paymillFormContainer', PaymillFrameResponseHandler);
-    }
-    <?php if(!isset($paymill_prefilled['last4']) || !isset($paymill_prefilled['expire_date'])) { ?>
-    paymillEmbedFrame();
-    </script >
-<?php } else { ?>
-</script >
-    <table id="paymillFastCheckoutTable" style="clear: both">
-            <tr>
-                <td><?php echo $paymill_cardnumber;?></td>
-                <td id="paymillFcCardNumber" class="paymill-card-number-{$paymillBrand}"><?php echo '**********'.$paymill_prefilled['last4']?></td>
-            </tr>
-            <tr>
-                <td><?php echo $paymill_cvc;?></td>
-                <td>{$paymillCvc}</td>
-            </tr>
-                    <tr>
-                    <td><?php echo $paymill_cardholder;?></td>
-                    <td>{$paymillCardHolder}</td>
-            </tr>
-                    <tr>
-                    <td><?php echo $paymill_expirydate;?></td>
-                    <td>{$paymillMonth}/{$paymillYear}</td>
-            </tr>
-    </table>
-<?php } ?>
+<script type="text/javascript" src="<?php echo $paymill_js; ?>/checkout_iframe.js"></script>
+<div class="right">
+        <form id='paymill_form' action="<?php echo $paymill_form_action; ?>" method="POST">
+        </form>
+        <script type="text/javascript">
+            <!--
+            var url = "https://bridge.paymill.com/dss3";
+            $.getScript( url, function() {
+               paymillEmbedFrame();
+            }); //-->
+        </script>
+</div>

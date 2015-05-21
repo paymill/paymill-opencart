@@ -134,6 +134,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         } else {
             $payment['expire_date'] = null;
         }
+
         $this->data['paymill_prefilled'] = $payment;
 
         if ($this->getPaymentName() == 'paymillcreditcard') {
@@ -144,7 +145,11 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
 
         $this->data['paymill_activepayment'] = $this->getPaymentName();
         if($this->getPaymentName() == "paymillcreditcard" && !$this->config->get($this->getPaymentName() . '_pci')) {
-            $this->template = 'default/template/payment/paymill_frame.tpl';
+            $this->data['paymill_load_frame_fastcheckout'] = false;
+            if(isset($payment['last4']) && isset($payment['expire_date'])) {
+                $this->data['paymill_load_frame_fastcheckout'] = true;
+            }
+            $this->template = 'default/template/payment/paymill_pci_frame.tpl';
             if (file_exists($this->config->get('config_template') . '/template/payment/paymill_frame.tpl')) {
                 $this->template = $this->config->get('config_template') . '/template/payment/paymill_frame.tpl';
             }
