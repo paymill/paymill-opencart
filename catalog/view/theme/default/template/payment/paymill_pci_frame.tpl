@@ -16,12 +16,42 @@
 <script type="text/javascript" src="<?php echo $paymill_js; ?>/checkout_iframe.js"></script>
 <div class="right">
         <form id='paymill_form' action="<?php echo $paymill_form_action; ?>" method="POST">
+            <?php if($paymill_buttonSolution){ ?>
+            <div class="buttons">
+                <input type="submit" class="button paymill_confirm_button" id="paymill_submit" value="<?php echo $button_confirm; ?>">
+            </div>
+            <?php } ?>
+            <div class="debit paymill_relative" id="paymillContainer">
+                <span class="paymill_loading_layer">
+                    <img src="<?php echo $paymill_image_folder. '/ajax-loader.gif';?>">
+                </span>
+                <script type="text/javascript">
+                    <!--
+                    toggleLoading('show');
+                    var url = "https://bridge.paymill.com/dss3";
+                    $.getScript( url, function() {
+                        paymillEmbedFrame();
+                        toggleLoading('hide');
+                    }); //-->
+                </script>
+            </div>
+            <?php if(!$paymill_buttonSolution){ ?>
+            <div class="buttons">
+                <input type="submit" class="button paymill_confirm_button" id="paymill_submit" value="<?php echo $button_confirm; ?>">
+            </div>
+            <?php } ?>
         </form>
         <script type="text/javascript">
             <!--
-            var url = "https://bridge.paymill.com/dss3";
-            $.getScript( url, function() {
-               paymillEmbedFrame();
+            $("#paymill_form").submit(function(e) {
+                if (!$("input[name=paymillToken]")) {
+                    console.log("disable");
+                    e.preventDefault();
+                }
+                toggleLoading('show');
+                $("#paymill_submit").attr('disabled', true);
+                paymill.createTokenViaFrame({amount_int: PAYMILL_AMOUNT, currency: PAYMILL_CURRENCY}, PaymillResponseHandler);
+                return false;
             }); //-->
         </script>
 </div>
