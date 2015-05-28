@@ -193,12 +193,6 @@ function PaymillResponseHandler(error, result) {
         var name = '';
         form.append("<input type='hidden' name='paymillToken' value='" + token + "'/>");
 
-        if (PAYMILL_PAYMENT === "paymilldirectdebit") {
-            name = $('#paymill_accountholder').val();
-        }else{
-            name = $('#paymill_card_holder').val();
-        }
-        form.append("<input type='hidden' name='paymillName' value='" + name + "'/>");
         form.get(0).submit();
     }
 }
