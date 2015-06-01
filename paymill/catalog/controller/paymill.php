@@ -103,6 +103,14 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
 
         $this->data['paymill_error'] = isset($this->session->data['error_message']) ? $this->session->data['error_message'] : null;
         $this->data['paymill_javascript_error'] = $this->language->get('error_javascript');
+        $this->data['paymill_translation_fields'] = array(
+            'cardholder' => $this->language->get('paymill_cardholder'),
+            'cardnumber' => $this->language->get('paymill_cardnumber'),
+            'expire_date' => $this->language->get('paymill_expirydate'),
+            'cvc' => $this->language->get('paymill_cvc'),
+            'changebutton' => $this->language->get('paymill_change_button'),
+            'lang' => $this->language->get('paymill_lang')
+        );
         $this->data['paymill_icon_visa'] = $this->config->get($this->getPaymentName() . '_icon_visa');
         $this->data['paymill_icon_master'] = $this->config->get($this->getPaymentName() . '_icon_master');
         $this->data['paymill_icon_amex'] = $this->config->get($this->getPaymentName() . '_icon_amex');
