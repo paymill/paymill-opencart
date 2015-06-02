@@ -45,7 +45,7 @@ function paymillEmbedFastcheckout()
     tableFragment.appendChild(paymillTableTr(PAYMILL_TRANSLATION_FIELDS['expire_date'],PAYMILL_FASTCHECKOUT_DATA['expire_date']));
     tableFragment.appendChild(paymillTableTr(PAYMILL_TRANSLATION_FIELDS['cardholder'],PAYMILL_FASTCHECKOUT_DATA['card_holder']));
     tableFragment.appendChild(paymillTableTr(PAYMILL_TRANSLATION_FIELDS['cvc'], "***"));
-    tableFragment.appendChild(paymillTableTr("<input type='button' class='button' id='paymill_change' value='" +PAYMILL_TRANSLATION_FIELDS['changebutton'] + "'>", ''));
+    tableFragment.appendChild(paymillTableTr('', "<input type='button' class='button' id='paymill_change' value='" +PAYMILL_TRANSLATION_FIELDS['changebutton'] + "'>"));
 
     var table = document.createElement('table');
     table.setAttribute("id","paymillTable");

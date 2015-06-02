@@ -15,6 +15,7 @@
 ?>
 
 <script type="text/javascript" src="<?php echo $paymill_js; ?>/checkout_iframe.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $paymill_iframe_css; ?>" />
 <div class="right">
         <form id='paymill_form' action="<?php echo $paymill_form_action; ?>" method="POST">
             <?php if($paymill_buttonSolution){ ?>
@@ -22,7 +23,7 @@
                 <input type="button" class="button paymill_confirm_button" id="paymill_submit" value="<?php echo $button_confirm; ?>">
             </div>
             <?php } ?>
-            <div class="debit paymill_relative" id="paymillContainer">
+            <div class="debit paymill_relative paymillClearfix" id="paymillContainer">
                 <span class="paymill_loading_layer">
                     <img src="<?php echo $paymill_image_folder. '/ajax-loader.gif';?>">
                 </span>
