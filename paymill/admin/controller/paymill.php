@@ -39,7 +39,9 @@ abstract class ControllerPaymentPaymill extends Controller
             $newConfig[$this->getPaymentName() . '_status'] = $this->getPostValue('paymill_status', 0);
             $newConfig[$this->getPaymentName() . '_publickey'] = trim($this->getPostValue('paymill_publickey', ''));
             $newConfig[$this->getPaymentName() . '_privatekey'] = trim($this->getPostValue('paymill_privatekey', ''));
-            $newConfig[$this->getPaymentName() . '_pci'] = trim($this->getPostValue('paymill_pci', ''));
+            if($this->getPaymentName() === 'paymillcreditcard') {
+                $newConfig[$this->getPaymentName() . '_pci'] = trim($this->getPostValue('paymill_pci', ''));
+            }
             $newConfig[$this->getPaymentName() . '_sort_order'] = $this->getPostValue('paymill_sort_order', 0);
             $newConfig[$this->getPaymentName() . '_preauth'] = $this->getPostValue('paymill_preauth', false);
             $newConfig[$this->getPaymentName() . '_fast_checkout'] = $this->getPostValue('paymill_fast_checkout', false);
@@ -100,7 +102,11 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['paymill_status'] = $this->getConfigValue($this->getPaymentName() . '_status');
         $this->data['paymill_publickey'] = $this->getConfigValue($this->getPaymentName() . '_publickey');
         $this->data['paymill_privatekey'] = $this->getConfigValue($this->getPaymentName() . '_privatekey');
-        $this->data['paymill_pci'] = $this->getConfigValue($this->getPaymentName() . '_pci');
+
+        if($this->getPaymentName() === 'paymillcreditcard') {
+            $this->data['paymill_pci'] = $this->getConfigValue($this->getPaymentName() . '_pci');
+        }
+
         $this->data['paymill_sort_order'] = $this->getConfigValue($this->getPaymentName() . '_sort_order');
         $this->data['paymill_fast_checkout'] = $this->getConfigValue($this->getPaymentName() . '_fast_checkout');
         $this->data['paymill_preauth'] = $this->getConfigValue($this->getPaymentName() . '_preauth');
@@ -206,7 +212,11 @@ abstract class ControllerPaymentPaymill extends Controller
         $config[$this->getPaymentName() . '_status'] = '0';
         $config[$this->getPaymentName() . '_publickey'] = '';
         $config[$this->getPaymentName() . '_privatekey'] = '';
-        $config[$this->getPaymentName() . '_pci'] = '0';
+
+        if($this->getPaymentName() === 'paymillcreditcard') {
+            $config[$this->getPaymentName() . '_pci'] = '0';
+        }
+
         $config[$this->getPaymentName() . '_sort_order'] = '1';
         $config[$this->getPaymentName() . '_fast_checkout'] = '0';
         $config[$this->getPaymentName() . '_preauth'] = '0';
