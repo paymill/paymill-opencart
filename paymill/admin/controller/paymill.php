@@ -77,6 +77,9 @@ abstract class ControllerPaymentPaymill extends Controller
         $this->data['text_success'] = $this->language->get('text_success');
         $this->data['text_paymill'] = $this->language->get('text_paymill');
         $this->data['text_sale'] = $this->language->get('text_sale');
+        $this->data['text_sale'] = $this->language->get('text_sale');
+        $this->data['text_pci_saq_a'] = $this->language->get('text_pci_saq_a');
+        $this->data['text_pci_saq_a_ep'] = $this->language->get('text_pci_saq_a_ep');
 
         $this->data['entry_status'] = $this->language->get('entry_status');
         $this->data['entry_publickey'] = $this->language->get('entry_publickey');

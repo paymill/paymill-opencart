@@ -56,8 +56,8 @@
                         <td><?php echo $entry_pci; ?></td>
                         <td>
                             <select name="paymill_pci">
-                                <option value="1" <?php if ($paymill_pci) { echo 'selected="selected"';}?>>SAQ A-EP</option>
-                                <option value="0" <?php if (!$paymill_pci) { echo 'selected="selected"';}?>>SAQ A</option>
+                                <option value="1" <?php if ($paymill_pci) { echo 'selected="selected"';}?>><?php echo $text_pci_saq_a_ep;?></option>
+                                <option value="0" <?php if (!$paymill_pci) { echo 'selected="selected"';}?>><?php echo $text_pci_saq_a; ?></option>
                             </select>
                         </td>
                     </tr>

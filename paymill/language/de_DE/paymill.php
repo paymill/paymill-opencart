@@ -82,6 +82,6 @@ $_["paymillTableShowDetails"] = "Show Details";
 $_["paymillCheckboxConnectedSearch"] = "Connected Search";
 $_["text_paymilldirectdebit"] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
 $_["text_paymillcreditcard"] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
-$_["entry_pci"] = "PCI-DSS";
+$_["entry_pci"] = "Zahlungsformular";
 $_["paymill_change_button"] = "Ändern";
 $_["paymill_lang"] = "de";
