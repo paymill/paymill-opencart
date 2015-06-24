@@ -14,10 +14,8 @@ function PaymillResponseHandler(error, result)
         $('.paymill_loading_layer').hide();
         $("#paymill_submit").removeAttr('disabled');
         if (PAYMILL_TRANSLATION.bridge.hasOwnProperty(error.apierror)) {
-            alert("API returned error:" + PAYMILL_TRANSLATION.bridge[error.apierror]);
             debug("API returned error:" + PAYMILL_TRANSLATION.bridge[error.apierror]);
         } else {
-            alert("API returned error(raw):" + error.apierror);
             debug("API returned error:" + error.apierror);
         }
     } else {
