@@ -4,7 +4,7 @@
  * This class acts as an easy to use gateway for the paymill phph wrapper.
  * @version    1.0.0
  * @category   PayIntelligent
- * @copyright  Copyright (c) 2013 PayIntelligent GmbH (http://payintelligent.de)
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (http://www.paymill.com/)
  */
 class Services_Paymill_PaymentProcessor
 {

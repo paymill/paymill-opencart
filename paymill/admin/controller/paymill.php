@@ -4,10 +4,7 @@ require_once dirname(dirname(dirname(__FILE__))) . '/metadata.php';
 require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/Webhooks.php';
 
 /**
- * paymill
- *
- * @category   PayIntelligent
- * @copyright  Copyright (c) 2011 PayIntelligent GmbH (http://payintelligent.de)
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (http://www.paymill.com)
  */
 abstract class ControllerPaymentPaymill extends Controller
 {

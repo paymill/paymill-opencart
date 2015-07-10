@@ -1,11 +1,7 @@
 <?php
 
 /**
- * paymillLogging
- *
- * @category   PayIntelligent
- * @package    Expression package is undefined on line 6, column 18 in Templates/Scripting/PHPClass.php.
- * @copyright  Copyright (c) 2011 PayIntelligent GmbH (http://payintelligent.de)
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (http://www.paymill.com)
  */
 class ModelCustompaymillLogging extends Model
 {
