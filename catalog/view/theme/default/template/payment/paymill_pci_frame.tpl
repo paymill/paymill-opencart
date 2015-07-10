@@ -28,6 +28,21 @@
                     <img src="<?php echo $paymill_image_folder. '/ajax-loader.gif';?>">
                 </span>
             </div>
+            <div class='paymill_icons'>
+                <?php
+                if($paymill_icon_visa){ echo "<img src=\"$paymill_image_folder/32x20_visa.png\">"; }
+                if($paymill_icon_master){ echo "<img src=\"$paymill_image_folder/32x20_mastercard.png\">"; }
+                if($paymill_icon_amex){ echo "<img src=\"$paymill_image_folder/32x20_amex.png\">"; }
+                if($paymill_icon_jcb){ echo "<img src=\"$paymill_image_folder/32x20_jcb.png\">"; }
+                if($paymill_icon_maestro){ echo "<img src=\"$paymill_image_folder/32x20_maestro.png\">"; }
+                if($paymill_icon_diners_club){ echo "<img src=\"$paymill_image_folder/32x20_dinersclub.png\">"; }
+                if($paymill_icon_discover){ echo "<img src=\"$paymill_image_folder/32x20_discover.png\">"; }
+                if($paymill_icon_china_unionpay){ echo "<img src=\"$paymill_image_folder/32x20_unionpay.png\">"; }
+                if($paymill_icon_dankort){ echo "<img src=\"$paymill_image_folder/32x20_dankort.png\">"; }
+                if($paymill_icon_carta_si){ echo "<img src=\"$paymill_image_folder/32x20_carta-si.png\">"; }
+                if($paymill_icon_carte_bleue){ echo "<img src=\"$paymill_image_folder/32x20_carte-bleue.png\">"; }
+                ?>
+            </div>
             <?php if(!$paymill_buttonSolution){ ?>
             <div class="buttons">
                 <input type="button" class="button paymill_confirm_button" id="paymill_submit" value="<?php echo $button_confirm; ?>">
