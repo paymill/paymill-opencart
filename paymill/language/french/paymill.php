@@ -83,5 +83,7 @@ $_["paymillCheckboxConnectedSearch"] = "Recherche connectée";
 $_["text_paymilldirectdebit"] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
 $_["text_paymillcreditcard"] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
 $_["entry_pci"] = "Formulaire de paiement";
+$_["text_pci_saq_a"] = "PayFrame intégré (nécessite PCI SAQ A)";
+$_["text_pci_saq_a_ep"] = "integration direct (nécessite PCI SAQ A-EP)";
 $_["paymill_change_button"] = "Changer";
 $_["paymill_lang"] = "fr";
