@@ -2,10 +2,16 @@
     text-align: right;
 }
 
-#paymillContainer {
+#paymillContainer{
     float: right;
     width: 385px;
 }
+
+#paymillIconsPaymentForm{
+    float: right;
+    width: 385px;
+}
+
 
 #paymillTable {
     width: 100%;

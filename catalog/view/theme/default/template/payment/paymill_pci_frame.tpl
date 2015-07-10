@@ -28,7 +28,7 @@
                     <img src="<?php echo $paymill_image_folder. '/ajax-loader.gif';?>">
                 </span>
             </div>
-            <div class='paymill_icons'>
+            <div class='paymill_icons' id="paymillIconsPaymentForm">
                 <?php
                 if($paymill_icon_visa){ echo "<img src=\"$paymill_image_folder/32x20_visa.png\">"; }
                 if($paymill_icon_master){ echo "<img src=\"$paymill_image_folder/32x20_mastercard.png\">"; }
