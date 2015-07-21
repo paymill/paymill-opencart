@@ -1,3 +1,6 @@
+## 1.6.0
+ * Integration of PayFrame to enable use of SAQ A for easier PCI DSS 3.0 compliance.
+
 ## 1.5.1
  * fixed 3dsecure checkout for different currencies
 
