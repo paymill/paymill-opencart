@@ -8,10 +8,7 @@ require_once dirname(dirname(dirname(__FILE__))) . '/lib/Services/Paymill/Transa
 require_once dirname(dirname(dirname(__FILE__))) . '/metadata.php';
 
 /**
- * paymill
- *
- * @category   PayIntelligent
- * @copyright  Copyright (c) 2011 PayIntelligent GmbH (http://payintelligent.de)
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (http://www.paymill.com)
  */
 abstract class ControllerPaymentPaymill extends Controller implements Services_Paymill_LoggingInterface
 {
@@ -74,11 +71,12 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         $this->load->model('checkout/order');
         $this->order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         $amount = $this->currency->format($this->order_info['total'], $this->order_info['currency_code'], false, false);
-	
+
         $this->data['paymill_amount'] = $amount;
         $this->data['paymill_currency'] = $this->order_info['currency_code'];
         $this->data['paymill_fullname'] = $this->order_info['firstname'] . ' ' . $this->order_info['lastname'];
         $this->data['paymill_css'] = $this->baseUrl . '/catalog/view/theme/default/stylesheet/paymill_styles.css';
+        $this->data['paymill_iframe_css'] = $this->baseUrl . '/catalog/view/theme/default/stylesheet/paymill_iframe_styles.css';
         $this->data['paymill_image_folder'] = $this->baseUrl . '/catalog/view/theme/default/image/payment';
         $this->data['paymill_js'] = $this->baseUrl . '/catalog/view/javascript/paymill/';
         $this->data['paymill_publickey'] = trim($this->config->get($this->getPaymentName() . '_publickey'));
@@ -103,6 +101,14 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
 
         $this->data['paymill_error'] = isset($this->session->data['error_message']) ? $this->session->data['error_message'] : null;
         $this->data['paymill_javascript_error'] = $this->language->get('error_javascript');
+        $this->data['paymill_translation_fields'] = array(
+            'cardholder' => $this->language->get('paymill_cardholder'),
+            'cardnumber' => $this->language->get('paymill_cardnumber'),
+            'expire_date' => $this->language->get('paymill_expirydate'),
+            'cvc' => $this->language->get('paymill_cvc'),
+            'changebutton' => $this->language->get('paymill_change_button'),
+            'lang' => $this->language->get('paymill_lang')
+        );
         $this->data['paymill_icon_visa'] = $this->config->get($this->getPaymentName() . '_icon_visa');
         $this->data['paymill_icon_master'] = $this->config->get($this->getPaymentName() . '_icon_master');
         $this->data['paymill_icon_amex'] = $this->config->get($this->getPaymentName() . '_icon_amex');
@@ -134,6 +140,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         } else {
             $payment['expire_date'] = null;
         }
+
         $this->data['paymill_prefilled'] = $payment;
 
         if ($this->getPaymentName() == 'paymillcreditcard') {
@@ -143,11 +150,21 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         }
 
         $this->data['paymill_activepayment'] = $this->getPaymentName();
-        $this->template = 'default/template/payment/paymill.tpl';
-        if (file_exists($this->config->get('config_template') . '/template/payment/paymill.tpl')) {
-            $this->template = $this->config->get('config_template') . '/template/payment/paymill.tpl';
+        if($this->getPaymentName() == "paymillcreditcard" && !$this->config->get($this->getPaymentName() . '_pci')) {
+            $this->data['paymill_load_frame_fastcheckout'] = false;
+            if(isset($payment['last4']) && isset($payment['expire_date'])) {
+                $this->data['paymill_load_frame_fastcheckout'] = true;
+            }
+            $this->template = 'default/template/payment/paymill_pci_frame.tpl';
+            if (file_exists($this->config->get('config_template') . '/template/payment/paymill_frame.tpl')) {
+                $this->template = $this->config->get('config_template') . '/template/payment/paymill_frame.tpl';
+            }
+        } else {
+            $this->template = 'default/template/payment/paymill.tpl';
+            if (file_exists($this->config->get('config_template') . '/template/payment/paymill.tpl')) {
+                $this->template = $this->config->get('config_template') . '/template/payment/paymill.tpl';
+            }
         }
-
         $this->render();
     }
 
@@ -182,9 +199,6 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
         if (isset($this->request->post['paymillFastcheckout'])) {
             $fastcheckout = $this->request->post['paymillFastcheckout'];
         }
-        if (isset($this->request->post['paymillName'])) {
-            $name = $this->request->post['paymillName'];
-        }
 
         $this->_logId = time();
         $this->language->load('payment/' . $this->getPaymentName());
@@ -212,7 +226,7 @@ abstract class ControllerPaymentPaymill extends Controller implements Services_P
             $paymentProcessor->setDescription(substr("OrderID:" . $this->session->data['order_id'] . " " . $this->order_info['email'],0,128));
             $paymentProcessor->setEmail($this->order_info['email']);
             $paymentProcessor->setLogger($this);
-            $paymentProcessor->setName($name);
+            $paymentProcessor->setName($this->order_info['firstname'] . ' ' . $this->order_info['lastname']);
             $paymentProcessor->setSource($source);
 
             if ($this->customer->getId() != null) {

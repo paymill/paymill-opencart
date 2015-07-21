@@ -82,3 +82,8 @@ $_["paymillTableShowDetails"] = "Ver Detalhes";
 $_["paymillCheckboxConnectedSearch"] = "Pesquisa relacionada";
 $_["text_paymilldirectdebit"] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
 $_["text_paymillcreditcard"] = '<img src="view/image/payment/paymill_logo.jpeg" alt="Paymill" title="Paymill" style="border: 1px solid #EEEEEE; hight:27px; width:96px;" />';
+$_["entry_pci"] = "Payment form";
+$_["text_pci_saq_a"] = "embedded PayFrame (requires PCI SAQ A)";
+$_["text_pci_saq_a_ep"] = "direct integration (requires PCI SAQ A-EP)";
+$_["paymill_change_button"] = "Cambiar";
+$_["paymill_lang"] = "pt";

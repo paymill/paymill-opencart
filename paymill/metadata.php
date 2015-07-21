@@ -1,14 +1,11 @@
 <?php
 
 /**
- * metadata
- *
- * @category   PayIntelligent
- * @copyright  Copyright (c) 2013 PayIntelligent GmbH (http://payintelligent.de)
+ * @copyright  Copyright (c) 2015 PAYMILL GmbH (http://www.paymill.com/)
  */
 class metadata
 {
-    private $_version = "1.5.1";
+    private $_version = "1.6.0";
 
     public function getVersion()
     {
