@@ -33,7 +33,7 @@ class Services_Paymill_Apiclient_Curl implements Services_Paymill_Apiclient_Inte
      */
     private $_apiUrl = '/';
 
-    const USER_AGENT = 'Paymill-php/0.0.2';
+    const USER_AGENT = 'Paymill-Opencart/1.6.1';
 
     public static $lastRawResponse;
     public static $lastRawCurlOptions;
@@ -109,8 +109,7 @@ class Services_Paymill_Apiclient_Curl implements Services_Paymill_Apiclient_Inte
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_USERAGENT => self::USER_AGENT,
-            CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_CAINFO => realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'paymill.crt',
+            CURLOPT_SSL_VERIFYPEER => true
         );
 
         if (Services_Paymill_Apiclient_Interface::HTTP_GET === $method) {
